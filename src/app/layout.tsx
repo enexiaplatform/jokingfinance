@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JokingFinance - Học tài chính bằng danh mục ảo",
+  title: "JokingFinance - Website nội dung tài chính có tòa soạn riêng",
   description:
-    "JokingFinance giúp người mới học tài chính, luyện đầu tư bằng điểm ảo và xây kỷ luật trước khi dùng tiền thật.",
+    "JokingFinance là website nội dung tài chính có tòa soạn quản trị bài viết, trường tìm kiếm và bộ mô phỏng danh mục ảo.",
 };
 
 export default function RootLayout({

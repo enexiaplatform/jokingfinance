@@ -78,7 +78,7 @@ export function JournalPanel() {
     <div className="grid gap-6">
       <div>
         <h1 className="text-3xl font-bold text-[#17201b]">Nhật ký giao dịch</h1>
-        <p className="mt-2 text-[#5b6861]">Ghi phần tự xem lại sau giao dịch để biến quyết định thành bài học.</p>
+        <p className="mt-2 text-[#5b6861]">Ghi phần tự xem lại sau giao dịch để biến quyết định thành kinh nghiệm.</p>
       </div>
 
       {message ? (

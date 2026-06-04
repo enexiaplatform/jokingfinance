@@ -15,8 +15,8 @@ type ArticlesPageProps = {
 };
 
 export const metadata = {
-  title: "Bài học - JokingFinance",
-  description: "Bài học tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.",
+  title: "Bài viết - JokingFinance",
+  description: "Bài viết tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.",
 };
 
 export default async function ArticlesPage({ searchParams }: ArticlesPageProps) {
@@ -39,13 +39,13 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
       <main className="bg-[#fffdf8]">
         <section className="border-b border-[#d9ddd3] bg-[#edf5ee] px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <Badge tone="green">Bài học hằng ngày</Badge>
+            <Badge tone="green">Bài viết hằng ngày</Badge>
             <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-normal text-[#17201b]">
-              Bài học tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.
+              Bài viết tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-[#5b6861]">
               Không phải tin nóng, không phải phím hàng. Đây là thư viện bài
-              học để người mới hiểu khái niệm rồi luyện trong phần mô phỏng.
+              viết để người mới hiểu khái niệm rồi luyện trong phần mô phỏng.
             </p>
 
             <form className="mt-8 grid gap-3 rounded-md border border-[#d9ddd3] bg-white p-3 shadow-sm md:grid-cols-[1fr_240px_auto]">

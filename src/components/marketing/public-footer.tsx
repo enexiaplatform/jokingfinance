@@ -13,8 +13,8 @@ export function PublicFooter() {
         <div>
           <p className="text-lg font-bold">JokingFinance</p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[#c9d6ce]">
-            JokingFinance không đùa với tiền của bạn. Nền tảng này giúp bạn
-            học tài chính nhẹ nhàng, an toàn và thực tế hơn trước khi dùng tiền thật.
+            JokingFinance không đùa với tiền của bạn. Website này kết hợp bài viết tài chính,
+            tòa soạn nội dung và mô phỏng danh mục ảo để người đọc hiểu trước khi hành động thật.
           </p>
           <p className="mt-4 max-w-3xl text-xs leading-6 text-[#aebcb4]">
             {EDUCATION_DISCLAIMER}

@@ -24,7 +24,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category?.title ?? "Chuyên mục"}
           </h1>
           <p className="mt-3 max-w-3xl text-lg leading-8 text-[#5b6861]">
-            {category?.description ?? "Các bài học trong chuyên mục này."}
+            {category?.description ?? "Các bài viết trong chuyên mục này."}
           </p>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (

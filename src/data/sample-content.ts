@@ -58,12 +58,12 @@ export const categories = [
   {
     title: "Tình huống thị trường",
     slug: "case-study-thi-truong",
-    description: "Bài học từ tình huống thị trường giả lập hoặc lịch sử.",
+    description: "Bài viết từ tình huống thị trường giả lập hoặc lịch sử.",
   },
   {
     title: "Phòng luyện tập",
     slug: "practice-lab",
-    description: "Bài học có nhiệm vụ thực hành đi kèm.",
+    description: "Bài viết có nhiệm vụ thực hành đi kèm.",
   },
   {
     title: "Kinh doanh dễ hiểu",
@@ -92,7 +92,7 @@ export const sampleArticles: Article[] = [
     readingTime: 5,
     relatedStocks: ["FPT", "VNM", "VCB"],
     relatedMissionSlug: "tao-danh-muc-ao-dau-tien",
-    seoTitle: "Cổ phiếu là gì? Bài học nhập môn cho người mới",
+    seoTitle: "Cổ phiếu là gì? Bài viết nhập môn cho người mới",
     seoDescription:
       "Hiểu cổ phiếu theo cách đơn giản trước khi luyện tập với danh mục ảo.",
     body: [
@@ -138,13 +138,13 @@ export const sampleArticles: Article[] = [
     readingTime: 7,
     relatedStocks: ["FPT", "MWG", "PNJ"],
     relatedMissionSlug: "so-sanh-3-co-phieu-cung-nganh-bang-pe",
-    seoTitle: "Tỷ số giá trên lợi nhuận là gì? Bài học định giá cho người mới",
+    seoTitle: "Tỷ số giá trên lợi nhuận là gì? Bài viết định giá cho người mới",
     seoDescription:
       "Tìm hiểu tỷ số giá trên lợi nhuận và luyện so sánh ba cổ phiếu cùng ngành bằng dữ liệu mô phỏng.",
     body: [
       "Tỷ số giá trên lợi nhuận là tỷ lệ giữa giá cổ phiếu và lợi nhuận trên mỗi cổ phiếu. Nói đơn giản, nó cho biết thị trường đang trả bao nhiêu đồng cho một đồng lợi nhuận hiện tại.",
       "Tỷ số thấp có thể là cơ hội, nhưng cũng có thể là tín hiệu thị trường lo ngại lợi nhuận giảm. Tỷ số cao có thể đắt, nhưng cũng có thể phản ánh kỳ vọng tăng trưởng tốt.",
-      "Bài học quan trọng: đừng dùng một chỉ số duy nhất. Hãy so sánh trong cùng ngành, hiểu chất lượng lợi nhuận và ghi rõ giả định trước khi mua.",
+      "Điểm quan trọng: đừng dùng một chỉ số duy nhất. Hãy so sánh trong cùng ngành, hiểu chất lượng lợi nhuận và ghi rõ giả định trước khi mua.",
     ],
   },
   {
@@ -161,7 +161,7 @@ export const sampleArticles: Article[] = [
     readingTime: 6,
     relatedStocks: ["VCB", "FPT", "GAS", "PNJ", "GMD"],
     relatedMissionSlug: "khong-phan-bo-qua-20-phan-tram-vao-mot-ma",
-    seoTitle: "Danh mục đầu tư là gì? Bài học phân bổ cho người mới",
+    seoTitle: "Danh mục đầu tư là gì? Bài viết phân bổ cho người mới",
     seoDescription:
       "Luyện xây danh mục ảo và tránh tập trung quá mức vào một mã cổ phiếu.",
     body: [

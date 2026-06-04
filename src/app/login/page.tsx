@@ -22,7 +22,7 @@ export default function LoginPage() {
               Đăng nhập để tiếp tục luyện tập.
             </h1>
             <p className="mt-4 text-lg leading-8 text-[#5b6861]">
-              Vào bảng học tập để xem danh mục ảo, nhiệm vụ đang làm và nhật ký giao dịch.
+              Vào tổng quan để mở tòa soạn, xem danh mục ảo, nhiệm vụ đang làm và nhật ký giao dịch.
             </p>
             <Disclaimer className="mt-6" />
           </div>

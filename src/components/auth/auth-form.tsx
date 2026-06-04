@@ -30,7 +30,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       if (displayName) {
         localStorage.setItem("jokingfinance-display-name", displayName);
       }
-      setMessage("Chế độ dùng thử: chưa cấu hình biến môi trường Supabase, đang mở khu vực học tập.");
+      setMessage("Chế độ dùng thử: chưa cấu hình biến môi trường Supabase, đang mở khu vực app.");
       router.push(redirectTo);
       return;
     }

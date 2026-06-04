@@ -1,12 +1,12 @@
 # JokingFinance
 
-JokingFinance là nền tảng học tài chính tiếng Việt và mô phỏng đầu tư cổ phiếu bằng điểm ảo cho người mới.
+JokingFinance là website nội dung tài chính tiếng Việt có tòa soạn quản trị bài viết và bộ mô phỏng đầu tư cổ phiếu bằng điểm ảo.
 
-JokingFinance không phải ứng dụng môi giới, không cung cấp tín hiệu giao dịch, không khuyến nghị cổ phiếu, không phải sản phẩm cờ bạc và không xử lý tiền thật. Đây là không gian học tập ưu tiên giáo dục, nơi người dùng đọc bài học dễ hiểu, làm nhiệm vụ thực hành, xây danh mục ảo bằng điểm ảo và tự xem lại quyết định trong nhật ký giao dịch.
+JokingFinance không phải ứng dụng môi giới, không cung cấp tín hiệu giao dịch, không khuyến nghị cổ phiếu, không phải sản phẩm cờ bạc và không xử lý tiền thật. Đây là hệ thống nội dung ưu tiên giáo dục, nơi người vận hành có thể đăng bài hằng ngày qua tòa soạn, còn người đọc có thể đọc bài viết dễ hiểu, làm nhiệm vụ thực hành, xây danh mục ảo bằng điểm ảo và tự xem lại quyết định trong nhật ký giao dịch.
 
 Lời hứa cốt lõi:
 
-> Bạn có thể sai. Nhưng hãy sai bằng điểm ảo trước.
+> Đăng bài mỗi ngày qua tòa soạn. Thực hành bằng điểm ảo trước khi dùng tiền thật.
 
 ## Công nghệ
 
@@ -14,7 +14,8 @@ Lời hứa cốt lõi:
 - TypeScript
 - Tailwind CSS
 - Supabase Auth và Postgres
-- Sanity CMS
+- Sanity làm hệ quản trị nội dung
+- Tòa soạn nội dung trong khu vực app
 - Triển khai trên Vercel
 - Lớp dữ liệu thị trường mô phỏng cho bản thử nghiệm
 
@@ -36,9 +37,10 @@ Công khai:
 - `/signup`
 - `/studio`
 
-Khu vực học tập:
+Khu vực app:
 
 - `/app/dashboard`
+- `/app/content`
 - `/app/simulator`
 - `/app/portfolio`
 - `/app/trades`
@@ -108,7 +110,7 @@ Khi đăng ký, trigger riêng sẽ tạo:
 File seed gồm:
 
 - 20 mã cổ phiếu Việt Nam mô phỏng: `FPT`, `VNM`, `MWG`, `HPG`, `VCB`, `BID`, `CTG`, `ACB`, `GAS`, `VHM`, `VIC`, `MSN`, `VRE`, `SSI`, `VND`, `PNJ`, `REE`, `GMD`, `FRT`, `DGC`
-- 10 nhiệm vụ thực hành gắn với vòng học tập
+- 10 nhiệm vụ thực hành gắn với vòng nội dung và mô phỏng
 
 Dữ liệu thị trường là dữ liệu mẫu/mô phỏng. Không dùng dữ liệu này để ra quyết định đầu tư thật.
 
@@ -117,7 +119,7 @@ Dữ liệu thị trường là dữ liệu mẫu/mô phỏng. Không dùng dữ
 1. Tạo dự án và bộ dữ liệu Sanity.
 2. Thêm `NEXT_PUBLIC_SANITY_PROJECT_ID` và `NEXT_PUBLIC_SANITY_DATASET`.
 3. Khởi động ứng dụng và mở `/studio`.
-4. Xuất bản bài học với trạng thái `published`.
+4. Xuất bản bài viết với trạng thái `published`.
 
 Schema gồm:
 
@@ -126,9 +128,22 @@ Schema gồm:
 - `tag`
 - `author`
 
-Trường bài học gồm tiêu đề, đường dẫn, tóm tắt, ảnh bìa, chuyên mục, thẻ, tác giả, ngày xuất bản, độ khó, thời gian đọc, nội dung, mã cổ phiếu liên quan, đường dẫn nhiệm vụ liên quan, trạng thái, trường tìm kiếm và tuyên bố giới hạn.
+Trường bài viết gồm tiêu đề, đường dẫn, tóm tắt, ảnh bìa, chuyên mục, thẻ, tác giả, ngày xuất bản, độ khó, thời gian đọc, nội dung, mã cổ phiếu liên quan, đường dẫn nhiệm vụ liên quan, trạng thái, trường tìm kiếm và tuyên bố giới hạn.
 
-Nếu Sanity chưa được cấu hình hoặc chưa có bài đã xuất bản, ứng dụng sẽ dùng 5 bài học mẫu.
+Nếu Sanity chưa được cấu hình hoặc chưa có bài đã xuất bản, ứng dụng sẽ dùng 5 bài viết mẫu.
+
+## Tòa Soạn Nội Dung
+
+Khu vực `/app/content` là tòa soạn bản thử nghiệm để người vận hành soạn bài mà không cần sửa mã nguồn. Màn hình này hỗ trợ:
+
+- Tiêu đề, tóm tắt, nội dung
+- Ảnh bìa
+- Chuyên mục và thẻ
+- Tiêu đề tìm kiếm và mô tả tìm kiếm
+- Trạng thái bản nháp, sẵn sàng đăng và đã xuất bản
+- Bản xem trước và hàng chờ nội dung
+
+Khi cấu hình Sanity, `/studio` là hệ quản trị nội dung gốc để lưu và xuất bản thật.
 
 ## Quy Tắc Mô Phỏng
 
@@ -179,7 +194,7 @@ Bản thử nghiệm không bao gồm:
 
 - Dữ liệu thị trường là dữ liệu tĩnh mô phỏng.
 - Ghi dữ liệu mô phỏng ưu tiên trình duyệt trước và đồng bộ Supabase khi đã cấu hình.
-- Chưa có bảng quản trị ngoài Sanity Studio.
+- Tòa soạn trong app hiện lưu bản thử nghiệm bằng bộ nhớ cục bộ; Sanity Studio là nơi xuất bản thật.
 - Chưa có luồng thanh toán.
 - Chưa có nhà cung cấp dữ liệu thị trường trực tiếp.
 - Chưa có hệ thống thông báo.
@@ -189,7 +204,7 @@ Bản thử nghiệm không bao gồm:
 
 - Thêm kiểu TypeScript sinh từ Supabase.
 - Chuyển thực thi giao dịch sang hàm Postgres nguyên tử.
-- Thêm phân tích tiến độ học tập.
-- Thêm chế độ xem trước/bản nháp cho Sanity.
+- Thêm phân tích hiệu quả nội dung và thực hành.
+- Đồng bộ tòa soạn trong app với Sanity bằng quyền quản trị.
 - Thêm nhà cung cấp dữ liệu thị trường có giấy phép qua lớp dữ liệu hiện có.
 - Thêm bảng quản trị nội dung và công cụ kiểm duyệt chỉ dành cho quản trị viên.
