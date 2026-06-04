@@ -1,5 +1,5 @@
 <!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Đây không phải phiên bản Next.js quen thuộc
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+Phiên bản này có thay đổi phá vỡ tương thích: API, quy ước và cấu trúc file có thể khác với dữ liệu huấn luyện cũ. Hãy đọc hướng dẫn liên quan trong `node_modules/next/dist/docs/` trước khi viết code và chú ý các cảnh báo ngừng hỗ trợ.
 <!-- END:nextjs-agent-rules -->
