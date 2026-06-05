@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { PublicFooter } from "@/components/marketing/public-footer";
 import { LandingHeroScene } from "@/components/marketing/landing-hero-scene";
+import { MarketRailCards } from "@/components/marketing/market-rail-cards";
 import { PublicNav } from "@/components/marketing/public-nav";
 
 const leadArticles = [
@@ -37,22 +38,6 @@ const leadArticles = [
   },
 ];
 
-const moversUp: Array<[string, string, string, string]> = [
-  ["FPT", "FPT Corp", "138.500", "+6,87%"],
-  ["PNJ", "Vàng bạc PNJ", "97.200", "+5,54%"],
-  ["HPG", "Hoà Phát", "29.850", "+5,11%"],
-  ["MWG", "Thế Giới Di Động", "64.700", "+4,52%"],
-  ["SSI", "CK SSI", "32.400", "+3,85%"],
-];
-
-const moversDown: Array<[string, string, string, string]> = [
-  ["VIC", "Vingroup", "41.200", "-5,40%"],
-  ["NVL", "Novaland", "11.450", "-4,66%"],
-  ["GVR", "Cao su VN", "33.800", "-4,25%"],
-  ["POW", "PV Power", "12.100", "-3,74%"],
-  ["STB", "Sacombank", "34.250", "-3,25%"],
-];
-
 const loopSteps = [
   ["01", "Học", "Đọc bài học ngắn, ngôn ngữ đời thường, bám sát thị trường thật."],
   ["02", "Luyện", "Đặt lệnh mua/bán bằng danh mục ảo 100.000.000 điểm, không rủi ro."],
@@ -60,31 +45,6 @@ const loopSteps = [
   ["04", "Xem lại", "Đọc lại nhật ký giao dịch để thấy điều gì hiệu quả, điều gì không."],
   ["05", "Cải thiện", "Điều chỉnh chiến lược, lặp lại, khôn hơn trước khi dùng tiền thật."],
 ];
-
-function MoverList({
-  items,
-  dir,
-}: {
-  items: Array<[string, string, string, string]>;
-  dir: "up" | "down";
-}) {
-  return (
-    <>
-      {items.map(([sym, co, px, pct]) => (
-        <div className="mover" key={sym}>
-          <div>
-            <div className="sym">{sym}</div>
-            <div className="co">{co}</div>
-          </div>
-          <div className="r">
-            <div className="px">{px}</div>
-            <div className={`pc ${dir}`}>{dir === "up" ? "▲" : "▼"} {pct}</div>
-          </div>
-        </div>
-      ))}
-    </>
-  );
-}
 
 export default function Home() {
   return (
@@ -146,21 +106,7 @@ export default function Home() {
               </div>
 
               <aside className="rail">
-                <div className="card">
-                  <div className="card-head">
-                    <span className="t">Top tăng giá hôm nay</span>
-                    <span className="lab">Mô phỏng</span>
-                  </div>
-                  <MoverList items={moversUp} dir="up" />
-                </div>
-
-                <div className="card">
-                  <div className="card-head">
-                    <span className="t">Top giảm giá hôm nay</span>
-                    <span className="lab">Mô phỏng</span>
-                  </div>
-                  <MoverList items={moversDown} dir="down" />
-                </div>
+                <MarketRailCards />
 
                 <div className="card">
                   <div className="card-head">
@@ -182,14 +128,6 @@ export default function Home() {
                   <div className="p-[12px_15px_15px]">
                     <div className="prog"><i className="w-[66%]" /></div>
                   </div>
-                </div>
-
-                <div className="card">
-                  <div className="card-head"><span className="t">Tổng quan phiên mô phỏng</span></div>
-                  <div className="stat-li"><span>Mã tăng giá</span><b className="up">218</b></div>
-                  <div className="stat-li"><span>Mã giảm giá</span><b className="down">142</b></div>
-                  <div className="stat-li"><span>Đứng giá</span><b className="ref">61</b></div>
-                  <div className="stat-li"><span>GT giao dịch (điểm ảo)</span><b>18.420 tỷ</b></div>
                 </div>
               </aside>
             </div>
@@ -259,7 +197,7 @@ export default function Home() {
             <AlertTriangle className="h-[18px] w-[18px]" aria-hidden="true" />
             <span>
               Nội dung này chỉ phục vụ mục đích giáo dục và mô phỏng. Đây không phải là khuyến nghị đầu tư.
-              Mọi mã cổ phiếu, giá và chỉ số hiển thị là dữ liệu mô phỏng. Điểm ảo không có giá trị quy đổi thành tiền thật.
+              Giá và chỉ số demo được lấy từ Vnstock khi khả dụng; điểm ảo không có giá trị quy đổi thành tiền thật.
             </span>
           </div>
         </div>

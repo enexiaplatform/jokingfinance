@@ -1,10 +1,10 @@
 export const APP_NAME = "JokingFinance";
 
 export const TAGLINE =
-  "Sai bằng tiền ảo. Khôn trước khi dùng tiền thật.";
+  "Học tài chính bằng dữ liệu thật. Luyện danh mục bằng điểm ảo.";
 
 export const ALT_TAGLINE =
-  "Học tài chính bớt khô khan. Luyện đầu tư bớt rủi ro.";
+  "Theo dõi thị trường Việt Nam, ghi luận điểm và luyện quyết định trong môi trường an toàn.";
 
 export const INITIAL_VIRTUAL_POINTS = 100_000_000;
 
@@ -14,7 +14,7 @@ export const EDUCATION_DISCLAIMER =
   "Nội dung này chỉ phục vụ mục đích giáo dục và mô phỏng. Đây không phải là khuyến nghị đầu tư, khuyến nghị mua, bán hoặc nắm giữ bất kỳ chứng khoán nào. Điểm ảo không có giá trị quy đổi thành tiền thật.";
 
 export const MOCK_DATA_DISCLAIMER =
-  "Dữ liệu trong bản thử nghiệm là dữ liệu mô phỏng và dữ liệu mẫu để phục vụ trải nghiệm học tập. Không dùng để ra quyết định đầu tư thật.";
+  "Giá và biến động trong bản demo được lấy từ Vnstock khi khả dụng; điểm ảo và giao dịch vẫn chỉ phục vụ học tập. Không dùng để ra quyết định đầu tư thật.";
 
 export const PUBLIC_NAV_ITEMS = [
   { label: "Trang chủ", href: "/" },
@@ -82,5 +82,5 @@ export const DISCIPLINE_REMINDERS = [
   "Viết luận điểm trước khi mua.",
   "Danh mục tốt bắt đầu từ quản trị rủi ro.",
   "Đây là môi trường luyện tập, không phải khuyến nghị đầu tư.",
-  "Sai bằng điểm ảo còn rẻ hơn sai bằng tiền thật.",
+  "Luyện bằng điểm ảo trước khi ra quyết định với tiền thật.",
 ];

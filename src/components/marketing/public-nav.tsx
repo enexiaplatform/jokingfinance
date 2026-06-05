@@ -1,36 +1,63 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PUBLIC_NAV_ITEMS } from "@/lib/constants";
+import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
+import {
+  formatMarketChange,
+  formatMarketNumber,
+  formatMarketPercent,
+  formatMarketUpdatedAt,
+  formatTodayLabel,
+  marketArrow,
+} from "@/lib/market-data/format";
+import type { MarketSummary } from "@/lib/market-data/summary";
 import { cn } from "@/lib/utils";
 
-const tickerItems = [
-  { sym: "FPT", px: "138.500", pct: "+6,87%", dir: "up" },
-  { sym: "PNJ", px: "97.200", pct: "+5,54%", dir: "up" },
-  { sym: "HPG", px: "29.850", pct: "+5,11%", dir: "up" },
-  { sym: "VIC", px: "41.200", pct: "-5,40%", dir: "down" },
-  { sym: "NVL", px: "11.450", pct: "-4,66%", dir: "down" },
-  { sym: "VCB", px: "92.500", pct: "+1,10%", dir: "up" },
-  { sym: "MSN", px: "71.800", pct: "-1,37%", dir: "down" },
-];
-
-const indexItems = [
-  { name: "VN-INDEX", val: "1.843,09", chg: "+11,54", pct: "+0,63%", dir: "up" },
-  { name: "VN30", val: "1.962,40", chg: "+9,82", pct: "+0,50%", dir: "up" },
-  { name: "HNX-INDEX", val: "294,06", chg: "-3,54", pct: "-1,19%", dir: "down" },
-  { name: "UPCOM", val: "98,72", chg: "+0,41", pct: "+0,42%", dir: "up" },
-  { name: "USD/VND", val: "25.410", chg: "-15", pct: "-0,06%", dir: "down" },
-  { name: "VÀNG SJC", val: "92,80tr", chg: "+0,30", pct: "+0,32%", dir: "up" },
-];
+const MARKET_REFRESH_MS = 60_000;
 
 export function PublicNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const tickerLoop = [...tickerItems, ...tickerItems];
+  const [marketSummary, setMarketSummary] = useState<MarketSummary>(fallbackMarketSummary);
+  const tickerLoop = [...marketSummary.tickers, ...marketSummary.tickers];
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadMarketSummary() {
+      try {
+        const response = await fetch("/api/market/summary", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Market summary request failed");
+        }
+
+        const data = (await response.json()) as MarketSummary;
+        if (active) {
+          setMarketSummary(data);
+        }
+      } catch {
+        if (active) {
+          setMarketSummary((current) => ({
+            ...current,
+            notice: "Dang hien du lieu du phong.",
+          }));
+        }
+      }
+    }
+
+    void loadMarketSummary();
+    const intervalId = window.setInterval(loadMarketSummary, MARKET_REFRESH_MS);
+
+    return () => {
+      active = false;
+      window.clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <>
@@ -38,16 +65,16 @@ export function PublicNav() {
         <div className="ribbon-inner">
           <span className="ribbon-tag">
             <span className="dot" />
-            Thị trường · mô phỏng
+            Thị trường · {marketSummary.source === "vnstock" ? "Vnstock" : "mô phỏng"}
           </span>
           <div className="ticker-mask">
             <div className="ticker-track">
               {tickerLoop.map((item, index) => (
-                <span className="tk" key={`${item.sym}-${index}`}>
-                  <b>{item.sym}</b>
-                  <span className="pr">{item.px}</span>
-                  <span className={cn("ch", item.dir)}>
-                    {item.dir === "up" ? "▲" : "▼"} {item.pct}
+                <span className="tk" key={`${item.symbol}-${index}`}>
+                  <b>{item.symbol}</b>
+                  <span className="pr">{formatMarketNumber(item.price)}</span>
+                  <span className={cn("ch", item.direction)}>
+                    {marketArrow(item.direction)} {formatMarketPercent(item.changePercent)}
                   </span>
                 </span>
               ))}
@@ -60,10 +87,12 @@ export function PublicNav() {
         <div className="wrap">
           <span className="sim-badge">
             <span className="d" />
-            Dữ liệu mô phỏng · không phải giá thật
+            {marketSummary.source === "vnstock"
+              ? `Dữ liệu demo từ Vnstock · cập nhật ${formatMarketUpdatedAt(marketSummary.updatedAt)}`
+              : "Dữ liệu mô phỏng · không phải giá thật"}
           </span>
           <div className="links">
-            <span>Thứ Sáu, 05/06/2026</span>
+            <span>{formatTodayLabel()}</span>
             <Link href="/request-access">Đăng ký thử</Link>
             <Link href="/login">Đăng nhập</Link>
           </div>
@@ -136,12 +165,12 @@ export function PublicNav() {
       <div className="idx-strip">
         <div className="wrap p-0">
           <div className="idx-rail">
-            {indexItems.map((item) => (
-              <div className="idx" key={item.name}>
+            {marketSummary.indices.map((item) => (
+              <div className="idx" key={item.code}>
                 <span className="name">{item.name}</span>
-                <span className="val">{item.val}</span>
-                <span className={cn("chg", item.dir)}>
-                  {item.dir === "up" ? "▲" : "▼"} {item.chg} <span>{item.pct}</span>
+                <span className="val">{formatMarketNumber(item.value, 2)}</span>
+                <span className={cn("chg", item.direction)}>
+                  {marketArrow(item.direction)} {formatMarketChange(item.change, 2)} <span>{formatMarketPercent(item.changePercent)}</span>
                 </span>
               </div>
             ))}

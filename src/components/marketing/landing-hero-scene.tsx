@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Ban,
   BookOpen,
@@ -8,15 +10,15 @@ import {
   XCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import { TAGLINE } from "@/lib/constants";
-
-const gainers = [
-  { sym: "FPT", co: "FPT Corp", px: "138.500", d: "+8.900", pct: "+6,87%" },
-  { sym: "PNJ", co: "Vàng bạc PNJ", px: "97.200", d: "+5.100", pct: "+5,54%" },
-  { sym: "HPG", co: "Hoà Phát", px: "29.850", d: "+1.450", pct: "+5,11%" },
-  { sym: "MWG", co: "Thế Giới Di Động", px: "64.700", d: "+2.800", pct: "+4,52%" },
-  { sym: "SSI", co: "CK SSI", px: "32.400", d: "+1.200", pct: "+3,85%" },
-];
+import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
+import {
+  formatMarketChange,
+  formatMarketNumber,
+  formatMarketPercent,
+} from "@/lib/market-data/format";
+import type { MarketSummary } from "@/lib/market-data/summary";
 
 const safetyChips = [
   { label: "Chỉ phục vụ giáo dục", icon: ShieldCheck },
@@ -26,6 +28,43 @@ const safetyChips = [
 ];
 
 export function LandingHeroScene() {
+  const [marketSummary, setMarketSummary] = useState<MarketSummary>(fallbackMarketSummary);
+  const boardRows = useMemo(
+    () =>
+      [...marketSummary.tickers]
+        .sort((a, b) => b.changePercent - a.changePercent)
+        .slice(0, 5),
+    [marketSummary.tickers],
+  );
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadMarketSummary() {
+      try {
+        const response = await fetch("/api/market/summary", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Market summary request failed");
+        }
+
+        const data = (await response.json()) as MarketSummary;
+        if (active) {
+          setMarketSummary(data);
+        }
+      } catch {
+        if (active) {
+          setMarketSummary(fallbackMarketSummary);
+        }
+      }
+    }
+
+    void loadMarketSummary();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section className="hero">
       <div className="hero-grid-bg" />
@@ -36,7 +75,7 @@ export function LandingHeroScene() {
             {TAGLINE.split(". ").map((part, index) => (
               <span key={part}>
                 {part}
-                {index === 0 ? "." : ""}
+                {index === 0 ? ". " : ""}
                 {index === 0 ? <br /> : null}
               </span>
             ))}
@@ -72,12 +111,12 @@ export function LandingHeroScene() {
 
         <div className="board">
           <div className="board-head">
-            <span className="t">Bảng giá mô phỏng · Top biến động</span>
+            <span className="t">Bảng giá Vnstock · Mã đang theo dõi</span>
             <div className="board-tabs">
               <button className="on" type="button">
-                Tăng
+                Demo
               </button>
-              <button type="button">Giảm</button>
+              <button type="button">{marketSummary.source === "vnstock" ? "Thật" : "Dự phòng"}</button>
             </div>
           </div>
           <table className="qt">
@@ -90,20 +129,20 @@ export function LandingHeroScene() {
               </tr>
             </thead>
             <tbody>
-              {gainers.map((item) => (
-                <tr key={item.sym}>
+              {boardRows.map((item) => (
+                <tr key={item.symbol}>
                   <td>
-                    <div className="sym">{item.sym}</div>
-                    <div className="co">{item.co}</div>
+                    <div className="sym">{item.symbol}</div>
+                    <div className="co">{item.exchange ?? "Vnstock"}</div>
                   </td>
                   <td>
-                    <span className="num">{item.px}</span>
+                    <span className="num">{formatMarketNumber(item.price)}</span>
                   </td>
                   <td>
-                    <span className="num up">{item.d}</span>
+                    <span className={`num ${item.direction}`}>{formatMarketChange(item.change)}</span>
                   </td>
                   <td>
-                    <span className="pill up">{item.pct}</span>
+                    <span className={`pill ${item.direction}`}>{formatMarketPercent(item.changePercent)}</span>
                   </td>
                 </tr>
               ))}
@@ -111,7 +150,7 @@ export function LandingHeroScene() {
           </table>
           <div className="board-foot">
             <Info className="h-[14px] w-[14px]" aria-hidden="true" />
-            Giá mô phỏng, cập nhật mỗi phiên học. Không phải khuyến nghị.
+            Giá demo lấy từ Vnstock khi khả dụng. Không phải khuyến nghị.
           </div>
         </div>
       </div>

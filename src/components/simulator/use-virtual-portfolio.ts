@@ -112,6 +112,11 @@ type MissionProgressRow = {
   } | null;
 };
 
+type MarketStocksResponse = {
+  source: "vnstock" | "mock";
+  stocks: Stock[];
+};
+
 function mapStock(row: StockRow): Stock {
   return {
     id: row.id,
@@ -160,6 +165,21 @@ function persistLocal(state: PortfolioState) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+async function fetchLiveStocks() {
+  try {
+    const response = await fetch("/api/market/stocks", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Market stocks request failed");
+    }
+
+    const data = (await response.json()) as MarketStocksResponse;
+
+    return data.stocks.length > 0 ? data.stocks : null;
+  } catch {
+    return null;
+  }
+}
+
 function createTrade(input: TradeInput, side: "buy" | "sell", price: number) {
   const estimate =
     side === "buy"
@@ -197,17 +217,27 @@ export function useVirtualPortfolio() {
     const supabase = createSupabaseBrowserClient();
     const storedState = parseStoredState();
     const displayName = localStorage.getItem(DISPLAY_NAME_KEY) ?? "";
+    const liveStocks = await fetchLiveStocks();
+    const defaultStocks = liveStocks ?? mockStocks;
 
     if (storedState) {
       setState({
         ...storedState,
         displayName: storedState.displayName || displayName,
-        stocks: storedState.stocks.length > 0 ? storedState.stocks : mockStocks,
+        stocks: defaultStocks,
         missions: storedState.missions.length > 0 ? storedState.missions : sampleMissions,
+        source: liveStocks ? "vnstock" : storedState.source,
       });
     }
 
     if (!supabase) {
+      if (!storedState && liveStocks) {
+        setState((current) => ({
+          ...current,
+          stocks: liveStocks,
+          source: "vnstock",
+        }));
+      }
       setLoading(false);
       return;
     }
@@ -217,6 +247,13 @@ export function useVirtualPortfolio() {
     } = await supabase.auth.getUser();
 
     if (!user) {
+      if (!storedState && liveStocks) {
+        setState((current) => ({
+          ...current,
+          stocks: liveStocks,
+          source: "vnstock",
+        }));
+      }
       setLoading(false);
       return;
     }
@@ -278,7 +315,7 @@ export function useVirtualPortfolio() {
         supabase.from("profiles").select("display_name").eq("user_id", user.id).limit(1),
       ]);
 
-    const stocks = stockRows && stockRows.length > 0 ? (stockRows as StockRow[]).map(mapStock) : mockStocks;
+    const stocks = liveStocks ?? (stockRows && stockRows.length > 0 ? (stockRows as StockRow[]).map(mapStock) : mockStocks);
     const missions =
       missionRows && missionRows.length > 0
         ? (missionRows as MissionRow[]).map(mapMission)
@@ -292,7 +329,7 @@ export function useVirtualPortfolio() {
       cash: portfolio.current_cash,
       stocks,
       missions,
-      source: "supabase",
+      source: liveStocks ? "vnstock" : "supabase",
       holdings: ((holdingRows ?? []) as HoldingRow[]).map((holding) => ({
         ticker: holding.ticker,
         stockId: holding.stock_id ?? undefined,

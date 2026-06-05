@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   ArrowLeftRight,
   BookOpen,
@@ -17,6 +18,14 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { APP_NAV_ITEMS } from "@/lib/constants";
+import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
+import {
+  formatMarketNumber,
+  formatMarketPercent,
+  formatMarketUpdatedAt,
+  marketArrow,
+} from "@/lib/market-data/format";
+import type { MarketSummary } from "@/lib/market-data/summary";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -35,13 +44,6 @@ const navIcons: Record<string, LucideIcon> = {
   "/app/settings": Settings,
 };
 
-const miniIndexes = [
-  { name: "VN-INDEX", val: "1.843,09", pct: "+0,63%", dir: "up" },
-  { name: "VN30", val: "1.962,40", pct: "+0,50%", dir: "up" },
-  { name: "HNX", val: "294,06", pct: "-1,19%", dir: "down" },
-  { name: "UPCOM", val: "98,72", pct: "+0,42%", dir: "up" },
-];
-
 function pageTitle(pathname: string) {
   const current = APP_NAV_ITEMS.find((item) => item.href === pathname);
   return current?.label ?? "Bảng học tập";
@@ -50,6 +52,35 @@ function pageTitle(pathname: string) {
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [marketSummary, setMarketSummary] = useState<MarketSummary>(fallbackMarketSummary);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadMarketSummary() {
+      try {
+        const response = await fetch("/api/market/summary", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Market summary request failed");
+        }
+
+        const data = (await response.json()) as MarketSummary;
+        if (active) {
+          setMarketSummary(data);
+        }
+      } catch {
+        if (active) {
+          setMarketSummary(fallbackMarketSummary);
+        }
+      }
+    }
+
+    void loadMarketSummary();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function signOut() {
     const supabase = createSupabaseBrowserClient();
@@ -125,7 +156,9 @@ export function AppShell({ children }: AppShellProps) {
           <div className="topbar-row">
             <div>
               <h1>{pageTitle(pathname)}</h1>
-              <div className="sub">Phiên mô phỏng · Thứ Sáu, 05/06/2026 · 09:37</div>
+              <div className="sub">
+                Dữ liệu {marketSummary.source === "vnstock" ? "Vnstock" : "dự phòng"} · cập nhật {formatMarketUpdatedAt(marketSummary.updatedAt)}
+              </div>
             </div>
             <div className="right">
               <label className="nav-search m-0 w-[220px]">
@@ -139,12 +172,12 @@ export function AppShell({ children }: AppShellProps) {
             </div>
           </div>
           <div className="mini-idx">
-            {miniIndexes.map((item) => (
-              <span className="m" key={item.name}>
+            {marketSummary.indices.map((item) => (
+              <span className="m" key={item.code}>
                 <b>{item.name}</b>
-                <span className="v">{item.val}</span>
-                <span className={cn("c", item.dir)}>
-                  {item.dir === "up" ? "▲" : "▼"} {item.pct}
+                <span className="v">{formatMarketNumber(item.value, 2)}</span>
+                <span className={cn("c", item.direction)}>
+                  {marketArrow(item.direction)} {formatMarketPercent(item.changePercent)}
                 </span>
               </span>
             ))}

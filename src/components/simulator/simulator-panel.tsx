@@ -221,7 +221,7 @@ export function SimulatorPanel() {
 
         <section className="overflow-hidden rounded-md border border-[#e0e5dc] bg-white shadow-sm">
           <div className="border-b border-[#e0e5dc] p-5">
-            <h2 className="text-xl font-bold text-[#17201b]">Danh sách cổ phiếu mẫu</h2>
+            <h2 className="text-xl font-bold text-[#17201b]">Danh sách cổ phiếu theo Vnstock</h2>
             <p className="mt-2 text-sm leading-6 text-[#5b6861]">
               {MOCK_DATA_DISCLAIMER}
             </p>

@@ -69,7 +69,7 @@ export type PortfolioState = {
   journal: JournalEntry[];
   missionProgress: MissionProgress[];
   missions: Mission[];
-  source: "demo" | "supabase";
+  source: "demo" | "supabase" | "vnstock";
 };
 
 export type TradeInput = {

@@ -41,8 +41,8 @@ export function PublicFooter() {
           </div>
         </div>
         <div className="foot-bot">
-          © 2026 JokingFinance · Sản phẩm giáo dục & mô phỏng. Mọi dữ liệu thị trường là mô phỏng,
-          không phải lời khuyên đầu tư. Điểm ảo không có giá trị quy đổi thành tiền thật.
+          © 2026 JokingFinance · Sản phẩm giáo dục & mô phỏng. Dữ liệu thị trường demo lấy từ
+          Vnstock khi khả dụng, không phải lời khuyên đầu tư. Điểm ảo không có giá trị quy đổi thành tiền thật.
         </div>
       </div>
     </footer>

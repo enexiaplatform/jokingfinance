@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JokingFinance - Sai bằng tiền ảo, khôn trước khi dùng tiền thật",
+  title: "JokingFinance - Học tài chính bằng dữ liệu thật, luyện danh mục bằng điểm ảo",
   description:
-    "JokingFinance giúp người mới học tài chính, luyện đầu tư bằng điểm ảo, ghi lại luận điểm và xem lại quyết định trước khi dùng tiền thật.",
+    "JokingFinance giúp người mới theo dõi dữ liệu thị trường Việt Nam, luyện đầu tư bằng điểm ảo, ghi lại luận điểm và xem lại quyết định trước khi dùng tiền thật.",
 };
 
 export default function RootLayout({
