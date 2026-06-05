@@ -1,10 +1,22 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, Menu, Sparkles, X } from "lucide-react";
-import { useState } from "react";
-import { APP_NAV_ITEMS, APP_NAME } from "@/lib/constants";
+import {
+  ArrowLeftRight,
+  BookOpen,
+  ClipboardList,
+  LayoutDashboard,
+  LineChart,
+  LogOut,
+  NotebookPen,
+  Search,
+  Settings,
+  WalletCards,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { APP_NAV_ITEMS } from "@/lib/constants";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -12,10 +24,32 @@ type AppShellProps = {
   children: React.ReactNode;
 };
 
+const navIcons: Record<string, LucideIcon> = {
+  "/app/dashboard": LayoutDashboard,
+  "/app/simulator": LineChart,
+  "/app/portfolio": WalletCards,
+  "/app/trades": ArrowLeftRight,
+  "/app/journal": NotebookPen,
+  "/app/missions": ClipboardList,
+  "/articles": BookOpen,
+  "/app/settings": Settings,
+};
+
+const miniIndexes = [
+  { name: "VN-INDEX", val: "1.843,09", pct: "+0,63%", dir: "up" },
+  { name: "VN30", val: "1.962,40", pct: "+0,50%", dir: "up" },
+  { name: "HNX", val: "294,06", pct: "-1,19%", dir: "down" },
+  { name: "UPCOM", val: "98,72", pct: "+0,42%", dir: "up" },
+];
+
+function pageTitle(pathname: string) {
+  const current = APP_NAV_ITEMS.find((item) => item.href === pathname);
+  return current?.label ?? "Bảng học tập";
+}
+
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [open, setOpen] = useState(false);
 
   async function signOut() {
     const supabase = createSupabaseBrowserClient();
@@ -26,79 +60,98 @@ export function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f5f0]">
-      <header className="sticky top-0 z-40 border-b border-[#d9ddd3] bg-[#fffdf8]/95 backdrop-blur lg:hidden">
-        <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/app/dashboard" className="flex items-center gap-2 font-bold">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#0f766e] text-white">
-              <Sparkles className="h-5 w-5" aria-hidden="true" />
-            </span>
-            {APP_NAME}
-          </Link>
-          <button
-            type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-md border border-[#cbd6ce] bg-white"
-            aria-label="Bật tắt điều hướng ứng dụng"
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-        <div className={cn("border-t border-[#d9ddd3] bg-[#fffdf8] p-3", open ? "grid" : "hidden")}>
-          {APP_NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className={cn(
-                "rounded-md px-3 py-2 text-sm font-semibold",
-                pathname === item.href
-                  ? "bg-[#e8f6ed] text-[#0f766e]"
-                  : "text-[#4c5d54] hover:bg-[#edf4ef]",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </header>
+    <div className="app">
+      <aside className="side">
+        <Link className="brand" href="/app/dashboard">
+          <Image src="/brand/logomark.svg" alt="" width={34} height={34} unoptimized />
+          Joking<span className="fin">Finance</span>
+        </Link>
 
-      <div className="lg:grid lg:grid-cols-[260px_1fr]">
-        <aside className="sticky top-0 hidden h-screen border-r border-[#d9ddd3] bg-[#fffdf8] p-4 lg:flex lg:flex-col">
-          <Link href="/app/dashboard" className="flex items-center gap-2 px-2 font-bold">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#0f766e] text-white">
-              <Sparkles className="h-5 w-5" aria-hidden="true" />
-            </span>
-            {APP_NAME}
-          </Link>
-          <nav className="mt-8 grid gap-1" aria-label="Điều hướng ứng dụng">
-            {APP_NAV_ITEMS.map((item) => (
+        <div className="side-sec">Học tập</div>
+        <nav className="side-nav" aria-label="Học tập">
+          {APP_NAV_ITEMS.filter((item) =>
+            ["/app/dashboard", "/app/simulator", "/articles", "/app/missions"].includes(item.href),
+          ).map((item) => {
+            const Icon = navIcons[item.href] ?? BookOpen;
+
+            return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(
-                  "rounded-md px-3 py-2 text-sm font-semibold",
-                  pathname === item.href
-                    ? "bg-[#e8f6ed] text-[#0f766e]"
-                    : "text-[#4c5d54] hover:bg-[#edf4ef]",
-                )}
+                className={cn(pathname === item.href && "active")}
               >
+                <Icon aria-hidden="true" />
                 {item.label}
               </Link>
-            ))}
-          </nav>
-          <button
-            type="button"
-            onClick={signOut}
-            className="mt-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#d9ddd3] bg-white px-4 text-sm font-semibold text-[#314039] hover:bg-[#fff3ef]"
-          >
+            );
+          })}
+        </nav>
+
+        <div className="side-sec">Danh mục ảo</div>
+        <nav className="side-nav" aria-label="Danh mục ảo">
+          {APP_NAV_ITEMS.filter((item) =>
+            ["/app/portfolio", "/app/trades", "/app/journal", "/app/settings"].includes(item.href),
+          ).map((item) => {
+            const Icon = navIcons[item.href] ?? WalletCards;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(pathname === item.href && "active")}
+              >
+                <Icon aria-hidden="true" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="side-foot">
+          <div className="side-bal">
+            <div className="lab">Tổng danh mục ảo</div>
+            <div className="v">103.420.000</div>
+            <div className="s">điểm ảo · +3,42% tổng</div>
+          </div>
+          <button className="btn btn-outline btn-sm w-full" type="button" onClick={signOut}>
             <LogOut className="h-4 w-4" aria-hidden="true" />
             Đăng xuất
           </button>
-        </aside>
+        </div>
+      </aside>
 
-        <main className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">{children}</main>
-      </div>
+      <main className="main">
+        <header className="topbar">
+          <div className="topbar-row">
+            <div>
+              <h1>{pageTitle(pathname)}</h1>
+              <div className="sub">Phiên mô phỏng · Thứ Sáu, 05/06/2026 · 09:37</div>
+            </div>
+            <div className="right">
+              <label className="nav-search m-0 w-[220px]">
+                <Search className="h-4 w-4 text-[var(--muted)]" aria-hidden="true" />
+                <input placeholder="Tìm mã CK..." />
+              </label>
+              <Link className="btn btn-primary btn-sm" href="/app/simulator">
+                <LineChart className="h-4 w-4" aria-hidden="true" />
+                Lệnh mới
+              </Link>
+            </div>
+          </div>
+          <div className="mini-idx">
+            {miniIndexes.map((item) => (
+              <span className="m" key={item.name}>
+                <b>{item.name}</b>
+                <span className="v">{item.val}</span>
+                <span className={cn("c", item.dir)}>
+                  {item.dir === "up" ? "▲" : "▼"} {item.pct}
+                </span>
+              </span>
+            ))}
+          </div>
+        </header>
+        <div className="dash">{children}</div>
+      </main>
     </div>
   );
 }

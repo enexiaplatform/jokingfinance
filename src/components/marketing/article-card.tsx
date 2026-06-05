@@ -13,7 +13,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
     <article className="flex h-full flex-col overflow-hidden rounded-md border border-[#e0e5dc] bg-white shadow-sm">
       <div className="flex h-36 items-end bg-[#dff0e5] p-4">
         <div className="w-full rounded-md border border-[#bad5c2] bg-[#fffdf8] p-3">
-          <p className="text-xs font-semibold uppercase text-[#66736c]">Bài viết tài chính</p>
+          <p className="text-xs font-semibold uppercase text-[#66736c]">Bài học tài chính</p>
           <p className="mt-2 line-clamp-2 text-sm font-bold text-[#17201b]">
             {article.title}
           </p>
@@ -43,7 +43,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
           href={`/articles/${article.slug}`}
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
         >
-          Đọc bài viết
+          Đọc bài học
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>

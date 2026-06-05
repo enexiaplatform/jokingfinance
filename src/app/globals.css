@@ -1,17 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f5f0;
-  --foreground: #17201b;
-  --muted: #66736c;
-  --line: #d9ddd3;
-  --surface: #fffdf8;
-  --surface-strong: #f0f7f1;
-  --primary: #0f766e;
-  --primary-dark: #115e59;
-  --coral: #d65a31;
-  --gold: #c08a16;
-  --ink: #13201b;
+  --jf-background: #f7f5f0;
+  --jf-foreground: #17201b;
+  --jf-ink: #13201b;
+  --jf-muted: #66736c;
+  --jf-muted-2: #5b6861;
+  --jf-line: #d9ddd3;
+  --jf-line-2: #e0e5dc;
+  --jf-surface: #fffdf8;
+  --jf-surface-strong: #f0f7f1;
+  --jf-surface-sub: #f8fbf7;
+  --jf-primary: #0f766e;
+  --jf-primary-dark: #115e59;
+  --jf-coral: #d65a31;
+  --jf-gold: #c08a16;
+  --jf-wash-green: #eaf3ec;
+  --jf-wash-green-2: #dff0e5;
+  --jf-wash-green-3: #edf5ee;
+  --jf-wash-sand: #f6f2e8;
+  --jf-green-bg: #e8f6ed;
+  --jf-green-bd: #b9d9c5;
+  --jf-green-fg: #166534;
+  --jf-gold-bg: #fff7d6;
+  --jf-gold-bd: #e8d59b;
+  --jf-gold-fg: #7a4d00;
+  --jf-coral-bg: #fff0e8;
+  --jf-coral-bd: #f1bea8;
+  --jf-coral-fg: #9a3412;
+  --jf-blue-bg: #edf7ff;
+  --jf-blue-bd: #b8d2e8;
+  --jf-blue-fg: #1d4f7a;
+  --jf-note-bg: #fff8df;
+  --jf-note-bd: #e2d3a7;
+  --jf-note-fg: #5b420b;
+  --jf-select-bg: #bfe5d0;
+  --background: var(--jf-background);
+  --foreground: var(--jf-foreground);
+  --muted: var(--jf-muted);
+  --line: var(--jf-line);
+  --surface: var(--jf-surface);
+  --surface-strong: var(--jf-surface-strong);
+  --primary: var(--jf-primary);
+  --primary-dark: var(--jf-primary-dark);
+  --coral: var(--jf-coral);
+  --gold: var(--jf-gold);
+  --ink: var(--jf-ink);
 }
 
 @theme inline {
@@ -25,6 +59,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -36,8 +71,29 @@ textarea {
 }
 
 ::selection {
-  background: #bfe5d0;
+  background: var(--jf-select-bg);
   color: var(--ink);
+}
+
+.jf-display {
+  color: var(--jf-ink);
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.jf-eyebrow {
+  color: var(--jf-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.jf-mono {
+  font-family: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .jf-grid {

@@ -1,10 +1,10 @@
 export const APP_NAME = "JokingFinance";
 
 export const TAGLINE =
-  "Website tài chính có tòa soạn riêng và bộ mô phỏng thực hành.";
+  "Sai bằng tiền ảo. Khôn trước khi dùng tiền thật.";
 
 export const ALT_TAGLINE =
-  "Đăng bài hằng ngày qua hệ quản trị nội dung. Để hệ thống làm phần lặp lại, không phải sửa mã nguồn mỗi lần đăng.";
+  "Học tài chính bớt khô khan. Luyện đầu tư bớt rủi ro.";
 
 export const INITIAL_VIRTUAL_POINTS = 100_000_000;
 
@@ -14,26 +14,24 @@ export const EDUCATION_DISCLAIMER =
   "Nội dung này chỉ phục vụ mục đích giáo dục và mô phỏng. Đây không phải là khuyến nghị đầu tư, khuyến nghị mua, bán hoặc nắm giữ bất kỳ chứng khoán nào. Điểm ảo không có giá trị quy đổi thành tiền thật.";
 
 export const MOCK_DATA_DISCLAIMER =
-  "Dữ liệu trong bản thử nghiệm là dữ liệu mô phỏng và dữ liệu mẫu để phục vụ trải nghiệm nội dung và mô phỏng. Không dùng để ra quyết định đầu tư thật.";
+  "Dữ liệu trong bản thử nghiệm là dữ liệu mô phỏng và dữ liệu mẫu để phục vụ trải nghiệm học tập. Không dùng để ra quyết định đầu tư thật.";
 
 export const PUBLIC_NAV_ITEMS = [
   { label: "Trang chủ", href: "/" },
-  { label: "Bài viết", href: "/articles" },
+  { label: "Bài học", href: "/articles" },
   { label: "Nhiệm vụ", href: "/missions" },
   { label: "Mô phỏng", href: "/simulator" },
   { label: "Gói học", href: "/pricing" },
-  { label: "Đăng ký thử", href: "/request-access" },
 ];
 
 export const APP_NAV_ITEMS = [
-  { label: "Tổng quan", href: "/app/dashboard" },
-  { label: "Tòa soạn", href: "/app/content" },
+  { label: "Bảng học tập", href: "/app/dashboard" },
   { label: "Mô phỏng", href: "/app/simulator" },
   { label: "Danh mục", href: "/app/portfolio" },
   { label: "Giao dịch", href: "/app/trades" },
   { label: "Nhật ký", href: "/app/journal" },
   { label: "Nhiệm vụ", href: "/app/missions" },
-  { label: "Bài viết", href: "/articles" },
+  { label: "Bài học", href: "/articles" },
   { label: "Cài đặt", href: "/app/settings" },
 ];
 
@@ -42,9 +40,9 @@ export const PRICING_PLANS = [
     name: "Miễn phí",
     price: "0 đồng",
     description:
-      "Bắt đầu đọc bài viết, thử mô phỏng cơ bản và làm vài nhiệm vụ nhỏ.",
+      "Bắt đầu đọc bài học, thử mô phỏng cơ bản và làm vài nhiệm vụ nhỏ.",
     features: [
-      "Đọc bài viết cho người mới",
+      "Đọc bài học cho người mới",
       "Danh mục ảo cơ bản",
       "Một số nhiệm vụ giới hạn",
       "Nhật ký giao dịch cơ bản",
@@ -54,9 +52,9 @@ export const PRICING_PLANS = [
     name: "Cơ bản",
     price: "49.000 đồng/tháng",
     description:
-      "Dành cho người muốn vận hành nội dung và mô phỏng đều đặn.",
+      "Dành cho người muốn học đều đặn, luyện danh mục ảo và xem lại quyết định rõ hơn.",
     features: [
-      "Tòa soạn nội dung cơ bản",
+      "Bài học tài chính có lộ trình",
       "Danh mục ảo đầy đủ",
       "Toàn bộ nhiệm vụ nhập môn và trung cấp",
       "Nhật ký giao dịch",
@@ -68,12 +66,12 @@ export const PRICING_PLANS = [
     name: "Chuyên sâu",
     price: "99.000 đồng/tháng",
     description:
-      "Dành cho đội ngũ muốn xuất bản đều hơn, có nội dung chuyên sâu và phần xem lại rõ hơn.",
+      "Dành cho người muốn luyện sâu hơn với tình huống nâng cao và phần phản tư chi tiết.",
     features: [
-      "Tình huống nội dung nâng cao",
+      "Tình huống đầu tư nâng cao",
       "Nhiệm vụ nâng cao",
       "Xem lại danh mục sâu hơn",
-      "Lịch nội dung",
+      "Lịch luyện tập cá nhân",
       "Công cụ phản tư giao dịch chi tiết hơn",
     ],
   },

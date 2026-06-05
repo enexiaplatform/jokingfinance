@@ -23,8 +23,8 @@ export function MetricCard({
 }: MetricCardProps) {
   return (
     <div className={cn("rounded-md border p-4 shadow-sm", tones[tone])}>
-      <p className="text-xs font-semibold uppercase text-[#66736c]">{label}</p>
-      <div className="mt-2 text-2xl font-bold text-[#17201b]">{value}</div>
+      <p className="jf-eyebrow">{label}</p>
+      <div className="jf-mono mt-2 text-2xl font-bold text-[#17201b]">{value}</div>
       {helper ? <div className="mt-2 text-sm text-[#5b6861]">{helper}</div> : null}
     </div>
   );

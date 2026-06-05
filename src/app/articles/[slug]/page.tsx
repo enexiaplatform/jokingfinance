@@ -23,7 +23,7 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug);
 
   return {
-    title: article?.seoTitle ?? article?.title ?? "Bài viết - JokingFinance",
+    title: article?.seoTitle ?? article?.title ?? "Bài học - JokingFinance",
     description: article?.seoDescription ?? article?.summary,
   };
 }
@@ -38,9 +38,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <>
         <PublicNav />
         <main className="bg-[#fffdf8] px-4 py-20 text-center">
-          <h1 className="text-3xl font-bold text-[#17201b]">Không tìm thấy bài viết.</h1>
+          <h1 className="text-3xl font-bold text-[#17201b]">Không tìm thấy bài học.</h1>
           <ButtonLink href="/articles" className="mt-6">
-            Quay lại bài viết
+            Quay lại bài học
           </ButtonLink>
         </main>
         <PublicFooter />
@@ -85,7 +85,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div className="mb-8 flex min-h-56 items-end rounded-md border border-[#d9ddd3] bg-[#dff0e5] p-5">
               <div className="max-w-xl rounded-md border border-[#bad5c2] bg-[#fffdf8] p-4">
                 <p className="text-xs font-semibold uppercase text-[#66736c]">
-                  Bài viết ưu tiên giáo dục
+                  Bài học ưu tiên giáo dục
                 </p>
                 <p className="mt-2 text-sm leading-6 text-[#314039]">
                   Đọc xong bài này, hãy luyện tập bằng một nhiệm vụ nhỏ trong
@@ -105,7 +105,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
 
             <div className="mt-10 rounded-md border border-[#b9d9c5] bg-[#f2fbf4] p-5">
-              <h2 className="text-xl font-bold text-[#17201b]">Luyện tập từ bài viết này</h2>
+              <h2 className="text-xl font-bold text-[#17201b]">Luyện tập từ bài học này</h2>
               <p className="mt-2 text-sm leading-6 text-[#5b6861]">
                 Đọc xong bài này, hãy luyện tập bằng một nhiệm vụ nhỏ trong JokingFinance.
               </p>
@@ -138,7 +138,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
             {relatedArticles.length > 0 ? (
               <section className="mt-12">
-                <h2 className="text-2xl font-bold text-[#17201b]">Bài viết liên quan</h2>
+                <h2 className="text-2xl font-bold text-[#17201b]">Bài học liên quan</h2>
                 <div className="mt-4 grid gap-3">
                   {relatedArticles.map((item) => (
                     <Link

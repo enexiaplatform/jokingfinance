@@ -1,37 +1,49 @@
 import Link from "next/link";
-import { EDUCATION_DISCLAIMER, PUBLIC_NAV_ITEMS } from "@/lib/constants";
-
-const footerLinks = [
-  ...PUBLIC_NAV_ITEMS,
-  { label: "Đăng nhập", href: "/login" },
-];
 
 export function PublicFooter() {
   return (
-    <footer className="border-t border-[#d9ddd3] bg-[#17201b] text-white">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.3fr_1fr] lg:px-8">
-        <div>
-          <p className="text-lg font-bold">JokingFinance</p>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#c9d6ce]">
-            JokingFinance không đùa với tiền của bạn. Website này kết hợp bài viết tài chính,
-            tòa soạn nội dung và mô phỏng danh mục ảo để người đọc hiểu trước khi hành động thật.
-          </p>
-          <p className="mt-4 max-w-3xl text-xs leading-6 text-[#aebcb4]">
-            {EDUCATION_DISCLAIMER}
-          </p>
+    <footer className="foot">
+      <div className="wrap">
+        <div className="foot-top">
+          <div>
+            <span className="brand">
+              Joking<span className="fin">Finance</span>
+            </span>
+            <p className="desc">
+              JokingFinance không đùa với tiền của bạn. Nền tảng giúp bạn học tài chính
+              nhẹ nhàng, an toàn và thực tế hơn trước khi dùng tiền thật.
+            </p>
+          </div>
+          <div>
+            <h5>Sản phẩm</h5>
+            <ul>
+              <li><Link href="/articles">Bài học</Link></li>
+              <li><Link href="/missions">Nhiệm vụ</Link></li>
+              <li><Link href="/simulator">Mô phỏng</Link></li>
+              <li><Link href="/app/dashboard">Bảng học tập</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Gói học</h5>
+            <ul>
+              <li><Link href="/pricing">Miễn phí</Link></li>
+              <li><Link href="/pricing">Cá nhân</Link></li>
+              <li><Link href="/request-access">Đăng ký thử</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Tài khoản</h5>
+            <ul>
+              <li><Link href="/login">Đăng nhập</Link></li>
+              <li><Link href="/signup">Tạo tài khoản</Link></li>
+              <li><Link href="/request-access">Trợ giúp</Link></li>
+            </ul>
+          </div>
         </div>
-
-        <nav className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3" aria-label="Chân trang">
-          {footerLinks.map((link) => (
-            <Link
-              key={`${link.href}-${link.label}`}
-              href={link.href}
-              className="rounded-md px-2 py-1 text-[#e7efe9] hover:bg-white/10"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="foot-bot">
+          © 2026 JokingFinance · Sản phẩm giáo dục & mô phỏng. Mọi dữ liệu thị trường là mô phỏng,
+          không phải lời khuyên đầu tư. Điểm ảo không có giá trị quy đổi thành tiền thật.
+        </div>
       </div>
     </footer>
   );

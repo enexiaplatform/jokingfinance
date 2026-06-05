@@ -1,7 +1,7 @@
 import { DashboardPanel } from "@/components/simulator/dashboard-panel";
 
 export const metadata = {
-  title: "Tổng quan - JokingFinance",
+  title: "Bảng học tập - JokingFinance",
 };
 
 export default function DashboardPage() {

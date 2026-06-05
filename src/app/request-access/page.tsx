@@ -20,7 +20,7 @@ export default function RequestAccessPage() {
               Tham gia danh sách thử nghiệm JokingFinance.
             </h1>
             <p className="mt-4 text-lg leading-8 text-[#5b6861]">
-              Cho chúng tôi biết mục tiêu học tài chính của bạn để bản thử nghiệm ưu tiên
+              Cho JokingFinance biết mục tiêu học tài chính của bạn để bản thử nghiệm ưu tiên
               đúng những tính năng người mới thật sự cần.
             </p>
             <Disclaimer className="mt-6" />

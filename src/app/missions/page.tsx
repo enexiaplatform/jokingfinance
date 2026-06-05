@@ -21,7 +21,7 @@ export default function MissionsPage() {
           <div className="mx-auto max-w-7xl">
             <Badge tone="green">Nhiệm vụ thực hành</Badge>
             <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-normal text-[#17201b]">
-              Nhiệm vụ nhỏ để biến bài viết thành hành động.
+              Nhiệm vụ nhỏ để biến bài học thành hành động.
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-[#5b6861]">
               Mỗi nhiệm vụ tập trung vào một thói quen: phân bổ, viết luận điểm,

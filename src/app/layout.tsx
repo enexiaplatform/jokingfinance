@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./redesign.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JokingFinance - Website nội dung tài chính có tòa soạn riêng",
+  title: "JokingFinance - Sai bằng tiền ảo, khôn trước khi dùng tiền thật",
   description:
-    "JokingFinance là website nội dung tài chính có tòa soạn quản trị bài viết, trường tìm kiếm và bộ mô phỏng danh mục ảo.",
+    "JokingFinance giúp người mới học tài chính, luyện đầu tư bằng điểm ảo, ghi lại luận điểm và xem lại quyết định trước khi dùng tiền thật.",
 };
 
 export default function RootLayout({

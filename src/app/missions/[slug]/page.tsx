@@ -105,15 +105,15 @@ export default async function MissionPage({ params }: MissionPageProps) {
 
             {mission.relatedArticleSlug ? (
               <div className="rounded-md border border-[#b9d9c5] bg-[#f2fbf4] p-5">
-                <h2 className="text-xl font-bold text-[#17201b]">Bài viết liên quan</h2>
+                <h2 className="text-xl font-bold text-[#17201b]">Bài học liên quan</h2>
                 <p className="mt-2 text-sm leading-6 text-[#5b6861]">
-                  Nhiệm vụ này được thiết kế để luyện tập ngay sau bài viết liên quan.
+                  Nhiệm vụ này được thiết kế để luyện tập ngay sau bài học liên quan.
                 </p>
                 <Link
                   href={`/articles/${mission.relatedArticleSlug}`}
                   className="mt-4 inline-flex text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
                 >
-                  Đọc bài viết liên quan
+                  Đọc bài học liên quan
                 </Link>
               </div>
             ) : null}

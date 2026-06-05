@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JokingFinance">
+  <rect width="120" height="120" rx="28" fill="#0f766e"></rect>
+  
+  <g stroke="#fffdf8" stroke-width="6" stroke-linecap="round">
+    
+    <line x1="38" y1="58" x2="38" y2="88"></line>
+    <rect x="32" y="64" width="12" height="18" rx="3" fill="#fffdf8" stroke="none"></rect>
+    
+    <line x1="60" y1="46" x2="60" y2="82"></line>
+    <rect x="54" y="52" width="12" height="22" rx="3" fill="#fffdf8" stroke="none"></rect>
+    
+    <line x1="82" y1="40" x2="82" y2="74"></line>
+    <rect x="76" y="48" width="12" height="20" rx="3" fill="#fffdf8" stroke="none"></rect>
+  </g>
+  
+  <path d="M82 18 Q82 30 94 30 Q82 30 82 42 Q82 30 70 30 Q82 30 82 18 Z" fill="#d65a31"></path>
+</svg>
