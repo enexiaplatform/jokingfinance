@@ -24,7 +24,8 @@ export function PublicNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [marketSummary, setMarketSummary] = useState<MarketSummary>(fallbackMarketSummary);
-  const tickerLoop = [...marketSummary.tickers, ...marketSummary.tickers];
+  const [marketReady, setMarketReady] = useState(false);
+  const tickerLoop = marketReady ? [...marketSummary.tickers, ...marketSummary.tickers] : [];
 
   useEffect(() => {
     let active = true;
@@ -39,6 +40,7 @@ export function PublicNav() {
         const data = (await response.json()) as MarketSummary;
         if (active) {
           setMarketSummary(data);
+          setMarketReady(true);
         }
       } catch {
         if (active) {
@@ -46,6 +48,7 @@ export function PublicNav() {
             ...current,
             notice: "Dang hien du lieu du phong.",
           }));
+          setMarketReady(true);
         }
       }
     }
@@ -65,19 +68,26 @@ export function PublicNav() {
         <div className="ribbon-inner">
           <span className="ribbon-tag">
             <span className="dot" />
-            Thị trường · {marketSummary.source === "vnstock" ? "Vnstock" : "mô phỏng"}
+            Thị trường · {!marketReady ? "đang đồng bộ" : marketSummary.source === "vnstock" ? "Vnstock" : "mô phỏng"}
           </span>
           <div className="ticker-mask">
             <div className="ticker-track">
-              {tickerLoop.map((item, index) => (
-                <span className="tk" key={`${item.symbol}-${index}`}>
-                  <b>{item.symbol}</b>
-                  <span className="pr">{formatMarketNumber(item.price)}</span>
-                  <span className={cn("ch", item.direction)}>
-                    {marketArrow(item.direction)} {formatMarketPercent(item.changePercent)}
+              {marketReady ? (
+                tickerLoop.map((item, index) => (
+                  <span className="tk" key={`${item.symbol}-${index}`}>
+                    <b>{item.symbol}</b>
+                    <span className="pr">{formatMarketNumber(item.price)}</span>
+                    <span className={cn("ch", item.direction)}>
+                      {marketArrow(item.direction)} {formatMarketPercent(item.changePercent)}
+                    </span>
                   </span>
+                ))
+              ) : (
+                <span className="tk">
+                  <b>VNSTOCK</b>
+                  <span className="pr">Đang đồng bộ dữ liệu...</span>
                 </span>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -87,7 +97,9 @@ export function PublicNav() {
         <div className="wrap">
           <span className="sim-badge">
             <span className="d" />
-            {marketSummary.source === "vnstock"
+            {!marketReady
+              ? "Đang đồng bộ dữ liệu demo từ Vnstock..."
+              : marketSummary.source === "vnstock"
               ? `Dữ liệu demo từ Vnstock · cập nhật ${formatMarketUpdatedAt(marketSummary.updatedAt)}`
               : "Dữ liệu mô phỏng · không phải giá thật"}
           </span>
@@ -165,15 +177,22 @@ export function PublicNav() {
       <div className="idx-strip">
         <div className="wrap p-0">
           <div className="idx-rail">
-            {marketSummary.indices.map((item) => (
-              <div className="idx" key={item.code}>
-                <span className="name">{item.name}</span>
-                <span className="val">{formatMarketNumber(item.value, 2)}</span>
-                <span className={cn("chg", item.direction)}>
-                  {marketArrow(item.direction)} {formatMarketChange(item.change, 2)} <span>{formatMarketPercent(item.changePercent)}</span>
-                </span>
+            {marketReady ? (
+              marketSummary.indices.map((item) => (
+                <div className="idx" key={item.code}>
+                  <span className="name">{item.name}</span>
+                  <span className="val">{formatMarketNumber(item.value, 2)}</span>
+                  <span className={cn("chg", item.direction)}>
+                    {marketArrow(item.direction)} {formatMarketChange(item.change, 2)} <span>{formatMarketPercent(item.changePercent)}</span>
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div className="idx">
+                <span className="name">VNSTOCK</span>
+                <span className="val">Đang đồng bộ</span>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
