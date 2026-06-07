@@ -1,6 +1,25 @@
 import { sampleArticles, type Article } from "@/data/sample-content";
 import { getSanityClient } from "./client";
 
+const localLatestInterestRateSlugs = new Set([
+  "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
+  "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
+  "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
+]);
+
+const localLatestInterestRateArticles = sampleArticles.filter((article) =>
+  localLatestInterestRateSlugs.has(article.slug),
+);
+
+function includeLocalLatestArticles(articles: Article[]): Article[] {
+  const existingSlugs = new Set(articles.map((article) => article.slug));
+
+  return [
+    ...localLatestInterestRateArticles.filter((article) => !existingSlugs.has(article.slug)),
+    ...articles,
+  ];
+}
+
 const articleProjection = `{
   title,
   "slug": slug.current,
@@ -32,7 +51,7 @@ export async function getArticles(): Promise<Article[]> {
       `*[_type == "article" && status == "published"] | order(publishedAt desc) ${articleProjection}`,
     );
 
-    return articles.length > 0 ? articles : sampleArticles;
+    return articles.length > 0 ? includeLocalLatestArticles(articles) : sampleArticles;
   } catch {
     return sampleArticles;
   }

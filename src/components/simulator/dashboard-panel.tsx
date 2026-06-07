@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { MetricCard } from "@/components/ui/metric-card";
+import { KnowledgeDashboardCard } from "@/components/app/knowledge-dashboard-card";
 import { useVirtualPortfolio } from "./use-virtual-portfolio";
 
 export function DashboardPanel() {
@@ -61,6 +62,8 @@ export function DashboardPanel() {
         />
         <MetricCard label="Mã đang giữ" value={summary.holdingsCount} helper="Số mã đang nắm giữ" />
       </div>
+
+      <KnowledgeDashboardCard />
 
       <div className="grid gap-5 xl:grid-cols-[1fr_1fr]">
         <section className="rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">

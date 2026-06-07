@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   ArrowLeftRight,
+  BookMarked,
   BookOpen,
   ClipboardList,
   LayoutDashboard,
@@ -35,6 +36,7 @@ type AppShellProps = {
 
 const navIcons: Record<string, LucideIcon> = {
   "/app/dashboard": LayoutDashboard,
+  "/app/saved": BookMarked,
   "/app/simulator": LineChart,
   "/app/portfolio": WalletCards,
   "/app/trades": ArrowLeftRight,
@@ -101,7 +103,7 @@ export function AppShell({ children }: AppShellProps) {
         <div className="side-sec">Học tập</div>
         <nav className="side-nav" aria-label="Học tập">
           {APP_NAV_ITEMS.filter((item) =>
-            ["/app/dashboard", "/app/simulator", "/articles", "/app/missions"].includes(item.href),
+            ["/app/dashboard", "/app/saved", "/app/simulator", "/articles", "/app/missions"].includes(item.href),
           ).map((item) => {
             const Icon = navIcons[item.href] ?? BookOpen;
 

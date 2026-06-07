@@ -81,9 +81,11 @@ Supabase hiện khuyến nghị dùng khóa có thể công khai cho ứng dụn
 1. Tạo một dự án Supabase.
 2. Thêm địa chỉ Supabase và khóa công khai vào `.env.local`.
 3. Chạy migration trong `supabase/migrations/20260604130000_jokingfinance_mvp_schema.sql`.
-4. Chạy dữ liệu mẫu trong `supabase/seed/seed.sql`.
-5. Bật đăng nhập bằng thư điện tử và mật khẩu.
-6. Để thử nghiệm nhanh, có thể tắt xác nhận thư điện tử trong Supabase Auth hoặc xác nhận thư của người dùng trước khi đăng nhập.
+4. Chạy migration trong `supabase/migrations/20260605125527_add_user_knowledge_progress.sql`.
+5. Chạy dữ liệu mẫu trong `supabase/seed/seed.sql`.
+6. Bật đăng nhập bằng thư điện tử và mật khẩu.
+7. Thêm URL callback trong Supabase Auth Redirect URLs: `http://localhost:3000/auth/callback` và URL production tương ứng trên Vercel.
+8. Để thử nghiệm nhanh, có thể tắt xác nhận thư điện tử trong Supabase Auth hoặc xác nhận thư của người dùng trước khi đăng nhập.
 
 Các bảng được tạo:
 
@@ -95,6 +97,7 @@ Các bảng được tạo:
 - `trade_journal`
 - `missions`
 - `user_mission_progress`
+- `user_knowledge_progress`
 - `early_access_requests`
 
 RLS được bật cho tất cả bảng công khai. Dữ liệu thuộc về người dùng được giới hạn bằng `auth.uid() = user_id`. Cổ phiếu và nhiệm vụ có thể đọc công khai. Yêu cầu đăng ký thử nghiệm có thể được gửi công khai nhưng không đọc công khai.

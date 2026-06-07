@@ -17,6 +17,8 @@ export function PublicFooter() {
           <div>
             <h5>Sản phẩm</h5>
             <ul>
+              <li><Link href="/knowledge">Thư viện kiến thức</Link></li>
+              <li><Link href="/news">Tin tức phân tích</Link></li>
               <li><Link href="/articles">Bài học</Link></li>
               <li><Link href="/missions">Nhiệm vụ</Link></li>
               <li><Link href="/simulator">Mô phỏng</Link></li>

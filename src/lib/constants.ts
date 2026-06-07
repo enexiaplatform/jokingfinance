@@ -18,6 +18,8 @@ export const MOCK_DATA_DISCLAIMER =
 
 export const PUBLIC_NAV_ITEMS = [
   { label: "Trang chủ", href: "/" },
+  { label: "Tin tức", href: "/news" },
+  { label: "Thư viện", href: "/knowledge" },
   { label: "Bài học", href: "/articles" },
   { label: "Nhiệm vụ", href: "/missions" },
   { label: "Mô phỏng", href: "/simulator" },
@@ -26,6 +28,7 @@ export const PUBLIC_NAV_ITEMS = [
 
 export const APP_NAV_ITEMS = [
   { label: "Bảng học tập", href: "/app/dashboard" },
+  { label: "Đã lưu", href: "/app/saved" },
   { label: "Mô phỏng", href: "/app/simulator" },
   { label: "Danh mục", href: "/app/portfolio" },
   { label: "Giao dịch", href: "/app/trades" },

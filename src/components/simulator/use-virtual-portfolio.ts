@@ -22,8 +22,8 @@ import type {
   TradeInput,
 } from "@/lib/simulator/types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { PORTFOLIO_STORAGE_EVENT, PORTFOLIO_STORAGE_KEY } from "@/lib/simulator/storage";
 
-const STORAGE_KEY = "jokingfinance-portfolio-v1";
 const DISPLAY_NAME_KEY = "jokingfinance-display-name";
 
 type RemoteContext = {
@@ -152,7 +152,7 @@ function mapMission(row: MissionRow): Mission {
 
 function parseStoredState() {
   try {
-    const value = localStorage.getItem(STORAGE_KEY);
+    const value = localStorage.getItem(PORTFOLIO_STORAGE_KEY);
     if (!value) return null;
 
     return JSON.parse(value) as PortfolioState;
@@ -162,7 +162,8 @@ function parseStoredState() {
 }
 
 function persistLocal(state: PortfolioState) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(state));
+  window.dispatchEvent(new Event(PORTFOLIO_STORAGE_EVENT));
 }
 
 async function fetchLiveStocks() {

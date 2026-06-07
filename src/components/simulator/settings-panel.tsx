@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { SupabaseSyncStatusCard } from "@/components/app/supabase-sync-status-card";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { useVirtualPortfolio } from "./use-virtual-portfolio";
 
@@ -46,6 +47,8 @@ export function SettingsPanel() {
           {message}
         </p>
       ) : null}
+
+      <SupabaseSyncStatusCard />
 
       <form onSubmit={handleSubmit} className="grid gap-4 rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">
         <h2 className="text-xl font-bold text-[#17201b]">Tên hiển thị</h2>

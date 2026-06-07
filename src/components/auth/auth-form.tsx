@@ -17,6 +17,17 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const isSignup = mode === "signup";
+  const initialMessage = searchParams.get("message") ?? "";
+
+  function getSafeRedirectTo() {
+    const redirectTo = searchParams.get("redirectTo") ?? "/app/dashboard";
+
+    if (!redirectTo.startsWith("/") || redirectTo.startsWith("//")) {
+      return "/app/dashboard";
+    }
+
+    return redirectTo;
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,7 +35,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     setMessage("");
 
     const supabase = createSupabaseBrowserClient();
-    const redirectTo = searchParams.get("redirectTo") ?? "/app/dashboard";
+    const redirectTo = getSafeRedirectTo();
 
     if (!supabase) {
       if (displayName) {
@@ -43,7 +54,9 @@ export function AuthForm({ mode }: AuthFormProps) {
           data: {
             display_name: displayName,
           },
-          emailRedirectTo: `${window.location.origin}/app/dashboard`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(
+            redirectTo,
+          )}`,
         },
       });
 
@@ -55,7 +68,8 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
 
       if (data.session) {
-        router.push("/app/dashboard");
+        router.push(redirectTo);
+        router.refresh();
         return;
       }
 
@@ -76,6 +90,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     }
 
     router.push(redirectTo);
+    router.refresh();
   }
 
   return (
@@ -125,9 +140,9 @@ export function AuthForm({ mode }: AuthFormProps) {
         {loading ? "Đang xử lý..." : isSignup ? "Tạo tài khoản" : "Đăng nhập"}
       </button>
 
-      {message ? (
+      {message || initialMessage ? (
         <p className="rounded-md border border-[#e2d3a7] bg-[#fff8df] p-3 text-sm leading-6 text-[#5b420b]">
-          {message}
+          {message || initialMessage}
         </p>
       ) : null}
     </form>

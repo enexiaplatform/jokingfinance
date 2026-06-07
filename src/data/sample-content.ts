@@ -34,6 +34,17 @@ export type Mission = {
   isActive: boolean;
 };
 
+export type LearningTrack = {
+  title: string;
+  slug: string;
+  description: string;
+  level: Difficulty;
+  estimatedMinutes: number;
+  outcome: string;
+  articleSlugs: string[];
+  missionSlugs: string[];
+};
+
 export const categories = [
   {
     title: "Chứng khoán nhập môn",
@@ -77,7 +88,119 @@ export const categories = [
   },
 ];
 
+export const learningTracks: LearningTrack[] = [
+  {
+    title: "Bắt đầu với chứng khoán",
+    slug: "bat-dau-voi-chung-khoan",
+    description:
+      "Nắm cổ phiếu là gì, vì sao giá thay đổi và cách viết luận điểm trước khi mua.",
+    level: "beginner",
+    estimatedMinutes: 22,
+    outcome: "Tạo được danh mục ảo đầu tiên và biết ghi lý do mua.",
+    articleSlugs: ["co-phieu-la-gi", "viet-3-dong-ly-do-truoc-khi-mua"],
+    missionSlugs: ["tao-danh-muc-ao-dau-tien", "viet-ly-do-truoc-khi-mua"],
+  },
+  {
+    title: "Đọc lãi suất như người quản lý tiền",
+    slug: "doc-lai-suat-nhu-nguoi-quan-ly-tien",
+    description:
+      "Hiểu bảng lãi suất ngân hàng, điều kiện gửi tiền và tác động lên cổ phiếu ngân hàng.",
+    level: "beginner",
+    estimatedMinutes: 21,
+    outcome: "So sánh được lãi suất theo kỳ hạn mà không chỉ đuổi theo số cao nhất.",
+    articleSlugs: [
+      "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
+      "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
+      "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
+    ],
+    missionSlugs: ["ghi-3-rui-ro-truoc-khi-mua", "review-danh-muc-sau-7-ngay"],
+  },
+  {
+    title: "Luyện kỷ luật trong mô phỏng",
+    slug: "luyen-ky-luat-trong-mo-phong",
+    description:
+      "Nhận diện FOMO, giới hạn tỷ trọng một mã và theo dõi quyết định sau vài ngày.",
+    level: "intermediate",
+    estimatedMinutes: 24,
+    outcome: "Biết kiểm tra cảm xúc và rủi ro trước khi tăng tỷ trọng danh mục.",
+    articleSlugs: ["vi-sao-nguoi-moi-de-fomo", "danh-muc-dau-tu-la-gi"],
+    missionSlugs: ["nhan-dien-giao-dich-fomo", "khong-phan-bo-qua-20-phan-tram-vao-mot-ma"],
+  },
+];
+
 export const sampleArticles: Article[] = [
+  {
+    title: "Lãi suất ngân hàng tháng 6/2026: đừng chỉ nhìn con số cao nhất",
+    slug: "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
+    summary:
+      "Bảng lãi suất đầu tháng 6/2026 cho thấy cùng là tiền gửi tiết kiệm nhưng mức lãi khác nhau rất lớn theo ngân hàng, kỳ hạn và hình thức gửi.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["lãi suất ngân hàng", "tiết kiệm", "tài chính cá nhân"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-05",
+    difficulty: "beginner",
+    readingTime: 6,
+    relatedStocks: ["VCB", "BID", "CTG", "ACB"],
+    relatedMissionSlug: "ghi-3-rui-ro-truoc-khi-mua",
+    seoTitle: "Lãi suất ngân hàng tháng 6/2026: cách đọc bảng lãi suất tiết kiệm",
+    seoDescription:
+      "Học cách đọc bảng lãi suất tiết kiệm ngân hàng tháng 6/2026 và tránh chạy theo con số cao nhất.",
+    body: [
+      "Đầu tháng 6/2026, các bảng tổng hợp lãi suất tiết kiệm cho thấy chênh lệch giữa các ngân hàng và các kỳ hạn vẫn rất rõ. Một số ngân hàng niêm yết mức cao hơn ở kỳ hạn dài, trong khi nhóm ngân hàng lớn có thể thấp hơn ở một số kỳ hạn ngắn.",
+      "Người mới thường bị hút vào dòng chữ 'lãi suất cao nhất'. Nhưng con số cao nhất thường đi kèm điều kiện: kỳ hạn dài, số tiền gửi lớn, hình thức online, khách hàng ưu tiên hoặc sản phẩm riêng. Nếu không đọc điều kiện, bạn có thể đang so sánh hai thứ không giống nhau.",
+      "Cách đọc an toàn hơn là chọn trước mục tiêu của mình: cần tiền trong 3 tháng, 6 tháng hay 12 tháng; có chấp nhận khóa tiền đến ngày đáo hạn không; và ngân hàng đó có phù hợp với mức độ an toàn, tiện lợi của bạn không.",
+      "Bài học cho JokingFinance: lãi suất không chỉ là con số. Nó là cái giá của thời gian, tính thanh khoản và niềm tin vào nơi giữ tiền.",
+    ],
+  },
+  {
+    title: "LPBank và Sacombank giảm lãi suất: người gửi tiền nên hiểu điều gì?",
+    slug: "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
+    summary:
+      "Tin điều chỉnh lãi suất không chỉ nói về một ngân hàng. Nó giúp bạn hiểu vì sao lãi suất huy động thay đổi theo nhu cầu vốn và chiến lược từng nhà băng.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["lãi suất huy động", "ngân hàng", "tiết kiệm"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-05",
+    difficulty: "beginner",
+    readingTime: 7,
+    relatedStocks: ["LPB", "STB", "VCB"],
+    relatedMissionSlug: "review-danh-muc-sau-7-ngay",
+    seoTitle: "LPBank, Sacombank giảm lãi suất: bài học cho người gửi tiết kiệm",
+    seoDescription:
+      "Giải thích vì sao ngân hàng điều chỉnh lãi suất và người gửi tiền nên đọc tin lãi suất như thế nào.",
+    body: [
+      "Ngày 04/06/2026, tin thị trường ghi nhận LPBank điều chỉnh giảm một số kỳ hạn ngắn, trong khi Sacombank cũng giảm ở nhiều kỳ hạn và mức tiền gửi. Đây là ví dụ tốt để học cách đọc tin lãi suất.",
+      "Khi một ngân hàng giảm lãi suất, điều đó không tự động có nghĩa là ngân hàng 'kém hấp dẫn' trong mọi trường hợp. Có thể ngân hàng đã đủ vốn ở một số kỳ hạn, muốn điều chỉnh cơ cấu tiền gửi, hoặc đơn giản là thay đổi chính sách huy động theo mặt bằng thị trường.",
+      "Người gửi tiền nên tách ba câu hỏi: kỳ hạn nào bị điều chỉnh, mức giảm bao nhiêu điểm phần trăm, và mình có đang gửi đúng kỳ hạn đó không. Tin lãi suất chỉ có ý nghĩa khi gắn với kế hoạch tiền mặt của bạn.",
+      "Nếu bạn cần dùng tiền trong ngắn hạn, lãi suất cao hơn một chút có thể không đáng để hy sinh khả năng rút tiền. Nếu bạn chắc chắn không dùng tiền trong 12-24 tháng, lúc đó mới nên so sánh kỳ hạn dài kỹ hơn.",
+    ],
+  },
+  {
+    title: "Lãi suất tiền gửi và cổ phiếu ngân hàng: liên quan với nhau ra sao?",
+    slug: "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
+    summary:
+      "Lãi suất huy động ảnh hưởng đến chi phí vốn của ngân hàng, nhưng không nên biến một tin lãi suất thành quyết định mua bán cổ phiếu ngay lập tức.",
+    category: "Phân tích ngành",
+    categorySlug: "phan-tich-nganh",
+    tags: ["ngân hàng", "lãi suất", "cổ phiếu ngân hàng"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-05",
+    difficulty: "intermediate",
+    readingTime: 8,
+    relatedStocks: ["VCB", "BID", "CTG", "ACB", "STB"],
+    relatedMissionSlug: "so-sanh-tang-truong-phong-thu",
+    seoTitle: "Lãi suất tiền gửi ảnh hưởng thế nào đến cổ phiếu ngân hàng?",
+    seoDescription:
+      "Bài học giải thích mối liên hệ giữa lãi suất huy động, chi phí vốn và cổ phiếu ngân hàng cho người mới.",
+    body: [
+      "Lãi suất tiền gửi là chi phí mà ngân hàng trả để huy động tiền từ người dân và doanh nghiệp. Khi lãi suất huy động tăng, chi phí vốn có thể tăng. Khi lãi suất huy động giảm, áp lực chi phí vốn có thể bớt lại, tùy từng ngân hàng.",
+      "Nhưng lợi nhuận ngân hàng không chỉ phụ thuộc vào lãi suất đầu vào. Bạn còn cần xem tăng trưởng tín dụng, biên lãi ròng, chất lượng tài sản, nợ xấu, dự phòng và khả năng thu phí dịch vụ.",
+      "Vì vậy, tin lãi suất là đầu mối để đặt câu hỏi, không phải nút mua bán. Nếu một ngân hàng giảm lãi suất huy động, hãy hỏi: ngân hàng đó có mất thị phần tiền gửi không, có cho vay được với biên lãi tốt không, và rủi ro nợ xấu đang ra sao.",
+      "Trong phần mô phỏng, bạn có thể chọn 2-3 cổ phiếu ngân hàng, ghi lại giả thuyết về lãi suất và theo dõi trong nhật ký. Mục tiêu không phải đoán đúng ngày mai, mà là học cách nối tin vĩ mô với kết quả kinh doanh.",
+    ],
+  },
   {
     title: "Cổ phiếu là gì? Giải thích cho người mới trong 5 phút",
     slug: "co-phieu-la-gi",
@@ -410,6 +533,10 @@ export const sampleMissions: Mission[] = [
 
 export function findArticle(slug: string) {
   return sampleArticles.find((article) => article.slug === slug) ?? null;
+}
+
+export function findLearningTrack(slug: string) {
+  return learningTracks.find((track) => track.slug === slug) ?? null;
 }
 
 export function findMission(slug: string) {
