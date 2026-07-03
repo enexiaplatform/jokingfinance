@@ -511,6 +511,31 @@ export const sampleArticles: Article[] = [
       "Điểm quan trọng thứ hai là phải điều chỉnh lạm phát cho mục tiêu tương lai. Nếu bạn 25 tuổi, chi tiêu hiện tại là 15 triệu/tháng và muốn tự do ở tuổi 45 (sau 20 năm), con số FIRE hôm nay là 6 tỷ đồng (theo quy tắc 33.3). Nhưng với lạm phát 4%/năm, con số thực tế bạn cần tích lũy ở tuổi 45 phải là 6 tỷ * (1.04)^20 ≈ 13.1 tỷ đồng.",
       "Đừng nản lòng trước con số lớn. Sức mạnh của lãi kép trong giai đoạn tích lũy (nhờ đầu tư đều đặn vào cổ phiếu đầu ngành có lợi suất 10-12%/năm) sẽ gánh vác phần lớn mục tiêu của bạn. Hãy sử dụng JokingFinance FIRE Tool để lập bản đồ chi tiết, theo dõi tiến độ tích lũy ảo và rèn luyện tính kỷ luật trước khi giải ngân tiền thật."
     ]
+  },
+  {
+    title: "Sức mạnh của tích lũy định kỳ DCA vs Bẫy chọn thời điểm thị trường",
+    slug: "suc-manh-cua-tich-luy-dinh-ky-dca",
+    summary: "Vì sao việc cố gắng đoán đỉnh bắt đáy thường phản tác dụng và cách chiến lược DCA giúp bạn biến biến động thị trường thành đồng minh.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["DCA", "tích lũy định kỳ", "tâm lý đầu tư", "người mới"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "beginner",
+    readingTime: 8,
+    relatedStocks: ["FPT", "HPG", "VNM"],
+    relatedMissionSlug: "thuc-hanh-gia-lap-dca-va-phan-tich-gia-von",
+    seoTitle: "Sức mạnh của tích lũy định kỳ DCA vs Định thời điểm thị trường",
+    seoDescription: "Tìm hiểu chiến lược DCA, cách bình quân giá vốn giúp giảm thiểu rủi ro tâm lý và tận dụng thị trường đi xuống để mua rẻ.",
+    body: [
+      "Một trong những bẫy tâm lý lớn nhất của người mới tham gia thị trường chứng khoán là nỗi ám ảnh phải 'đoán đúng đỉnh, bắt đúng đáy'. Họ tốn hàng giờ nhìn bảng điện xanh đỏ, lướt các hội nhóm phím hàng với hy vọng chọn đúng thời điểm vàng để giải ngân toàn bộ số tiền tiết kiệm của mình.",
+      "Tuy nhiên, các nghiên cứu dài hạn chỉ ra rằng ngay cả các chuyên gia quản lý quỹ chuyên nghiệp cũng không thể liên tục định thời điểm thị trường chính xác. Việc cố mua một lần (Lump Sum) khi thị trường đang hưng phấn cực độ dễ biến thành thảm họa 'đu đỉnh', dẫn đến những khoản lỗ nặng nề và sự suy sụp về tâm lý.",
+      "Chiến lược DCA (Dollar Cost Averaging - Tích lũy định kỳ) tiếp cận vấn đề theo một cách hoàn toàn khác: thừa nhận sự bất định của ngắn hạn và tập trung vào kỷ luật dài hạn. Thay vì đầu tư toàn bộ vốn một lần, bạn chia nhỏ nguồn vốn và giải ngân đều đặn một lượng tiền cố định (ví dụ: 3 triệu đồng) vào một ngày cố định mỗi tháng, bất kể giá cổ phiếu tăng hay giảm.",
+      "Cơ chế cốt lõi làm nên sức mạnh của DCA là 'Bình quân giá vốn'. Khi giá cổ phiếu tăng cao, số tiền cố định của bạn sẽ mua được ít cổ phiếu hơn. Nhưng khi thị trường sụt giảm mạnh, chính số tiền cố định đó lại mua được nhiều cổ phiếu hơn. Một cách tự động, bạn gom được nhiều hàng giá rẻ nhất khi đám đông đang sợ hãi bán tháo.",
+      "DCA thể hiện sức mạnh vượt trội nhất trong kịch bản thị trường suy thoái rồi phục hồi (U-Shape). Trong suốt giai đoạn thị trường lao dốc, bạn liên tục gom cổ phiếu ở mức giá chiết khấu sâu. Đến khi thị trường chỉ cần quay lại mức đỉnh cũ, danh mục của bạn đã có lãi lớn nhờ giá vốn trung bình thấp, trong khi người mua một lần ban đầu chỉ vừa về bờ.",
+      "Ngoài lợi ích tài chính, DCA là một 'liều thuốc an thần' cho tâm lý đầu tư. Bạn không còn phải dằn vặt mỗi khi thị trường giảm, vì biết rằng đó là cơ hội gom thêm nhiều cổ phiếu giá rẻ. Bạn cũng không bị FOMO khi thị trường tăng nóng, vì đã có một kế hoạch giải ngân kỷ luật được thiết lập sẵn từ trước. Đầu tư trở thành một thói quen tích lũy nhẹ nhàng như gửi tiết kiệm ngân hàng.",
+      "Để áp dụng DCA thành công, có ba nguyên tắc bạn cần tuyệt đối tuân thủ: Thứ nhất, chỉ chọn những cổ phiếu của các doanh nghiệp đầu ngành, có sức mạnh tài chính vững vàng và triển vọng tăng trưởng dài hạn vững chắc (như FPT, HPG, VCB). Thứ hai, kiên định duy trì kỷ luật đóng tiền đều đặn, không tự ý dừng lại hoặc thay đổi chiến lược khi thị trường rung lắc ngắn hạn. Thứ ba, chỉ đầu tư bằng nguồn tiền nhàn rỗi thực sự để đảm bảo bạn không bị buộc phải bán tháo danh mục trước thời hạn."
+    ]
   }
 ];
 
@@ -772,6 +797,29 @@ export const sampleMissions: Mission[] = [
       "Có ghi chép bài học hoặc suy ngẫm về tỷ lệ rút an toàn."
     ],
     relatedArticleSlug: "tu-do-tai-chinh-fire-tai-viet-nam-lo-trinh-thuc-te",
+    isActive: true,
+  },
+  {
+    title: "Thực hành giả lập DCA và phân tích giá vốn",
+    slug: "thuc-hanh-gia-lap-dca-va-phan-tich-gia-von",
+    description: "Sử dụng công cụ Tích lũy định kỳ DCA để kiểm tra sự khác biệt giữa DCA và Mua một lần trong các kịch bản thị trường khác nhau.",
+    difficulty: "beginner",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu bản chất cơ chế bình quân giá vốn và cách DCA bảo vệ tâm lý nhà đầu tư trước biến động ngắn hạn.",
+    instructions: [
+      "Mở tab Tích lũy định kỳ DCA trong hộp công cụ.",
+      "Chọn một mã cổ phiếu (ví dụ: HPG hoặc FPT) và đặt mức tích lũy định kỳ hàng tháng.",
+      "Chạy thử nghiệm ở cả kịch bản 'Tăng trưởng dài hạn' và 'Suy thoái rồi phục hồi (U-Shape)'.",
+      "So sánh tỷ lệ lợi nhuận và giá vốn trung bình của DCA so với chiến lược Mua toàn bộ ban đầu và Đu đỉnh.",
+      "Ghi nhận bài học về kịch bản nào mà DCA phát huy sức mạnh vượt trội nhất."
+    ],
+    successCriteria: [
+      "Đã chạy thử nghiệm DCA với ít nhất 2 kịch bản thị trường.",
+      "Xác định được giá vốn trung bình của DCA so với Lump Sum.",
+      "Có ghi chép bài học suy ngẫm về sức mạnh gom hàng giá rẻ của DCA khi thị trường đi xuống."
+    ],
+    relatedArticleSlug: "suc-manh-cua-tich-luy-dinh-ky-dca",
     isActive: true,
   },
 ];

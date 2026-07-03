@@ -23,8 +23,9 @@ import Link from "next/link";
 import { ValuationTool } from "./valuation-tool";
 import { BiasTool } from "./bias-tool";
 import { FireTool } from "./fire-tool";
+import { DcaTool } from "./dca-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca";
 
 type ChecklistQuestion = {
   id: number;
@@ -464,6 +465,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🔥 Hoạch định FIRE (Tự Do Tài Chính)
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("dca")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "dca"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🪙 Tích lũy định kỳ DCA
         </button>
       </div>
 
@@ -1232,8 +1244,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <ValuationTool stocks={state?.stocks || []} />
       ) : activeTab === "bias" ? (
         <BiasTool />
-      ) : (
+      ) : activeTab === "fire" ? (
         <FireTool />
+      ) : (
+        <DcaTool />
       )}
 
       <Disclaimer />
