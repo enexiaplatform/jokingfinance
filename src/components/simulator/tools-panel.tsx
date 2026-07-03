@@ -20,8 +20,10 @@ import {
   Zap
 } from "lucide-react";
 import Link from "next/link";
+import { ValuationTool } from "./valuation-tool";
+import { BiasTool } from "./bias-tool";
 
-type Tab = "checklist" | "calculator" | "allocation";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias";
 
 type ChecklistQuestion = {
   id: number;
@@ -428,6 +430,28 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🛡️ Quỹ Dự Phòng & Phân Bổ Vốn
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("valuation")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "valuation"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          💎 Định Giá Trị Nội Tại
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("bias")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "bias"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🧠 Trắc Nghiệm Tâm Lý Giao Dịch
         </button>
       </div>
 
@@ -894,7 +918,7 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
             </section>
           </div>
         </div>
-      ) : (
+      ) : activeTab === "allocation" ? (
         /* Allocation Tab */
         <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
           {/* Inputs Panel */}
@@ -1192,6 +1216,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
             </section>
           </div>
         </div>
+      ) : activeTab === "valuation" ? (
+        <ValuationTool stocks={state?.stocks || []} />
+      ) : (
+        <BiasTool />
       )}
 
       <Disclaimer />

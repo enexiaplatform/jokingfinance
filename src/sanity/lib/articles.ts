@@ -8,6 +8,8 @@ const localPriorityArticleSlugs = new Set([
   "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
   "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
   "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
+  "khi-niem-dinh-gia-pe-va-bien-an-toan",
+  "lai-kep-va-chi-phi-co-hoi",
 ]);
 
 const localPriorityArticles = sampleArticles.filter((article) =>

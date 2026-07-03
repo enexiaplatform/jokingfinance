@@ -130,6 +130,8 @@ export const knowledgePillars: KnowledgePillar[] = [
         goal: "Hiểu vì sao thời gian, tỷ suất và kỷ luật quan trọng hơn một lần thắng lớn.",
         topics: ["Lãi kép", "Lạm phát", "Chi phí cơ hội", "Tỷ suất thực", "Tái đầu tư"],
         practice: "So sánh 3 kịch bản tiết kiệm đều đặn trong 5 năm.",
+        relatedArticleSlugs: ["lai-kep-va-chi-phi-co-hoi"],
+        relatedMissionSlugs: ["review-danh-muc-sau-7-ngay"],
       },
       {
         title: "Nợ cá nhân và đòn bẩy",
@@ -288,6 +290,8 @@ export const knowledgePillars: KnowledgePillar[] = [
         goal: "Chấp nhận mình có thể sai và không trả giá quá lạc quan.",
         topics: ["Sai số ước tính", "Kịch bản tốt", "Kịch bản xấu", "Giá mua hợp lý", "Tỷ lệ kỳ vọng/rủi ro"],
         practice: "Viết 3 kịch bản cho một cổ phiếu: xấu, cơ sở, tốt.",
+        relatedArticleSlugs: ["khi-niem-dinh-gia-pe-va-bien-an-toan"],
+        relatedMissionSlugs: ["so-sanh-3-co-phieu-cung-nganh-bang-pe"],
       },
     ],
   },

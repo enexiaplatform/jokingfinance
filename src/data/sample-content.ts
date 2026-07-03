@@ -435,6 +435,57 @@ export const sampleArticles: Article[] = [
       "Sau giao dịch, hãy quay lại nhật ký để xem điều gì đúng, điều gì sai và mình có tuân thủ kế hoạch ban đầu không.",
     ],
   },
+  {
+    title: "Khái niệm Định giá P/E và Biên an toàn",
+    slug: "khi-niem-dinh-gia-pe-va-bien-an-toan",
+    summary:
+      "Tập trung vào định giá cơ bản giúp nhà đầu tư tránh bẫy tâm lý FOMO và chọn điểm mua có tỷ lệ rủi ro thấp.",
+    category: "Định giá cơ bản",
+    categorySlug: "dinh-gia-co-ban",
+    tags: ["định giá", "P/E", "biên an toàn", "giá trị nội tại"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "intermediate",
+    readingTime: 8,
+    relatedStocks: ["FPT", "VNM", "MWG"],
+    relatedMissionSlug: "so-sanh-3-co-phieu-cung-nganh-bang-pe",
+    seoTitle: "Định giá P/E và Biên an toàn trong đầu tư giá trị",
+    seoDescription:
+      "Hiểu rõ khái niệm định giá P/E, phương pháp Benjamin Graham, chiết khấu dòng tiền DCF và cách áp dụng Biên an toàn để bảo vệ vốn.",
+    body: [
+      "Đầu tư giá trị không có nghĩa là mua cổ phiếu giá rẻ nhất về mặt số tuyệt đối, mà là mua doanh nghiệp với mức giá thấp hơn đáng kể so với giá trị thực tế của nó. Phần chênh lệch đó được gọi là Biên an toàn (Margin of Safety).",
+      "Có nhiều phương pháp ước lượng giá trị nội tại của một cổ phiếu ảo hay thật. Phương pháp P/E mục tiêu nhân EPS dự phóng là cách tiếp cận phổ biến nhất vì tính trực quan. Bên cạnh đó, công thức của Benjamin Graham (với EPS và tốc độ tăng trưởng dự kiến g) mang lại góc nhìn bảo thủ hơn, nhấn mạnh việc không trả giá quá cao cho sự tăng trưởng.",
+      "Với các doanh nghiệp có dòng tiền ổn định và dễ dự báo, mô hình Chiết khấu dòng tiền (Discounted Cash Flow - DCF) là chuẩn mực vàng. DCF giả định giá trị của doanh nghiệp hôm nay bằng tổng toàn bộ dòng tiền tự do doanh nghiệp tạo ra trong tương lai, được chiết khấu về hiện tại theo một tỷ suất sinh lời kỳ vọng.",
+      "Tuy nhiên, mọi công thức định giá đều dựa trên giả định về tương lai - thứ không ai biết trước một cách chắc chắn. Nếu bạn dự báo doanh nghiệp tăng trưởng 20% mỗi năm nhưng thực tế chỉ đạt 10%, định giá của bạn sẽ bị sai lệch lớn. Đó là lý do bạn cần Biên an toàn.",
+      "Biên an toàn (thường từ 20% đến 30%) hoạt động như một bộ đệm giảm chấn. Nếu giá trị nội tại ước tính của FPT là 130.000 đồng/cổ phiếu, một biên an toàn 20% có nghĩa là bạn chỉ sẵn sàng mua nếu giá thị trường dưới 104.000 đồng. Biên an toàn bảo vệ bạn khỏi các sai số dự báo và các biến động bất ngờ của thị trường vĩ mô.",
+      "Trước khi đặt lệnh mua ảo hay thật, hãy tập sử dụng JokingFinance Valuation Tool để tính toán cả 3 kịch bản. Nếu giá thị trường hiện tại đang cao hơn nhiều so với giá trị nội tại hợp lý của cả kịch bản cơ sở, hãy kiên nhẫn đứng ngoài và chế ngự lòng tham của mình."
+    ]
+  },
+  {
+    title: "Lãi kép, kỷ luật & Tầm nhìn dài hạn",
+    slug: "lai-kep-va-chi-phi-co-hoi",
+    summary:
+      "Hiểu rõ sức mạnh của thời gian kết hợp với việc kiểm soát lạm phát lối sống và chi phí cơ hội.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["lãi kép", "chi phí cơ hội", "kỷ luật", "tài chính cá nhân"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "beginner",
+    readingTime: 6,
+    relatedStocks: [],
+    relatedMissionSlug: "review-danh-muc-sau-7-ngay",
+    seoTitle: "Lãi kép, kỷ luật & Tầm nhìn dài hạn trong đầu tư",
+    seoDescription:
+      "Tối ưu hóa lãi kép bằng cách duy trì kỷ luật tích lũy, quản trị chi phí cơ hội và bảo vệ danh mục đầu tư dài hạn.",
+    body: [
+      "Kỳ quan thứ tám của thế giới - Lãi kép - không hoạt động dựa trên những cú thắng đột biến hay lợi nhuận khổng lồ chỉ trong một đêm. Lãi kép đòi hỏi hai yếu tố cốt lõi: Tỷ suất sinh lời ổn định và Thời gian đủ dài.",
+      "Nhiều người mới tham gia thị trường với kỳ vọng nhân đôi tài khoản nhanh chóng, dẫn đến việc chấp nhận rủi ro quá lớn (như dùng margin tối đa hoặc đuổi theo các cổ phiếu đầu cơ nóng). Khi thị trường đảo chiều, họ thua lỗ lớn, cắt lỗ muộn, và làm gián đoạn hoàn toàn chu kỳ tích lũy lãi kép.",
+      "Một khía cạnh thường bị bỏ qua của lãi kép là chi phí cơ hội của việc tiêu dùng bốc đồng. Khi bạn chi tiêu 10 triệu đồng cho một món đồ không thiết yếu, chi phí thực tế không chỉ là 10 triệu đồng hôm nay, mà là giá trị tương lai của 10 triệu đồng đó nếu được đầu tư với lãi suất 8% hoặc 10% mỗi năm trong 15 năm tiếp theo.",
+      "Để lãi kép hoạt động hiệu quả, bạn cần duy trì kỷ luật tích lũy định kỳ và kiên quyết bảo vệ nguồn vốn của mình. Sử dụng JokingFinance Simulator giúp bạn làm quen với tư duy dài hạn, thử nghiệm các mô hình phân bổ tài sản khác nhau và quan sát kết quả tích lũy mà không chịu áp lực cảm xúc của tiền thật.",
+      "Hãy nhớ rằng: bảo vệ vốn quan trọng hơn kiếm lợi nhuận. Chỉ khi bạn giữ được kỷ luật cắt lỗ sớm và tránh được các cú sập sâu, sức mạnh của lãi kép mới có thể phát huy tối đa tác dụng qua nhiều năm."
+    ]
+  }
 ];
 
 export const sampleMissions: Mission[] = [
