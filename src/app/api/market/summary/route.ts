@@ -1,6 +1,6 @@
 import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
 import { getVnstockMarketSummary } from "@/lib/market-data/vnstockSummary";
-import type { MarketSummary } from "@/lib/market-data/summary";
+import { withMarketFetchTime, type MarketSummary } from "@/lib/market-data/summary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,7 +19,10 @@ export async function GET() {
 
   try {
     const provider = process.env.MARKET_DATA_SOURCE ?? "vnstock";
-    const summary = provider === "mock" ? fallbackMarketSummary : await getVnstockMarketSummary();
+    const summary =
+      provider === "mock"
+        ? withMarketFetchTime(fallbackMarketSummary)
+        : await getVnstockMarketSummary();
     cachedSummary = summary;
     cachedAt = now;
 
@@ -27,8 +30,10 @@ export async function GET() {
   } catch {
     const fallback = {
       ...fallbackMarketSummary,
-      updatedAt: new Date().toISOString(),
-      notice: "Nguon Vnstock dang loi hoac bi gioi han, dang dung du lieu mo phong.",
+      status: "failed" as const,
+      fetchedAt: new Date().toISOString(),
+      notice:
+        "Không thể tải nguồn Vnstock. Đang dùng dữ liệu minh họa gần nhất, không phải giá hiện tại.",
     };
 
     cachedSummary = fallback;

@@ -2,8 +2,10 @@ import type { MarketSummary } from "./summary";
 
 export const fallbackMarketSummary: MarketSummary = {
   source: "mock",
+  status: "demo",
   updatedAt: new Date("2026-06-05T09:45:00+07:00").toISOString(),
-  notice: "Dang hien du lieu mo phong vi nguon mien phi chua san sang.",
+  fetchedAt: new Date("2026-06-05T09:45:00+07:00").toISOString(),
+  notice: "Đang hiển thị dữ liệu minh họa, không phải giá thị trường hiện tại.",
   tickers: [
     { symbol: "FPT", price: 138500, change: 8900, changePercent: 6.87, direction: "up", exchange: "HSX" },
     { symbol: "PNJ", price: 97200, change: 5100, changePercent: 5.54, direction: "up", exchange: "HSX" },

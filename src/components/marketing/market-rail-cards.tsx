@@ -5,6 +5,8 @@ import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
 import {
   formatMarketNumber,
   formatMarketPercent,
+  marketStatusLabel,
+  marketTimestampLabel,
   marketArrow,
 } from "@/lib/market-data/format";
 import type { MarketSummary, MarketTickerItem } from "@/lib/market-data/summary";
@@ -29,7 +31,13 @@ function useMarketSummary() {
         }
       } catch {
         if (active) {
-          setMarketSummary(fallbackMarketSummary);
+          setMarketSummary({
+            ...fallbackMarketSummary,
+            status: "failed",
+            fetchedAt: new Date().toISOString(),
+            notice:
+              "Không thể tải dữ liệu thị trường. Đang dùng dữ liệu minh họa gần nhất.",
+          });
         }
       }
     }
@@ -102,7 +110,7 @@ export function MarketRailCards() {
       <div className="card">
         <div className="card-head">
           <span className="t">Mã tăng trong danh sách theo dõi</span>
-          <span className="lab">{marketSummary.source === "vnstock" ? "Vnstock" : "Mô phỏng"}</span>
+          <span className="lab">{marketStatusLabel(marketSummary.status)}</span>
         </div>
         <MoverList items={gainers} fallbackLabel="Chưa có mã tăng trong danh sách theo dõi." />
       </div>
@@ -110,7 +118,7 @@ export function MarketRailCards() {
       <div className="card">
         <div className="card-head">
           <span className="t">Mã giảm trong danh sách theo dõi</span>
-          <span className="lab">{marketSummary.source === "vnstock" ? "Vnstock" : "Mô phỏng"}</span>
+          <span className="lab">{marketStatusLabel(marketSummary.status)}</span>
         </div>
         <MoverList items={losers} fallbackLabel="Chưa có mã giảm trong danh sách theo dõi." />
       </div>
@@ -120,7 +128,8 @@ export function MarketRailCards() {
         <div className="stat-li"><span>Mã tăng giá</span><b className="up">{upCount}</b></div>
         <div className="stat-li"><span>Mã giảm giá</span><b className="down">{downCount}</b></div>
         <div className="stat-li"><span>Đứng giá</span><b className="ref">{flatCount}</b></div>
-        <div className="stat-li"><span>Nguồn dữ liệu</span><b>{marketSummary.source === "vnstock" ? "Vnstock" : "Dự phòng"}</b></div>
+        <div className="stat-li"><span>Trạng thái</span><b>{marketStatusLabel(marketSummary.status)}</b></div>
+        <div className="stat-li"><span>Thời điểm</span><b>{marketTimestampLabel(marketSummary)}</b></div>
       </div>
     </>
   );

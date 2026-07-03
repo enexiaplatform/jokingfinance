@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { getNewsBriefBySlug, newsBriefs, type NewsImpact } from "@/data/news-intelligence";
 import { formatDate } from "@/lib/format";
+import { getSiteUrl } from "@/lib/site-url";
 
 type NewsDetailPageProps = {
   params: Promise<{
@@ -49,6 +50,9 @@ export async function generateMetadata({ params }: NewsDetailPageProps) {
   return {
     title: brief ? `${brief.title} - Tin tức phân tích - JokingFinance` : "Tin tức phân tích - JokingFinance",
     description: brief?.summary,
+    alternates: {
+      canonical: new URL(`/news/${slug}`, getSiteUrl()).toString(),
+    },
   };
 }
 

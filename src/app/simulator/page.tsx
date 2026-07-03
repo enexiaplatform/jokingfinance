@@ -8,6 +8,9 @@ import { MOCK_DATA_DISCLAIMER } from "@/lib/constants";
 
 export const metadata = {
   title: "Mô phỏng - JokingFinance",
+  alternates: {
+    canonical: "/simulator",
+  },
 };
 
 export default function SimulatorPreviewPage() {

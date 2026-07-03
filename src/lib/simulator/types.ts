@@ -5,6 +5,12 @@ export type TradeSide = "buy" | "sell";
 
 export type TradeEmotion = "calm" | "curious" | "FOMO" | "confident" | "uncertain";
 
+export type ReviewInterval = 7 | 14 | 30;
+
+export type ThesisStatus = "valid" | "weakened" | "invalid" | "unsure";
+
+export type WouldRepeat = "yes" | "no" | "unsure";
+
 export type MistakeType =
   | "FOMO"
   | "Over-concentration"
@@ -38,6 +44,8 @@ export type Trade = {
   expectedHoldingPeriod: string;
   riskNote: string;
   emotion: TradeEmotion;
+  reviewAfterDays: ReviewInterval;
+  reviewDueAt: string;
   createdAt: string;
 };
 
@@ -47,6 +55,9 @@ export type JournalEntry = {
   lessonLearned: string;
   mistakeType: MistakeType;
   confidenceScore: number;
+  thesisStatus: ThesisStatus;
+  wouldRepeat: WouldRepeat;
+  reviewedAt: string;
   updatedAt: string;
 };
 
@@ -79,4 +90,5 @@ export type TradeInput = {
   expectedHoldingPeriod: string;
   riskNote: string;
   emotion: TradeEmotion;
+  reviewAfterDays: ReviewInterval;
 };

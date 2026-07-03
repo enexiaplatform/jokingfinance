@@ -1,30 +1,55 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Clock } from "lucide-react";
+import { SaveContentButton } from "@/components/app/save-content-button";
 import { PublicFooter } from "@/components/marketing/public-footer";
 import { PublicNav } from "@/components/marketing/public-nav";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { findMission } from "@/data/sample-content";
 import { formatDate, formatDifficulty } from "@/lib/format";
+import { getSiteUrl } from "@/lib/site-url";
 import { getArticleBySlug, getArticles } from "@/sanity/lib/articles";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
 };
 
+const ebookRelevantArticleSlugs = new Set([
+  "quy-trinh-dau-tu-cho-nguoi-moi",
+  "quy-du-phong-bao-nhieu-la-du-truoc-khi-dau-tu",
+  "viet-3-dong-ly-do-truoc-khi-mua",
+]);
+
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
+  const canonicalUrl = new URL(`/articles/${slug}`, getSiteUrl()).toString();
 
   return {
     title: article?.seoTitle ?? article?.title ?? "Bài học - JokingFinance",
     description: article?.seoDescription ?? article?.summary,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: article
+      ? {
+          type: "article",
+          title: article.seoTitle ?? article.title,
+          description: article.seoDescription ?? article.summary,
+          url: canonicalUrl,
+          publishedTime: article.publishedAt,
+          modifiedTime: article.lastReviewedAt ?? article.publishedAt,
+          authors: [article.author],
+        }
+      : undefined,
   };
 }
 
@@ -34,18 +59,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const articles = await getArticles();
 
   if (!article) {
-    return (
-      <>
-        <PublicNav />
-        <main className="bg-[#fffdf8] px-4 py-20 text-center">
-          <h1 className="text-3xl font-bold text-[#17201b]">Không tìm thấy bài học.</h1>
-          <ButtonLink href="/articles" className="mt-6">
-            Quay lại bài học
-          </ButtonLink>
-        </main>
-        <PublicFooter />
-      </>
-    );
+    notFound();
   }
 
   const relatedMission = findMission(article.relatedMissionSlug);
@@ -53,9 +67,54 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     .filter((item) => item.slug !== article.slug && item.categorySlug === article.categorySlug)
     .slice(0, 3);
   const plainBody = article.body.every((block) => typeof block === "string");
+  const articleUrl = new URL(`/articles/${article.slug}`, getSiteUrl()).toString();
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.summary,
+    datePublished: article.publishedAt,
+    dateModified: article.lastReviewedAt ?? article.publishedAt,
+    inLanguage: "vi-VN",
+    mainEntityOfPage: articleUrl,
+    author: {
+      "@type": "Organization",
+      name: article.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "JokingFinance",
+      url: getSiteUrl().toString(),
+    },
+  };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Trang chủ",
+        item: getSiteUrl().toString(),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Bài học",
+        item: new URL("/articles", getSiteUrl()).toString(),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.title,
+        item: articleUrl,
+      },
+    ],
+  };
 
   return (
     <>
+      <JsonLd data={[articleSchema, breadcrumbSchema]} />
       <PublicNav />
       <main className="bg-[#fffdf8]">
         <article>
@@ -75,9 +134,36 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <p className="mt-5 text-lg leading-8 text-[#43534a]">
                 {article.summary}
               </p>
-              <p className="mt-5 text-sm text-[#66736c]">
-                {article.author} · {formatDate(article.publishedAt)}
+              <div className="mt-5 flex flex-wrap gap-x-2 gap-y-1 text-sm text-[#66736c]">
+                <span>{article.author}</span>
+                <span aria-hidden="true">·</span>
+                <span>Xuất bản {formatDate(article.publishedAt)}</span>
+                {article.lastReviewedAt ? (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>Rà soát {formatDate(article.lastReviewedAt)}</span>
+                  </>
+                ) : null}
+              </div>
+              <p className="mt-3 text-sm leading-6 text-[#5b6861]">
+                Nội dung được viết cho mục đích giáo dục và rà soát theo{" "}
+                <Link
+                  href="/editorial-policy"
+                  className="font-semibold text-[#0f766e] underline-offset-4 hover:underline"
+                >
+                  nguyên tắc biên tập của JokingFinance
+                </Link>
+                .
               </p>
+              <div className="mt-6">
+                <SaveContentButton
+                  id={`article:${article.slug}`}
+                  kind="article"
+                  title={article.title}
+                  summary={article.summary}
+                  href={`/articles/${article.slug}`}
+                />
+              </div>
             </div>
           </header>
 
@@ -111,6 +197,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </p>
               <ButtonLink
                 href={relatedMission ? `/missions/${relatedMission.slug}` : "/missions"}
+                data-analytics-event="article_mission_click"
+                data-analytics-label={relatedMission?.title ?? "Danh sách nhiệm vụ"}
+                data-analytics-location={`article:${article.slug}`}
                 className="mt-5"
               >
                 Bắt đầu nhiệm vụ thực hành
@@ -134,6 +223,36 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             ) : null}
 
+            {ebookRelevantArticleSlugs.has(article.slug) ? (
+              <section className="mt-10 rounded-md border border-[#e2d3a7] bg-[#fff8df] p-5">
+                <div className="flex items-start gap-3">
+                  <BookOpenCheck
+                    className="mt-1 h-6 w-6 shrink-0 text-[#8a5a0a]"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h2 className="text-xl font-bold text-[#5b420b]">
+                      Dùng thử checklist trước khi đăng ký ebook
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-[#6e5315]">
+                      Bản đọc thử gồm bảy câu hỏi để kiểm tra mục tiêu, luận điểm, điều
+                      kiện sai và tỷ trọng trước khi chọn cổ phiếu.
+                    </p>
+                    <Link
+                      href="/ebook/sample"
+                      data-analytics-event="ebook_sample_click"
+                      data-analytics-label="Đọc checklist 7 bước"
+                      data-analytics-location={`article:${article.slug}`}
+                      className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-md bg-[#8a5a0a] px-4 text-sm font-bold text-white hover:bg-[#6b4508]"
+                    >
+                      Đọc checklist 7 bước
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
             <Disclaimer className="mt-10" />
 
             {relatedArticles.length > 0 ? (
@@ -144,6 +263,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     <Link
                       key={item.slug}
                       href={`/articles/${item.slug}`}
+                      data-analytics-event="related_article_click"
+                      data-analytics-label={item.title}
+                      data-analytics-location={`article:${article.slug}`}
                       className="rounded-md border border-[#e0e5dc] bg-white p-4 font-semibold text-[#17201b] hover:border-[#0f766e]"
                     >
                       {item.title}

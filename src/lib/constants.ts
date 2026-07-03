@@ -10,6 +10,9 @@ export const INITIAL_VIRTUAL_POINTS = 100_000_000;
 
 export const TRADE_FEE_RATE = 0.0015;
 
+export const SIMULATOR_SAFETY_CONSENT_KEY =
+  "jokingfinance-simulator-safety-consent-v1";
+
 export const EDUCATION_DISCLAIMER =
   "Nội dung này chỉ phục vụ mục đích giáo dục và mô phỏng. Đây không phải là khuyến nghị đầu tư, khuyến nghị mua, bán hoặc nắm giữ bất kỳ chứng khoán nào. Điểm ảo không có giá trị quy đổi thành tiền thật.";
 
@@ -17,19 +20,19 @@ export const MOCK_DATA_DISCLAIMER =
   "Giá và biến động trong bản demo được lấy từ Vnstock khi khả dụng; điểm ảo và giao dịch vẫn chỉ phục vụ học tập. Không dùng để ra quyết định đầu tư thật.";
 
 export const PUBLIC_NAV_ITEMS = [
-  { label: "Trang chủ", href: "/" },
   { label: "Tin tức", href: "/news" },
   { label: "Thư viện", href: "/knowledge" },
-  { label: "Bài học", href: "/articles" },
+  { label: "Tình huống", href: "/cases" },
   { label: "Nhiệm vụ", href: "/missions" },
   { label: "Mô phỏng", href: "/simulator" },
-  { label: "Gói học", href: "/pricing" },
 ];
 
 export const APP_NAV_ITEMS = [
   { label: "Bảng học tập", href: "/app/dashboard" },
   { label: "Đã lưu", href: "/app/saved" },
+  { label: "Tình huống", href: "/cases" },
   { label: "Mô phỏng", href: "/app/simulator" },
+  { label: "Công cụ", href: "/app/tools" },
   { label: "Danh mục", href: "/app/portfolio" },
   { label: "Giao dịch", href: "/app/trades" },
   { label: "Nhật ký", href: "/app/journal" },

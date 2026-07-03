@@ -1,21 +1,24 @@
 import { sampleArticles, type Article } from "@/data/sample-content";
 import { getSanityClient } from "./client";
 
-const localLatestInterestRateSlugs = new Set([
+const localPriorityArticleSlugs = new Set([
+  "quy-trinh-dau-tu-cho-nguoi-moi",
+  "quy-du-phong-bao-nhieu-la-du-truoc-khi-dau-tu",
+  "lai-suat-thuc-la-gi",
   "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
   "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
   "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
 ]);
 
-const localLatestInterestRateArticles = sampleArticles.filter((article) =>
-  localLatestInterestRateSlugs.has(article.slug),
+const localPriorityArticles = sampleArticles.filter((article) =>
+  localPriorityArticleSlugs.has(article.slug),
 );
 
 function includeLocalLatestArticles(articles: Article[]): Article[] {
   const existingSlugs = new Set(articles.map((article) => article.slug));
 
   return [
-    ...localLatestInterestRateArticles.filter((article) => !existingSlugs.has(article.slug)),
+    ...localPriorityArticles.filter((article) => !existingSlugs.has(article.slug)),
     ...articles,
   ];
 }
@@ -29,6 +32,7 @@ const articleProjection = `{
   "tags": tags[]->title,
   "author": author->name,
   publishedAt,
+  "lastReviewedAt": _updatedAt,
   difficulty,
   readingTime,
   "coverImageUrl": coverImage.asset->url,

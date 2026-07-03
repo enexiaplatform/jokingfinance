@@ -1,44 +1,75 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookMarked, BookmarkX, Newspaper } from "lucide-react";
+import {
+  ArrowRight,
+  BookMarked,
+  BookmarkX,
+  LibraryBig,
+  Newspaper,
+  Scale,
+} from "lucide-react";
 import { useSavedContent } from "@/lib/saved-content/use-saved-content";
 
 export function SavedContentPanel() {
   const { items, removeItem } = useSavedContent();
   const knowledgeItems = items.filter((item) => item.kind === "knowledge");
+  const articleItems = items.filter((item) => item.kind === "article");
+  const caseItems = items.filter((item) => item.kind === "case");
   const newsItems = items.filter((item) => item.kind === "news");
+  const groups = [
+    {
+      title: "Module kiến thức",
+      emptyText: "Chưa lưu module nào.",
+      items: knowledgeItems,
+      icon: BookMarked,
+    },
+    {
+      title: "Bài học",
+      emptyText: "Chưa lưu bài học nào.",
+      items: articleItems,
+      icon: LibraryBig,
+    },
+    {
+      title: "Tình huống thực hành",
+      emptyText: "Chưa lưu tình huống nào.",
+      items: caseItems,
+      icon: Scale,
+    },
+    {
+      title: "Brief tin tức",
+      emptyText: "Chưa lưu brief tin tức nào.",
+      items: newsItems,
+      icon: Newspaper,
+    },
+  ];
 
   return (
     <div className="grid gap-6">
       <div>
         <h1 className="text-3xl font-bold text-[#17201b]">Danh sách học đã lưu</h1>
         <p className="mt-2 max-w-3xl text-[#5b6861]">
-          Lưu module và brief tin tức cần đọc lại. Danh sách này hiện được giữ trên trình duyệt.
+          Gom module, bài học, tình huống và brief cần xem lại vào một hàng đợi học tập
+          trên trình duyệt này.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-md border border-[#d0ded3] bg-white p-4 shadow-sm">
-          <p className="text-3xl font-black text-[#0f766e]">{items.length}</p>
-          <p className="mt-1 text-sm text-[#5b6861]">Nội dung đã lưu</p>
-        </div>
-        <div className="rounded-md border border-[#d0ded3] bg-white p-4 shadow-sm">
-          <p className="text-3xl font-black text-[#0f766e]">{knowledgeItems.length}</p>
-          <p className="mt-1 text-sm text-[#5b6861]">Module kiến thức</p>
-        </div>
-        <div className="rounded-md border border-[#d0ded3] bg-white p-4 shadow-sm">
-          <p className="text-3xl font-black text-[#0f766e]">{newsItems.length}</p>
-          <p className="mt-1 text-sm text-[#5b6861]">Brief tin tức</p>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <SavedMetric label="Nội dung đã lưu" value={items.length} />
+        <SavedMetric label="Module kiến thức" value={knowledgeItems.length} />
+        <SavedMetric label="Bài học" value={articleItems.length} />
+        <SavedMetric label="Case và brief" value={caseItems.length + newsItems.length} />
       </div>
 
       {items.length === 0 ? (
         <section className="rounded-md border border-[#d0ded3] bg-white p-8 text-center shadow-sm">
           <BookMarked className="mx-auto h-8 w-8 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="mt-4 text-xl font-bold text-[#17201b]">Chưa có nội dung nào được lưu</h2>
+          <h2 className="mt-4 text-xl font-bold text-[#17201b]">
+            Chưa có nội dung nào được lưu
+          </h2>
           <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#5b6861]">
-            Mở thư viện hoặc bàn tin, chọn “Lưu để học”, nội dung sẽ xuất hiện tại đây.
+            Mở thư viện, bài học, tình huống hoặc bản tin rồi chọn “Lưu để học”. Nội dung
+            sẽ xuất hiện tại đây.
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <Link
@@ -49,32 +80,37 @@ export function SavedContentPanel() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/news"
+              href="/cases"
               className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[#d0ded3] bg-white px-4 text-sm font-bold text-[#314039] hover:border-[#0f766e]"
             >
-              Mở bàn tin
+              Mở tình huống
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </section>
       ) : (
         <div className="grid gap-6 xl:grid-cols-2">
-          <SavedGroup
-            title="Module kiến thức"
-            emptyText="Chưa lưu module nào."
-            items={knowledgeItems}
-            icon={BookMarked}
-            onRemove={removeItem}
-          />
-          <SavedGroup
-            title="Brief tin tức"
-            emptyText="Chưa lưu brief tin tức nào."
-            items={newsItems}
-            icon={Newspaper}
-            onRemove={removeItem}
-          />
+          {groups.map((group) => (
+            <SavedGroup
+              key={group.title}
+              title={group.title}
+              emptyText={group.emptyText}
+              items={group.items}
+              icon={group.icon}
+              onRemove={removeItem}
+            />
+          ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function SavedMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-md border border-[#d0ded3] bg-white p-4 shadow-sm">
+      <p className="text-3xl font-black text-[#0f766e]">{value}</p>
+      <p className="mt-1 text-sm text-[#5b6861]">{label}</p>
     </div>
   );
 }

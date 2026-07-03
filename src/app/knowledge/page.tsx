@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, CheckCircle2, Clock, Layers3, Target } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, Clock, Layers3, Scale, Target } from "lucide-react";
 import { KnowledgePillarProgress } from "@/components/marketing/knowledge-pillar-progress";
 import { PublicFooter } from "@/components/marketing/public-footer";
 import { PublicNav } from "@/components/marketing/public-nav";
@@ -19,6 +19,9 @@ export const metadata = {
   title: "Thư viện kiến thức - JokingFinance",
   description:
     "Bản đồ kiến thức tài chính, chứng khoán, danh mục, rủi ro và tâm lý đầu tư cho người mới.",
+  alternates: {
+    canonical: "/knowledge",
+  },
 };
 
 function countModules() {
@@ -297,6 +300,32 @@ export default function KnowledgePage() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="border-t border-[#e0e5dc] bg-[#17201b] px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+            <div>
+              <div className="flex items-center gap-2 text-[#6ee7b7]">
+                <Scale className="h-5 w-5" aria-hidden="true" />
+                <p className="text-sm font-bold uppercase">Từ hiểu sang làm</p>
+              </div>
+              <h2 className="mt-3 text-3xl font-black leading-tight text-white">
+                Kiểm tra kiến thức bằng một quyết định có áp lực.
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-[#cbd5ce]">
+                Tình huống thực hành đặt bạn trước dữ kiện chưa hoàn hảo, nhiều lựa chọn
+                và hệ quả khác nhau. Chọn cách xử lý trước, sau đó mới đọc debrief.
+              </p>
+            </div>
+            <ButtonLink
+              href="/cases"
+              variant="secondary"
+              className="w-full justify-between border-[#6c7c73] bg-[#233029] text-white hover:bg-[#2b3a32]"
+            >
+              Mở thư viện tình huống
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </ButtonLink>
           </div>
         </section>
 

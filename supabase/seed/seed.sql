@@ -95,3 +95,40 @@ on conflict (slug) do update set
   related_article_slug = excluded.related_article_slug,
   is_active = excluded.is_active,
   updated_at = now();
+
+insert into public.missions (
+  title, slug, description, difficulty, category, estimated_minutes,
+  objective, instructions, success_criteria, related_article_slug,
+  related_case_slug, is_active
+) values (
+  'Bình thường hóa lợi nhuận trước khi dùng P/E',
+  'binh-thuong-hoa-loi-nhuan-truoc-khi-dung-pe',
+  'Viết ba kịch bản EPS để kiểm tra một cổ phiếu P/E thấp có thực sự rẻ hay chỉ đang ở đỉnh lợi nhuận.',
+  'advanced',
+  'Định giá và chu kỳ',
+  25,
+  'Không dùng P/E trailing máy móc khi lợi nhuận doanh nghiệp biến động theo chu kỳ.',
+  'Chọn một doanh nghiệp có lợi nhuận hoặc biên lợi nhuận biến động mạnh qua các năm.
+Viết ba kịch bản EPS: xấu, cơ sở và tốt; ghi rõ giả định chính của từng kịch bản.
+Tính lại P/E hiện tại trên từng mức EPS thay vì chỉ dùng lợi nhuận 12 tháng gần nhất.
+Viết mức giá hoặc dữ kiện mới khiến bạn sẵn sàng xem xét lại quyết định.',
+  'Có đủ ba kịch bản EPS và giả định đi kèm.
+Có P/E tính lại cho ít nhất kịch bản cơ sở và xấu.
+Kết luận có nhắc tới chu kỳ, biên an toàn và điều kiện kiểm chứng.',
+  'pe-la-gi',
+  'pe-thap-o-dinh-chu-ky',
+  true
+)
+on conflict (slug) do update set
+  title = excluded.title,
+  description = excluded.description,
+  difficulty = excluded.difficulty,
+  category = excluded.category,
+  estimated_minutes = excluded.estimated_minutes,
+  objective = excluded.objective,
+  instructions = excluded.instructions,
+  success_criteria = excluded.success_criteria,
+  related_article_slug = excluded.related_article_slug,
+  related_case_slug = excluded.related_case_slug,
+  is_active = excluded.is_active,
+  updated_at = now();

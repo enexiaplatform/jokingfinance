@@ -8,6 +8,7 @@ import { PRICING_PLANS } from "@/lib/constants";
 
 export const metadata = {
   title: "Gói học - JokingFinance",
+  alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {

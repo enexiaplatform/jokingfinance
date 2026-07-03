@@ -1,5 +1,66 @@
 import { INITIAL_VIRTUAL_POINTS, TRADE_FEE_RATE } from "@/lib/constants";
-import type { Holding, PortfolioState, TradeInput } from "./types";
+import type {
+  Holding,
+  PortfolioState,
+  ReviewInterval,
+  Trade,
+  TradeInput,
+} from "./types";
+
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+export function getTradeReviewDueAt(
+  createdAt: string,
+  reviewAfterDays: ReviewInterval = 7,
+) {
+  return new Date(new Date(createdAt).getTime() + reviewAfterDays * DAY_IN_MS).toISOString();
+}
+
+export function getTradeReviewSchedule(
+  state: Pick<PortfolioState, "trades" | "journal">,
+  now = new Date(),
+) {
+  return state.trades
+    .map((trade) => {
+      const entry = state.journal.find((item) => item.tradeId === trade.id);
+      const dueAt =
+        trade.reviewDueAt ||
+        getTradeReviewDueAt(trade.createdAt, trade.reviewAfterDays || 7);
+      const daysUntil = Math.ceil(
+        (new Date(dueAt).getTime() - now.getTime()) / DAY_IN_MS,
+      );
+
+      return {
+        trade,
+        entry,
+        dueAt,
+        daysUntil,
+        status: entry?.reviewedAt
+          ? ("completed" as const)
+          : daysUntil <= 0
+            ? ("due" as const)
+            : ("upcoming" as const),
+      };
+    })
+    .sort((a, b) => {
+      const statusOrder = { due: 0, upcoming: 1, completed: 2 };
+      return (
+        statusOrder[a.status] - statusOrder[b.status] ||
+        new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime()
+      );
+    });
+}
+
+export function normalizeTradeReview(trade: Trade): Trade {
+  const reviewAfterDays = trade.reviewAfterDays || 7;
+
+  return {
+    ...trade,
+    reviewAfterDays,
+    reviewDueAt:
+      trade.reviewDueAt || getTradeReviewDueAt(trade.createdAt, reviewAfterDays),
+  };
+}
 
 export function estimateBuyCost(quantity: number, price: number) {
   const gross = quantity * price;
@@ -103,6 +164,10 @@ export function validateTradeInput(input: TradeInput) {
 
   if (!Number.isFinite(input.quantity) || input.quantity <= 0) {
     return "Số lượng phải lớn hơn 0.";
+  }
+
+  if (input.thesis.trim().length < 10) {
+    return "Hãy viết ít nhất 10 ký tự về lý do mua hoặc bán trước khi xác nhận.";
   }
 
   return "";

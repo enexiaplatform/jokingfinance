@@ -25,7 +25,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <Badge tone="neutral">{formatDifficulty(article.difficulty)}</Badge>
         </div>
         <h2 className="mt-4 text-xl font-bold leading-7 text-[#17201b]">
-          <Link href={`/articles/${article.slug}`} className="hover:text-[#0f766e]">
+          <Link
+            href={`/articles/${article.slug}`}
+            data-analytics-event="article_open_click"
+            data-analytics-label={article.title}
+            data-analytics-location="article_card_title"
+            className="hover:text-[#0f766e]"
+          >
             {article.title}
           </Link>
         </h2>
@@ -41,6 +47,9 @@ export function ArticleCard({ article }: ArticleCardProps) {
         </div>
         <Link
           href={`/articles/${article.slug}`}
+          data-analytics-event="article_open_click"
+          data-analytics-label={article.title}
+          data-analytics-location="article_card_action"
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
         >
           Đọc bài học

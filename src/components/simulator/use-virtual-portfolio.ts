@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { sampleMissions, type Mission } from "@/data/sample-content";
+import { trackEvent } from "@/lib/analytics";
 import { mockStocks } from "@/lib/market-data/mockProvider";
 import type { Stock } from "@/lib/market-data/types";
 import {
@@ -9,6 +10,8 @@ import {
   estimateBuyCost,
   estimateSellProceeds,
   getPortfolioSummary,
+  getTradeReviewDueAt,
+  normalizeTradeReview,
   updateHoldingAfterBuy,
   updateHoldingAfterSell,
   validateTradeInput,
@@ -74,6 +77,8 @@ type TradeRow = {
   expected_holding_period?: string | null;
   risk_note?: string | null;
   emotion?: Trade["emotion"] | null;
+  review_after_days?: Trade["reviewAfterDays"] | null;
+  review_due_at?: string | null;
   created_at: string;
 };
 
@@ -83,6 +88,9 @@ type JournalRow = {
   lesson_learned?: string | null;
   mistake_type?: MistakeType | null;
   confidence_score?: number | null;
+  thesis_status?: JournalEntry["thesisStatus"] | null;
+  would_repeat?: JournalEntry["wouldRepeat"] | null;
+  reviewed_at?: string | null;
   updated_at: string;
 };
 
@@ -98,6 +106,7 @@ type MissionRow = {
   instructions: string;
   success_criteria: string;
   related_article_slug?: string | null;
+  related_case_slug?: string | null;
   is_active: boolean;
 };
 
@@ -146,8 +155,35 @@ function mapMission(row: MissionRow): Mission {
     instructions: row.instructions.split("\n").filter(Boolean),
     successCriteria: row.success_criteria.split("\n").filter(Boolean),
     relatedArticleSlug: row.related_article_slug ?? undefined,
+    relatedCaseSlug: row.related_case_slug ?? undefined,
     isActive: row.is_active,
   };
+}
+
+function mergeMissionCatalog(primaryMissions: Mission[] = []) {
+  const primaryBySlug = new Map(
+    primaryMissions.map((mission) => [mission.slug, mission]),
+  );
+
+  const mergedMissions = sampleMissions.map((fallbackMission) => {
+    const primaryMission = primaryBySlug.get(fallbackMission.slug);
+    primaryBySlug.delete(fallbackMission.slug);
+
+    if (!primaryMission) {
+      return fallbackMission;
+    }
+
+    return {
+      ...fallbackMission,
+      ...primaryMission,
+      relatedArticleSlug:
+        primaryMission.relatedArticleSlug ?? fallbackMission.relatedArticleSlug,
+      relatedCaseSlug:
+        primaryMission.relatedCaseSlug ?? fallbackMission.relatedCaseSlug,
+    };
+  });
+
+  return [...mergedMissions, ...primaryBySlug.values()];
 }
 
 function parseStoredState() {
@@ -155,7 +191,18 @@ function parseStoredState() {
     const value = localStorage.getItem(PORTFOLIO_STORAGE_KEY);
     if (!value) return null;
 
-    return JSON.parse(value) as PortfolioState;
+    const storedState = JSON.parse(value) as PortfolioState;
+
+    return {
+      ...storedState,
+      trades: (storedState.trades ?? []).map(normalizeTradeReview),
+      journal: (storedState.journal ?? []).map((entry) => ({
+        ...entry,
+        thesisStatus: entry.thesisStatus ?? "unsure",
+        wouldRepeat: entry.wouldRepeat ?? "unsure",
+        reviewedAt: entry.reviewedAt ?? entry.updatedAt,
+      })),
+    };
   } catch {
     return null;
   }
@@ -187,6 +234,8 @@ function createTrade(input: TradeInput, side: "buy" | "sell", price: number) {
       ? estimateBuyCost(input.quantity, price)
       : estimateSellProceeds(input.quantity, price);
 
+  const createdAt = new Date().toISOString();
+
   return {
     id: crypto.randomUUID(),
     ticker: input.ticker,
@@ -200,7 +249,9 @@ function createTrade(input: TradeInput, side: "buy" | "sell", price: number) {
     expectedHoldingPeriod: input.expectedHoldingPeriod,
     riskNote: input.riskNote,
     emotion: input.emotion,
-    createdAt: new Date().toISOString(),
+    reviewAfterDays: input.reviewAfterDays,
+    reviewDueAt: getTradeReviewDueAt(createdAt, input.reviewAfterDays),
+    createdAt,
   } satisfies Trade;
 }
 
@@ -226,18 +277,25 @@ export function useVirtualPortfolio() {
         ...storedState,
         displayName: storedState.displayName || displayName,
         stocks: defaultStocks,
-        missions: storedState.missions.length > 0 ? storedState.missions : sampleMissions,
+        missions: mergeMissionCatalog(
+          Array.isArray(storedState.missions) ? storedState.missions : [],
+        ),
         source: liveStocks ? "vnstock" : storedState.source,
       });
     }
 
     if (!supabase) {
-      if (!storedState && liveStocks) {
-        setState((current) => ({
-          ...current,
-          stocks: liveStocks,
-          source: "vnstock",
-        }));
+      if (!storedState) {
+        const nextState: PortfolioState = {
+          ...createInitialPortfolioState(),
+          displayName,
+          stocks: defaultStocks,
+          missions: sampleMissions,
+          source: liveStocks ? "vnstock" : "demo",
+        };
+
+        persistLocal(nextState);
+        setState(nextState);
       }
       setLoading(false);
       return;
@@ -248,12 +306,17 @@ export function useVirtualPortfolio() {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      if (!storedState && liveStocks) {
-        setState((current) => ({
-          ...current,
-          stocks: liveStocks,
-          source: "vnstock",
-        }));
+      if (!storedState) {
+        const nextState: PortfolioState = {
+          ...createInitialPortfolioState(),
+          displayName,
+          stocks: defaultStocks,
+          missions: sampleMissions,
+          source: liveStocks ? "vnstock" : "demo",
+        };
+
+        persistLocal(nextState);
+        setState(nextState);
       }
       setLoading(false);
       return;
@@ -319,7 +382,7 @@ export function useVirtualPortfolio() {
     const stocks = liveStocks ?? (stockRows && stockRows.length > 0 ? (stockRows as StockRow[]).map(mapStock) : mockStocks);
     const missions =
       missionRows && missionRows.length > 0
-        ? (missionRows as MissionRow[]).map(mapMission)
+        ? mergeMissionCatalog((missionRows as MissionRow[]).map(mapMission))
         : sampleMissions;
 
     const nextState: PortfolioState = {
@@ -353,6 +416,10 @@ export function useVirtualPortfolio() {
         expectedHoldingPeriod: trade.expected_holding_period ?? "",
         riskNote: trade.risk_note ?? "",
         emotion: trade.emotion ?? "calm",
+        reviewAfterDays: trade.review_after_days ?? 7,
+        reviewDueAt:
+          trade.review_due_at ??
+          getTradeReviewDueAt(trade.created_at, trade.review_after_days ?? 7),
         createdAt: trade.created_at,
       })),
       journal: ((journalRows ?? []) as JournalRow[]).map((entry) => ({
@@ -361,6 +428,9 @@ export function useVirtualPortfolio() {
         lessonLearned: entry.lesson_learned ?? "",
         mistakeType: entry.mistake_type ?? "Other",
         confidenceScore: entry.confidence_score ?? 3,
+        thesisStatus: entry.thesis_status ?? "unsure",
+        wouldRepeat: entry.would_repeat ?? "unsure",
+        reviewedAt: entry.reviewed_at ?? entry.updated_at,
         updatedAt: entry.updated_at,
       })),
       missionProgress: ((progressRows ?? []) as MissionProgressRow[]).map((progress) => ({
@@ -423,6 +493,8 @@ export function useVirtualPortfolio() {
       expected_holding_period: trade.expectedHoldingPeriod,
       risk_note: trade.riskNote,
       emotion: trade.emotion,
+      review_after_days: trade.reviewAfterDays,
+      review_due_at: trade.reviewDueAt,
       created_at: trade.createdAt,
     });
 
@@ -456,7 +528,25 @@ export function useVirtualPortfolio() {
     (input: TradeInput) => {
       const inputError = validateTradeInput(input);
       if (inputError) {
+        trackEvent(
+          input.thesis.trim().length < 10
+            ? "missing_thesis_warning_shown"
+            : "trade_blocked_invalid_input",
+          {
+            side: "buy",
+            ticker: input.ticker,
+          },
+        );
         setMessage(inputError);
+        return;
+      }
+
+      if (input.riskNote.trim().length < 5) {
+        trackEvent("trade_blocked_missing_risk", {
+          side: "buy",
+          ticker: input.ticker,
+        });
+        setMessage("Hãy ghi rủi ro chính có thể làm luận điểm mua sai.");
         return;
       }
 
@@ -469,6 +559,10 @@ export function useVirtualPortfolio() {
 
         const estimate = estimateBuyCost(input.quantity, stock.currentPrice);
         if (estimate.net > current.cash) {
+          trackEvent("trade_blocked_insufficient_cash", {
+            ticker: input.ticker,
+            requested_value: estimate.net,
+          });
           setMessage("Tiền ảo không đủ để mua số lượng này.");
           return current;
         }
@@ -492,6 +586,24 @@ export function useVirtualPortfolio() {
 
         persistLocal(nextState);
         void syncTrade(nextState, trade);
+        trackEvent("virtual_buy_completed", {
+          ticker: stock.ticker,
+          quantity: input.quantity,
+          has_thesis: true,
+          has_risk_note: true,
+        });
+        if (!current.trades.some((item) => item.side === "buy")) {
+          trackEvent("first_virtual_buy", {
+            ticker: stock.ticker,
+          });
+        }
+        const nextSummary = getPortfolioSummary(nextState);
+        if (nextSummary.concentrationWarning) {
+          trackEvent("concentration_warning_shown", {
+            ticker: nextSummary.topHolding?.ticker,
+            weight: nextSummary.topHolding?.weight,
+          });
+        }
         setMessage(`Đã mua mô phỏng ${input.quantity} ${stock.ticker}.`);
         return nextState;
       });
@@ -503,6 +615,15 @@ export function useVirtualPortfolio() {
     (input: TradeInput) => {
       const inputError = validateTradeInput(input);
       if (inputError) {
+        trackEvent(
+          input.thesis.trim().length < 10
+            ? "missing_thesis_warning_shown"
+            : "trade_blocked_invalid_input",
+          {
+            side: "sell",
+            ticker: input.ticker,
+          },
+        );
         setMessage(inputError);
         return;
       }
@@ -512,11 +633,19 @@ export function useVirtualPortfolio() {
         const holding = current.holdings.find((item) => item.ticker === input.ticker);
 
         if (!stock || !holding) {
+          trackEvent("trade_blocked_no_holding", {
+            ticker: input.ticker,
+          });
           setMessage("Bạn chưa nắm giữ mã này.");
           return current;
         }
 
         if (input.quantity > holding.quantity) {
+          trackEvent("trade_blocked_excess_quantity", {
+            ticker: input.ticker,
+            requested_quantity: input.quantity,
+            available_quantity: holding.quantity,
+          });
           setMessage("Không thể bán nhiều hơn số lượng đang nắm giữ.");
           return current;
         }
@@ -535,6 +664,11 @@ export function useVirtualPortfolio() {
 
         persistLocal(nextState);
         void syncTrade(nextState, trade);
+        trackEvent("virtual_sell_completed", {
+          ticker: stock.ticker,
+          quantity: input.quantity,
+          has_reason: true,
+        });
         setMessage(`Đã bán mô phỏng ${input.quantity} ${stock.ticker}.`);
         return nextState;
       });
@@ -551,6 +685,11 @@ export function useVirtualPortfolio() {
       const nextState = { ...current, journal: nextJournal };
       persistLocal(nextState);
       setMessage("Đã lưu phần tự xem lại.");
+      trackEvent("decision_review_completed", {
+        trade_id: entry.tradeId,
+        thesis_status: entry.thesisStatus,
+        would_repeat: entry.wouldRepeat,
+      });
 
       const supabase = createSupabaseBrowserClient();
       const remote = remoteRef.current;
@@ -564,6 +703,9 @@ export function useVirtualPortfolio() {
             lesson_learned: entry.lessonLearned,
             mistake_type: entry.mistakeType,
             confidence_score: entry.confidenceScore,
+            thesis_status: entry.thesisStatus,
+            would_repeat: entry.wouldRepeat,
+            reviewed_at: entry.reviewedAt,
             updated_at: entry.updatedAt,
           },
           { onConflict: "trade_id" },

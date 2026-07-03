@@ -1,12 +1,11 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type ButtonLinkProps = {
+type ButtonLinkProps = Omit<ComponentProps<typeof Link>, "children" | "href"> & {
   href: string;
   children: ReactNode;
   variant?: "primary" | "secondary" | "ghost" | "danger";
-  className?: string;
 };
 
 const variants = {
@@ -25,10 +24,12 @@ export function ButtonLink({
   children,
   variant = "primary",
   className,
+  ...props
 }: ButtonLinkProps) {
   return (
     <Link
       href={href}
+      {...props}
       className={cn(
         "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition-colors",
         variants[variant],

@@ -104,4 +104,37 @@ export const knowledgePlaybooks: KnowledgePlaybook[] = [
       { title: "Tin rủi ro tập trung", href: "/news/ma-vuot-ty-trong-lon-trong-danh-muc" },
     ],
   },
+  {
+    title: "Bình thường hóa lợi nhuận trước khi dùng P/E",
+    slug: "binh-thuong-hoa-loi-nhuan-truoc-khi-dung-pe",
+    summary:
+      "Kiểm tra một cổ phiếu có P/E thấp bằng lợi nhuận qua chu kỳ thay vì mặc định lợi nhuận 12 tháng gần nhất sẽ lặp lại.",
+    useWhen:
+      "Khi doanh nghiệp vừa có lợi nhuận kỷ lục, biên lợi nhuận cao bất thường hoặc ngành đang ở pha thuận lợi.",
+    steps: [
+      "Đặt lợi nhuận hiện tại cạnh biên lợi nhuận và EPS của ít nhất 5 năm.",
+      "Xác định biến số chu kỳ chính như giá bán, giá đầu vào, công suất hoặc nhu cầu.",
+      "Viết ba kịch bản EPS: xấu, cơ sở và tốt; tính lại P/E cho từng kịch bản.",
+      "Chỉ gọi cổ phiếu là rẻ khi giá còn biên an toàn trong kịch bản cơ sở hoặc xấu.",
+    ],
+    outputs: [
+      "Một bảng ba kịch bản EPS và P/E tương ứng.",
+      "Danh sách dữ kiện cần theo dõi để nhận biết chu kỳ đổi hướng.",
+      "Một mức giá hoặc điều kiện xem xét lại thay vì kết luận mua ngay.",
+    ],
+    links: [
+      {
+        title: "P/E và kỳ vọng lợi nhuận",
+        href: "/knowledge/dinh-gia-co-ban/p-e-va-ky-vong-loi-nhuan",
+      },
+      {
+        title: "Nhiệm vụ bình thường hóa lợi nhuận",
+        href: "/missions/binh-thuong-hoa-loi-nhuan-truoc-khi-dung-pe",
+      },
+      {
+        title: "Case P/E thấp ở đỉnh chu kỳ",
+        href: "/cases/pe-thap-o-dinh-chu-ky",
+      },
+    ],
+  },
 ];

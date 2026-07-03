@@ -10,33 +10,8 @@ import { PublicFooter } from "@/components/marketing/public-footer";
 import { LandingHeroScene } from "@/components/marketing/landing-hero-scene";
 import { MarketRailCards } from "@/components/marketing/market-rail-cards";
 import { PublicNav } from "@/components/marketing/public-nav";
-
-const leadArticles = [
-  {
-    kicker: "Chỉ số · VN-Index",
-    title: "Đọc bảng chỉ số: VN-Index, HNX, UPCOM thực ra đang nói gì với bạn?",
-    level: "Người mới",
-    time: "6 phút đọc",
-  },
-  {
-    kicker: "Tâm lý · Hành vi",
-    title: "FOMO và sợ mất tiền thật: luyện cách kiểm soát cảm xúc bằng danh mục ảo",
-    level: "Trung cấp",
-    time: "9 phút đọc",
-  },
-  {
-    kicker: "Định giá · Cơ bản",
-    title: "P/E, P/B trong 5 phút: hiểu nhanh trước khi mở lệnh mô phỏng đầu tiên",
-    level: "Người mới",
-    time: "5 phút đọc",
-  },
-  {
-    kicker: "Danh mục · Phân bổ",
-    title: "Bao nhiêu mã là đủ? Cách phân bổ tỷ trọng cho người mới bắt đầu",
-    level: "Trung cấp",
-    time: "7 phút đọc",
-  },
-];
+import { formatDate, formatDifficulty } from "@/lib/format";
+import { getArticles } from "@/sanity/lib/articles";
 
 const loopSteps = [
   ["01", "Học", "Đọc bài học ngắn, ngôn ngữ đời thường, bám sát thị trường thật."],
@@ -46,7 +21,17 @@ const loopSteps = [
   ["05", "Cải thiện", "Điều chỉnh chiến lược, lặp lại, khôn hơn trước khi dùng tiền thật."],
 ];
 
-export default function Home() {
+export const metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
+export default async function Home() {
+  const articles = await getArticles();
+  const featuredArticle = articles[0];
+  const latestArticles = articles.slice(1, 5);
+
   return (
     <>
       <PublicNav />
@@ -67,38 +52,40 @@ export default function Home() {
                   </Link>
                 </div>
 
+                {featuredArticle ? (
                 <article className="lead-art">
                   <div className="art-img">
-                    <div className="ph">Ảnh minh hoạ bài học</div>
+                    <div className="ph">Bài học nổi bật</div>
                   </div>
                   <div>
-                    <span className="kicker">Cơ bản · Quản trị rủi ro</span>
+                    <span className="kicker">{featuredArticle.category}</span>
                     <h3>
-                      Vì sao viết luận điểm trước khi mua lại quan trọng hơn việc chọn đúng cổ phiếu?
+                      <Link href={`/articles/${featuredArticle.slug}`}>
+                        {featuredArticle.title}
+                      </Link>
                     </h3>
-                    <p>
-                      Một danh mục tốt bắt đầu từ kỷ luật, không phải từ may mắn. Bài học
-                      hướng dẫn bạn ghi lại lý do, thời gian nắm giữ và mức rủi ro chấp
-                      nhận được, bằng điểm ảo, trước khi quen tay với tiền thật.
-                    </p>
+                    <p>{featuredArticle.summary}</p>
                     <div className="meta">
-                      <span className="mlvl">Người mới</span>
-                      <span>8 phút đọc</span>
+                      <span className="mlvl">{formatDifficulty(featuredArticle.difficulty)}</span>
+                      <span>{featuredArticle.readingTime} phút đọc</span>
                       <span>·</span>
-                      <span>Cập nhật hôm nay</span>
+                      <span>{formatDate(featuredArticle.publishedAt)}</span>
                     </div>
                   </div>
                 </article>
+                ) : null}
 
-                {leadArticles.map((item) => (
-                  <article className="art-row" key={item.title}>
+                {latestArticles.map((article) => (
+                  <article className="art-row" key={article.slug}>
                     <div className="thumb" />
                     <div>
-                      <span className="kicker">{item.kicker}</span>
-                      <h4>{item.title}</h4>
+                      <span className="kicker">{article.category}</span>
+                      <h4>
+                        <Link href={`/articles/${article.slug}`}>{article.title}</Link>
+                      </h4>
                       <div className="meta">
-                        <span className="mlvl">{item.level}</span>
-                        <span>{item.time}</span>
+                        <span className="mlvl">{formatDifficulty(article.difficulty)}</span>
+                        <span>{article.readingTime} phút đọc</span>
                       </div>
                     </div>
                   </article>
@@ -169,7 +156,15 @@ export default function Home() {
                 dính tới tiền thật.
               </p>
               <div className="hero-cta">
-                <Link className="btn btn-coral" href="/signup">Tạo danh mục ảo miễn phí</Link>
+                <Link
+                  className="btn btn-coral"
+                  href="/signup"
+                  data-analytics-event="signup_cta_click"
+                  data-analytics-label="Tạo danh mục ảo miễn phí"
+                  data-analytics-location="home_safety"
+                >
+                  Tạo danh mục ảo miễn phí
+                </Link>
                 <Link className="btn btn-ghost border border-[#2d4036] text-[#cdd9d1]" href="/simulator">
                   Xem cách hoạt động
                 </Link>

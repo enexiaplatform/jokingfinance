@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { CheckCircle2, Clock, Target } from "lucide-react";
 import { PublicFooter } from "@/components/marketing/public-footer";
 import { PublicNav } from "@/components/marketing/public-nav";
@@ -7,6 +8,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { findMission } from "@/data/sample-content";
 import { formatDifficulty } from "@/lib/format";
+import { getSiteUrl } from "@/lib/site-url";
 
 type MissionPageProps = {
   params: Promise<{ slug: string }>;
@@ -19,6 +21,9 @@ export async function generateMetadata({ params }: MissionPageProps) {
   return {
     title: mission ? `${mission.title} - JokingFinance` : "Nhiệm vụ - JokingFinance",
     description: mission?.description,
+    alternates: {
+      canonical: new URL(`/missions/${slug}`, getSiteUrl()).toString(),
+    },
   };
 }
 
@@ -27,18 +32,7 @@ export default async function MissionPage({ params }: MissionPageProps) {
   const mission = findMission(slug);
 
   if (!mission) {
-    return (
-      <>
-        <PublicNav />
-        <main className="bg-[#fffdf8] px-4 py-20 text-center">
-          <h1 className="text-3xl font-bold text-[#17201b]">Không tìm thấy nhiệm vụ.</h1>
-          <ButtonLink href="/missions" className="mt-6">
-            Quay lại nhiệm vụ
-          </ButtonLink>
-        </main>
-        <PublicFooter />
-      </>
-    );
+    notFound();
   }
 
   return (
@@ -61,7 +55,13 @@ export default async function MissionPage({ params }: MissionPageProps) {
             <p className="mt-5 text-lg leading-8 text-[#43534a]">
               {mission.description}
             </p>
-            <ButtonLink href={`/app/missions?start=${mission.slug}`} className="mt-8">
+            <ButtonLink
+              href={`/app/missions?start=${mission.slug}`}
+              data-analytics-event="mission_start_click"
+              data-analytics-label={mission.title}
+              data-analytics-location={`mission:${mission.slug}`}
+              className="mt-8"
+            >
               Bắt đầu luyện tập
             </ButtonLink>
           </div>
@@ -114,6 +114,23 @@ export default async function MissionPage({ params }: MissionPageProps) {
                   className="mt-4 inline-flex text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
                 >
                   Đọc bài học liên quan
+                </Link>
+              </div>
+            ) : null}
+
+            {mission.relatedCaseSlug ? (
+              <div className="rounded-md border border-[#e2d3a7] bg-[#fff8df] p-5">
+                <h2 className="text-xl font-bold text-[#5b420b]">
+                  Tình huống để kiểm tra quy trình
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-[#6e5315]">
+                  Ra quyết định trước, sau đó đối chiếu cách bạn dùng dữ kiện và biên an toàn.
+                </p>
+                <Link
+                  href={`/cases/${mission.relatedCaseSlug}`}
+                  className="mt-4 inline-flex text-sm font-bold text-[#8a5a0a] hover:text-[#6b4508]"
+                >
+                  Mở tình huống liên quan
                 </Link>
               </div>
             ) : null}

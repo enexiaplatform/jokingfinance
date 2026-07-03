@@ -15,18 +15,26 @@ import {
   NotebookPen,
   Search,
   Settings,
+  Scale,
   WalletCards,
+  Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { APP_NAV_ITEMS } from "@/lib/constants";
 import { fallbackMarketSummary } from "@/lib/market-data/fallbackSummary";
 import {
+  formatPercent,
+  formatPoints,
+} from "@/lib/format";
+import {
   formatMarketNumber,
   formatMarketPercent,
-  formatMarketUpdatedAt,
+  marketStatusLabel,
+  marketTimestampLabel,
   marketArrow,
 } from "@/lib/market-data/format";
 import type { MarketSummary } from "@/lib/market-data/summary";
+import { usePortfolioShellSummary } from "@/lib/simulator/use-portfolio-shell-summary";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +45,9 @@ type AppShellProps = {
 const navIcons: Record<string, LucideIcon> = {
   "/app/dashboard": LayoutDashboard,
   "/app/saved": BookMarked,
+  "/cases": Scale,
   "/app/simulator": LineChart,
+  "/app/tools": Wrench,
   "/app/portfolio": WalletCards,
   "/app/trades": ArrowLeftRight,
   "/app/journal": NotebookPen,
@@ -47,7 +57,9 @@ const navIcons: Record<string, LucideIcon> = {
 };
 
 function pageTitle(pathname: string) {
-  const current = APP_NAV_ITEMS.find((item) => item.href === pathname);
+  const current = APP_NAV_ITEMS.find(
+    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  );
   return current?.label ?? "Bảng học tập";
 }
 
@@ -55,6 +67,7 @@ export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [marketSummary, setMarketSummary] = useState<MarketSummary>(fallbackMarketSummary);
+  const portfolioSummary = usePortfolioShellSummary();
 
   useEffect(() => {
     let active = true;
@@ -72,7 +85,13 @@ export function AppShell({ children }: AppShellProps) {
         }
       } catch {
         if (active) {
-          setMarketSummary(fallbackMarketSummary);
+          setMarketSummary({
+            ...fallbackMarketSummary,
+            status: "failed",
+            fetchedAt: new Date().toISOString(),
+            notice:
+              "Không thể tải dữ liệu thị trường. Đang dùng dữ liệu minh họa gần nhất.",
+          });
         }
       }
     }
@@ -103,7 +122,7 @@ export function AppShell({ children }: AppShellProps) {
         <div className="side-sec">Học tập</div>
         <nav className="side-nav" aria-label="Học tập">
           {APP_NAV_ITEMS.filter((item) =>
-            ["/app/dashboard", "/app/saved", "/app/simulator", "/articles", "/app/missions"].includes(item.href),
+            ["/app/dashboard", "/app/saved", "/cases", "/app/simulator", "/app/tools", "/articles", "/app/missions"].includes(item.href),
           ).map((item) => {
             const Icon = navIcons[item.href] ?? BookOpen;
 
@@ -111,7 +130,10 @@ export function AppShell({ children }: AppShellProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(pathname === item.href && "active")}
+                className={cn(
+                  (pathname === item.href || pathname.startsWith(`${item.href}/`)) &&
+                    "active",
+                )}
               >
                 <Icon aria-hidden="true" />
                 {item.label}
@@ -131,7 +153,10 @@ export function AppShell({ children }: AppShellProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(pathname === item.href && "active")}
+                className={cn(
+                  (pathname === item.href || pathname.startsWith(`${item.href}/`)) &&
+                    "active",
+                )}
               >
                 <Icon aria-hidden="true" />
                 {item.label}
@@ -143,8 +168,16 @@ export function AppShell({ children }: AppShellProps) {
         <div className="side-foot">
           <div className="side-bal">
             <div className="lab">Tổng danh mục ảo</div>
-            <div className="v">103.420.000</div>
-            <div className="s">điểm ảo · +3,42% tổng</div>
+            <div className="v">
+              {portfolioSummary
+                ? formatPoints(portfolioSummary.portfolioValue).replace(" điểm ảo", "")
+                : "Chưa có dữ liệu"}
+            </div>
+            <div className="s">
+              {portfolioSummary
+                ? `điểm ảo · ${formatPercent(portfolioSummary.pnlPercent)} tổng`
+                : "Mở mô phỏng để khởi tạo"}
+            </div>
           </div>
           <button className="btn btn-outline btn-sm w-full" type="button" onClick={signOut}>
             <LogOut className="h-4 w-4" aria-hidden="true" />
@@ -159,14 +192,21 @@ export function AppShell({ children }: AppShellProps) {
             <div>
               <h1>{pageTitle(pathname)}</h1>
               <div className="sub">
-                Dữ liệu {marketSummary.source === "vnstock" ? "Vnstock" : "dự phòng"} · cập nhật {formatMarketUpdatedAt(marketSummary.updatedAt)}
+                {marketStatusLabel(marketSummary.status)} · {marketTimestampLabel(marketSummary)}
               </div>
             </div>
             <div className="right">
-              <label className="nav-search m-0 w-[220px]">
-                <Search className="h-4 w-4 text-[var(--muted)]" aria-hidden="true" />
-                <input placeholder="Tìm mã CK..." />
-              </label>
+              <form className="nav-search m-0 w-[220px]" action="/app/simulator">
+                <button type="submit" aria-label="Mở mã trong mô phỏng">
+                  <Search className="h-4 w-4 text-[var(--muted)]" aria-hidden="true" />
+                </button>
+                <input
+                  name="ticker"
+                  aria-label="Tìm mã cổ phiếu"
+                  placeholder="Tìm mã CK..."
+                  autoComplete="off"
+                />
+              </form>
               <Link className="btn btn-primary btn-sm" href="/app/simulator">
                 <LineChart className="h-4 w-4" aria-hidden="true" />
                 Lệnh mới

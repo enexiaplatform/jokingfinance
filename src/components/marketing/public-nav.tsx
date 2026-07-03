@@ -11,8 +11,9 @@ import {
   formatMarketChange,
   formatMarketNumber,
   formatMarketPercent,
-  formatMarketUpdatedAt,
   formatTodayLabel,
+  marketStatusLabel,
+  marketTimestampLabel,
   marketArrow,
 } from "@/lib/market-data/format";
 import type { MarketSummary } from "@/lib/market-data/summary";
@@ -44,10 +45,13 @@ export function PublicNav() {
         }
       } catch {
         if (active) {
-          setMarketSummary((current) => ({
-            ...current,
-            notice: "Dang hien du lieu du phong.",
-          }));
+          setMarketSummary({
+            ...fallbackMarketSummary,
+            status: "failed",
+            fetchedAt: new Date().toISOString(),
+            notice:
+              "Không thể tải dữ liệu thị trường. Đang dùng dữ liệu minh họa gần nhất.",
+          });
           setMarketReady(true);
         }
       }
@@ -68,7 +72,7 @@ export function PublicNav() {
         <div className="ribbon-inner">
           <span className="ribbon-tag">
             <span className="dot" />
-            Thị trường · {!marketReady ? "đang đồng bộ" : marketSummary.source === "vnstock" ? "Vnstock" : "mô phỏng"}
+            Thị trường · {!marketReady ? "đang kiểm tra nguồn" : marketStatusLabel(marketSummary.status)}
           </span>
           <div className="ticker-mask">
             <div className="ticker-track">
@@ -99,9 +103,7 @@ export function PublicNav() {
             <span className="d" />
             {!marketReady
               ? "Đang đồng bộ dữ liệu demo từ Vnstock..."
-              : marketSummary.source === "vnstock"
-              ? `Dữ liệu demo từ Vnstock · cập nhật ${formatMarketUpdatedAt(marketSummary.updatedAt)}`
-              : "Dữ liệu mô phỏng · không phải giá thật"}
+              : `${marketStatusLabel(marketSummary.status)} · ${marketTimestampLabel(marketSummary)}`}
           </span>
           <div className="links">
             <span>{formatTodayLabel()}</span>
@@ -123,7 +125,11 @@ export function PublicNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={pathname === item.href ? "active" : undefined}
+                className={
+                  pathname === item.href || pathname.startsWith(`${item.href}/`)
+                    ? "active"
+                    : undefined
+                }
               >
                 {item.label}
               </Link>
@@ -131,17 +137,29 @@ export function PublicNav() {
             <Link href="/app/dashboard">Bảng học tập</Link>
           </nav>
 
-          <label className="nav-search">
-            <Search className="h-[17px] w-[17px]" aria-hidden="true" />
-            <input placeholder="Gõ mã CK hoặc tìm bài học..." />
-          </label>
+          <form className="nav-search" action="/articles">
+            <button type="submit" aria-label="Gửi tìm kiếm bài học">
+              <Search className="h-[17px] w-[17px]" aria-hidden="true" />
+            </button>
+            <input
+              name="q"
+              aria-label="Tìm bài học"
+              placeholder="Tìm bài học..."
+            />
+          </form>
 
           <div className="nav-cta">
             <Link className="btn btn-ghost btn-sm" href="/login">
               Đăng nhập
             </Link>
-            <Link className="btn btn-primary btn-sm" href="/signup">
-              Bắt đầu luyện tập
+            <Link
+              className="btn btn-primary btn-sm"
+              href="/start"
+              data-analytics-event="onboarding_start_click"
+              data-analytics-label="Bắt đầu"
+              data-analytics-location="public_nav_desktop"
+            >
+              Bắt đầu
             </Link>
           </div>
 
@@ -157,6 +175,20 @@ export function PublicNav() {
 
         <div className={cn("border-t border-[var(--line)] bg-[var(--surface)] px-4 py-3 lg:hidden", open ? "block" : "hidden")}>
           <nav className="grid gap-1" aria-label="Điều hướng công khai trên di động">
+            <form
+              action="/articles"
+              className="mb-2 flex min-h-11 items-center gap-2 rounded-md border border-[#d9ddd3] bg-white px-3"
+            >
+              <button type="submit" aria-label="Gửi tìm kiếm bài học">
+                <Search className="h-4 w-4 text-[#66736c]" aria-hidden="true" />
+              </button>
+              <input
+                name="q"
+                aria-label="Tìm bài học"
+                placeholder="Tìm bài học..."
+                className="min-w-0 flex-1 bg-transparent text-sm text-[#17201b] outline-none"
+              />
+            </form>
             {PUBLIC_NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -167,8 +199,15 @@ export function PublicNav() {
                 {item.label}
               </Link>
             ))}
-            <Link className="btn btn-primary mt-2" href="/signup" onClick={() => setOpen(false)}>
-              Bắt đầu luyện tập
+            <Link
+              className="btn btn-primary mt-2"
+              href="/start"
+              onClick={() => setOpen(false)}
+              data-analytics-event="onboarding_start_click"
+              data-analytics-label="Bắt đầu trong 15 phút"
+              data-analytics-location="public_nav_mobile"
+            >
+              Bắt đầu trong 15 phút
             </Link>
           </nav>
         </div>

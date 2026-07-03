@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { MOCK_DATA_DISCLAIMER } from "@/lib/constants";
 import { estimateBuyCost, estimateSellProceeds } from "@/lib/simulator/calculations";
-import type { TradeEmotion } from "@/lib/simulator/types";
+import type { ReviewInterval, TradeEmotion } from "@/lib/simulator/types";
 import { formatEmotion, formatPercent, formatPoints, formatTradeSide } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Disclaimer } from "@/components/ui/disclaimer";
@@ -13,14 +14,54 @@ import { useVirtualPortfolio } from "./use-virtual-portfolio";
 const emotions: TradeEmotion[] = ["calm", "curious", "FOMO", "confident", "uncertain"];
 
 export function SimulatorPanel() {
+  const searchParams = useSearchParams();
   const { state, summary, loading, message, buyStock, sellStock } = useVirtualPortfolio();
-  const [side, setSide] = useState<"buy" | "sell">("buy");
-  const [ticker, setTicker] = useState("FPT");
-  const [quantity, setQuantity] = useState(10);
-  const [thesis, setThesis] = useState("");
+  
+  const [side, setSide] = useState<"buy" | "sell">(() => {
+    const s = searchParams.get("side");
+    return s === "buy" || s === "sell" ? s : "buy";
+  });
+  const [ticker, setTicker] = useState(
+    () => searchParams.get("ticker")?.trim().toUpperCase() || "FPT",
+  );
+  const [quantity, setQuantity] = useState(() => {
+    const q = Number(searchParams.get("quantity"));
+    return q > 0 ? q : 10;
+  });
+  const [thesis, setThesis] = useState(() => searchParams.get("thesis") || "");
   const [expectedHoldingPeriod, setExpectedHoldingPeriod] = useState("1-3 tháng");
-  const [riskNote, setRiskNote] = useState("");
+  const [riskNote, setRiskNote] = useState(() => searchParams.get("riskNote") || "");
   const [emotion, setEmotion] = useState<TradeEmotion>("calm");
+  const [reviewAfterDays, setReviewAfterDays] = useState<ReviewInterval>(7);
+
+  // Sync state with query parameters during render if they change
+  const currentParamsString = searchParams.toString();
+  const [prevParamsString, setPrevParamsString] = useState(currentParamsString);
+
+  if (currentParamsString !== prevParamsString) {
+    setPrevParamsString(currentParamsString);
+    
+    const sideParam = searchParams.get("side");
+    if (sideParam === "buy" || sideParam === "sell") {
+      setSide(sideParam);
+    }
+    const tickerParam = searchParams.get("ticker");
+    if (tickerParam) {
+      setTicker(tickerParam.trim().toUpperCase());
+    }
+    const qtyParam = Number(searchParams.get("quantity"));
+    if (qtyParam > 0) {
+      setQuantity(qtyParam);
+    }
+    const thesisParam = searchParams.get("thesis");
+    if (thesisParam) {
+      setThesis(thesisParam);
+    }
+    const riskParam = searchParams.get("riskNote");
+    if (riskParam) {
+      setRiskNote(riskParam);
+    }
+  }
 
   const selectedStock = useMemo(
     () => state.stocks.find((stock) => stock.ticker === ticker) ?? state.stocks[0],
@@ -44,6 +85,7 @@ export function SimulatorPanel() {
       expectedHoldingPeriod,
       riskNote,
       emotion,
+      reviewAfterDays,
     };
 
     if (side === "buy") {
@@ -169,6 +211,8 @@ export function SimulatorPanel() {
             <textarea
               value={thesis}
               onChange={(event) => setThesis(event.target.value)}
+              required
+              minLength={10}
               rows={3}
               className="rounded-md border border-[#d9ddd3] px-3 py-2"
               placeholder="Viết luận điểm ngắn trước khi xác nhận"
@@ -190,6 +234,8 @@ export function SimulatorPanel() {
             <textarea
               value={riskNote}
               onChange={(event) => setRiskNote(event.target.value)}
+              required={side === "buy"}
+              minLength={side === "buy" ? 5 : undefined}
               rows={2}
               className="rounded-md border border-[#d9ddd3] px-3 py-2"
               placeholder="Rủi ro nào có thể làm luận điểm sai?"
@@ -209,6 +255,24 @@ export function SimulatorPanel() {
                 </option>
               ))}
             </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+            Nhắc tôi xem lại quyết định
+            <select
+              value={reviewAfterDays}
+              onChange={(event) =>
+                setReviewAfterDays(Number(event.target.value) as ReviewInterval)
+              }
+              className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3"
+            >
+              <option value={7}>Sau 7 ngày</option>
+              <option value={14}>Sau 14 ngày</option>
+              <option value={30}>Sau 30 ngày</option>
+            </select>
+            <span className="font-normal text-[#66736c]">
+              Lịch xem lại giúp kiểm tra luận điểm bằng dữ liệu, thay vì chỉ nhìn lãi/lỗ.
+            </span>
           </label>
 
           <button

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArrowRight, BookOpen, CheckCircle2, Clock, Target } from "lucide-react";
 import { ArticleCard } from "@/components/marketing/article-card";
 import { PublicFooter } from "@/components/marketing/public-footer";
@@ -14,6 +15,7 @@ import {
   learningTracks,
 } from "@/data/sample-content";
 import { formatDifficulty } from "@/lib/format";
+import { getSiteUrl } from "@/lib/site-url";
 
 type TrackPageProps = {
   params: Promise<{ slug: string }>;
@@ -30,6 +32,9 @@ export async function generateMetadata({ params }: TrackPageProps) {
   return {
     title: track ? `${track.title} - JokingFinance` : "Lộ trình học - JokingFinance",
     description: track?.description,
+    alternates: {
+      canonical: new URL(`/tracks/${slug}`, getSiteUrl()).toString(),
+    },
   };
 }
 
@@ -38,18 +43,7 @@ export default async function TrackPage({ params }: TrackPageProps) {
   const track = findLearningTrack(slug);
 
   if (!track) {
-    return (
-      <>
-        <PublicNav />
-        <main className="bg-[#fffdf8] px-4 py-20 text-center">
-          <h1 className="text-3xl font-bold text-[#17201b]">Không tìm thấy lộ trình.</h1>
-          <ButtonLink href="/articles" className="mt-6">
-            Quay lại bài học
-          </ButtonLink>
-        </main>
-        <PublicFooter />
-      </>
-    );
+    notFound();
   }
 
   const articles = track.articleSlugs

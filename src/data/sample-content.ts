@@ -9,6 +9,7 @@ export type Article = {
   tags: string[];
   author: string;
   publishedAt: string;
+  lastReviewedAt?: string;
   difficulty: Difficulty;
   readingTime: number;
   coverImageUrl?: string;
@@ -31,6 +32,7 @@ export type Mission = {
   instructions: string[];
   successCriteria: string[];
   relatedArticleSlug?: string;
+  relatedCaseSlug?: string;
   isActive: boolean;
 };
 
@@ -97,7 +99,12 @@ export const learningTracks: LearningTrack[] = [
     level: "beginner",
     estimatedMinutes: 22,
     outcome: "Tạo được danh mục ảo đầu tiên và biết ghi lý do mua.",
-    articleSlugs: ["co-phieu-la-gi", "viet-3-dong-ly-do-truoc-khi-mua"],
+    articleSlugs: [
+      "quy-trinh-dau-tu-cho-nguoi-moi",
+      "quy-du-phong-bao-nhieu-la-du-truoc-khi-dau-tu",
+      "co-phieu-la-gi",
+      "viet-3-dong-ly-do-truoc-khi-mua",
+    ],
     missionSlugs: ["tao-danh-muc-ao-dau-tien", "viet-ly-do-truoc-khi-mua"],
   },
   {
@@ -109,6 +116,7 @@ export const learningTracks: LearningTrack[] = [
     estimatedMinutes: 21,
     outcome: "So sánh được lãi suất theo kỳ hạn mà không chỉ đuổi theo số cao nhất.",
     articleSlugs: [
+      "lai-suat-thuc-la-gi",
       "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
       "lpbank-sacombank-giam-lai-suat-nguoi-gui-tien-nen-hieu-dieu-gi",
       "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
@@ -129,6 +137,117 @@ export const learningTracks: LearningTrack[] = [
 ];
 
 export const sampleArticles: Article[] = [
+  {
+    title: "Quy trình đầu tư cho người mới: 7 bước trước khi chọn cổ phiếu",
+    slug: "quy-trinh-dau-tu-cho-nguoi-moi",
+    summary:
+      "Một quy trình thực hành giúp người mới đi từ mục tiêu tài chính, quỹ dự phòng và luận điểm đến quản trị rủi ro, mô phỏng và nhật ký.",
+    category: "Chứng khoán nhập môn",
+    categorySlug: "chung-khoan-nhap-mon",
+    tags: ["người mới", "quy trình đầu tư", "quản trị rủi ro"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-11",
+    lastReviewedAt: "2026-06-11",
+    difficulty: "beginner",
+    readingTime: 9,
+    relatedStocks: [],
+    relatedMissionSlug: "tao-danh-muc-ao-dau-tien",
+    seoTitle: "Quy trình đầu tư cho người mới: 7 bước trước khi chọn cổ phiếu",
+    seoDescription:
+      "Quy trình đầu tư 7 bước cho người mới, từ quỹ dự phòng và mục tiêu đến mô phỏng, quản trị rủi ro và nhật ký quyết định.",
+    body: [
+      "Người mới thường bắt đầu bằng câu hỏi nên mua cổ phiếu nào. Một điểm bắt đầu tốt hơn là xây quy trình giúp bạn biết khi nào mình chưa nên mua, cần tìm dữ kiện gì và sẽ làm gì nếu nhận định sai.",
+      "Bước 1: xác định mục tiêu và thời gian. Khoản tiền cần dùng trong vài tháng không nên chịu cùng mức biến động với khoản tiền dành cho mục tiêu nhiều năm. Thời gian quyết định loại rủi ro bạn có thể chấp nhận.",
+      "Bước 2: bảo vệ nền tài chính cá nhân. Hãy xử lý nợ lãi cao và xây quỹ dự phòng trước khi đưa tiền vào tài sản biến động. Đầu tư không nên khiến một sự cố nhỏ buộc bạn bán tài sản vào thời điểm bất lợi.",
+      "Bước 3: hiểu thứ mình định sở hữu. Với cổ phiếu, hãy trả lời doanh nghiệp bán gì, kiếm tiền như thế nào, lợi thế và rủi ro chính nằm ở đâu. Nếu chưa giải thích được bằng ngôn ngữ đơn giản, bạn chưa cần vội định giá.",
+      "Bước 4: viết luận điểm và điều kiện sai. Ghi ba dòng: vì sao doanh nghiệp có thể tốt lên, thị trường đang kỳ vọng điều gì, và dữ kiện nào sẽ chứng minh bạn sai. Điều kiện sai quan trọng không kém lý do mua.",
+      "Bước 5: thiết kế tỷ trọng trước khi đặt lệnh. Một ý tưởng hấp dẫn vẫn có thể sai. Giới hạn tỷ trọng giúp một sai lầm không phá hỏng toàn bộ kế hoạch và buộc bạn cân nhắc rủi ro thay vì chỉ nghĩ đến lợi nhuận.",
+      "Bước 6: mô phỏng trước. Dùng danh mục ảo để luyện cách đặt lệnh, ghi cảm xúc và theo dõi giả thuyết. Mục tiêu của mô phỏng không phải khoe lãi, mà là phát hiện thói quen ra quyết định thiếu kỷ luật.",
+      "Bước 7: xem lại bằng nhật ký. Định kỳ so sánh quyết định ban đầu với dữ kiện mới. Tách kết quả do may mắn khỏi một quy trình tốt, và đừng đánh giá chất lượng quyết định chỉ bằng việc giá đang tăng hay giảm.",
+      "Quy trình không loại bỏ thua lỗ. Nó giúp bạn ra quyết định có thể giải thích, kiểm soát mức thiệt hại và học được điều gì đó sau mỗi lần đúng hoặc sai.",
+    ],
+  },
+  {
+    title: "Quỹ dự phòng bao nhiêu là đủ trước khi đầu tư?",
+    slug: "quy-du-phong-bao-nhieu-la-du-truoc-khi-dau-tu",
+    summary:
+      "Cách ước tính quỹ dự phòng theo chi phí thiết yếu, độ ổn định thu nhập và trách nhiệm tài chính thay vì áp dụng một con số cho tất cả.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["quỹ dự phòng", "người mới", "tài chính cá nhân"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-11",
+    lastReviewedAt: "2026-06-11",
+    difficulty: "beginner",
+    readingTime: 7,
+    relatedStocks: [],
+    relatedMissionSlug: "ghi-3-rui-ro-truoc-khi-mua",
+    seoTitle: "Quỹ dự phòng bao nhiêu là đủ trước khi đầu tư?",
+    seoDescription:
+      "Cách tính quỹ dự phòng dựa trên chi phí thiết yếu, thu nhập và trách nhiệm tài chính trước khi bắt đầu đầu tư.",
+    body: [
+      "Quỹ dự phòng là khoản tiền dành cho sự cố như mất thu nhập, chi phí y tế hoặc sửa chữa cần thiết. Nó không được tạo ra để tối đa hóa lợi nhuận, mà để bạn không phải vay đắt hoặc bán khoản đầu tư trong lúc bất lợi.",
+      "Mốc ba đến sáu tháng chi phí thiết yếu là điểm tham khảo phổ biến, không phải công thức bắt buộc. Người có thu nhập ổn định, ít người phụ thuộc và bảo hiểm phù hợp có thể cần vùng đệm khác người làm nghề tự do hoặc đang gánh nhiều trách nhiệm gia đình.",
+      "Hãy bắt đầu bằng chi phí thiết yếu mỗi tháng: nhà ở, ăn uống cơ bản, điện nước, đi lại, bảo hiểm, học phí bắt buộc và khoản trả nợ tối thiểu. Không dùng tổng chi tiêu có cả du lịch, mua sắm và giải trí để tính một cách máy móc.",
+      "Sau đó đánh giá độ ổn định thu nhập. Nếu thu nhập biến động mạnh, ngành nghề có chu kỳ hoặc chỉ có một nguồn thu, bạn nên cân nhắc vùng đệm dài hơn. Nếu gia đình có hai nguồn thu độc lập, rủi ro gián đoạn đồng thời có thể thấp hơn.",
+      "Quỹ dự phòng cần thanh khoản cao và ít biến động. Một tài sản có thể bán được không có nghĩa là nó phù hợp làm quỹ dự phòng, vì giá có thể giảm đúng lúc bạn cần tiền. Tài khoản thanh toán hoặc tiền gửi kỳ hạn ngắn thường dễ lập kế hoạch hơn.",
+      "Bạn không nhất thiết phải chờ quỹ đạt mức hoàn hảo mới học đầu tư. Có thể học, đọc và dùng mô phỏng ngay; còn tiền thật nên đi sau một nền tài chính đủ vững. Đây là cách tách việc học khỏi áp lực phải kiếm lợi nhuận sớm.",
+      "Rà soát quỹ khi chi phí sống, công việc hoặc trách nhiệm gia đình thay đổi. Con số phù hợp hôm nay có thể không còn đủ sau khi chuyển nhà, có con hoặc chuyển sang nguồn thu ít ổn định hơn.",
+    ],
+  },
+  {
+    title: "Bức tranh dòng tiền cá nhân (Chặng 1)",
+    slug: "buc-tranh-dong-tien-ca-nhan",
+    summary:
+      "Hiểu rõ cấu trúc dòng tiền đi vào, đi ra và cách tối ưu hóa tích lũy trước khi nghĩ đến việc dùng tiền thật để đầu tư cổ phiếu.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["dòng tiền", "tài chính cá nhân", "quản lý tài sản"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "beginner",
+    readingTime: 6,
+    relatedStocks: [],
+    relatedMissionSlug: "tao-danh-muc-ao-tien",
+    seoTitle: "Bức tranh dòng tiền cá nhân và phân bổ vốn JokingFinance",
+    seoDescription:
+      "Từng bước xây dựng dòng tiền cá nhân lành mạnh, thiết lập quỹ khẩn cấp và phân bổ tích lũy thông minh.",
+    body: [
+      "Kiến thức về đầu tư cổ phiếu sẽ vô nghĩa nếu bạn không kiểm soát được dòng tiền cá nhân của mình. Một dòng tiền âm hoặc không ổn định sẽ liên tục đặt bạn vào tình thế phải rút tiền đầu tư vào những thời điểm tệ nhất.",
+      "Dòng tiền cá nhân gồm ba phần chính: Dòng tiền vào (Thu nhập chủ động & thụ động), Dòng tiền ra (Chi phí thiết yếu & không thiết yếu) và Phần thặng dư tích lũy. Mục tiêu đầu tiên không phải là làm giàu nhanh, mà là tối ưu hóa phần thặng dư tích lũy này.",
+      "Rất nhiều người mới mắc sai lầm khi dồn toàn bộ thặng dư tháng đầu tiên vào tài khoản chứng khoán tiền thật. Khi xe hỏng, đau ốm hoặc mất việc, họ buộc phải bán cổ phiếu lỗ để lấy tiền mặt trang trải. Họ gọi đó là 'xui xẻo', nhưng thực chất đó là lỗi thiết kế dòng tiền.",
+      "Quy trình phân bổ vốn chuẩn mực bắt đầu bằng việc xây dựng một lá chắn vững chắc - Quỹ dự phòng khẩn cấp từ 6 đến 12 tháng chi phí thiết yếu. Khi lá chắn này chưa đầy, 70-80% thặng dư nên được phân bổ vào các tài sản thanh khoản cao, an toàn như gửi tiết kiệm ngắn hạn.",
+      "Trong giai đoạn xây lá chắn này, bạn hoàn toàn có thể tích lũy kinh nghiệm chiến trường bằng cách sử dụng các công cụ mô phỏng điểm ảo như JokingFinance. Trải nghiệm cảm giác thị trường lên xuống bằng điểm ảo giúp bạn làm quen với nhịp đập của bảng điện mà không phải đánh cược bằng tiền sinh hoạt.",
+      "Khi quỹ dự phòng đã đầy, bạn mới nên bắt đầu giải ngân tiền thật vào cổ phiếu dài hạn với tỷ lệ 30-50% thặng dư mỗi tháng. Nguồn vốn này là nguồn vốn nhàn rỗi thực sự, cho phép bạn nắm giữ cổ phiếu qua các chu kỳ biến động lớn mà không bị áp lực buộc phải bán.",
+    ],
+  },
+  {
+    title: "Lãi suất thực là gì? Cách nhìn lợi nhuận sau lạm phát",
+    slug: "lai-suat-thuc-la-gi",
+    summary:
+      "Lãi suất danh nghĩa cho biết tiền tăng bao nhiêu; lãi suất thực giúp ước tính sức mua tăng hay giảm sau khi tính đến lạm phát.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["lãi suất thực", "lạm phát", "tiết kiệm"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-06-11",
+    lastReviewedAt: "2026-06-11",
+    difficulty: "beginner",
+    readingTime: 6,
+    relatedStocks: [],
+    relatedMissionSlug: "review-danh-muc-sau-7-ngay",
+    seoTitle: "Lãi suất thực là gì? Cách tính lợi nhuận sau lạm phát",
+    seoDescription:
+      "Hiểu lãi suất thực, công thức ước tính sau lạm phát và cách dùng khi so sánh tiết kiệm với các mục tiêu tài chính.",
+    body: [
+      "Lãi suất danh nghĩa là con số ngân hàng hoặc sản phẩm tài chính công bố. Lãi suất thực cố gắng trả lời một câu hỏi khác: sau khi giá cả tăng lên, sức mua của khoản tiền tăng được bao nhiêu.",
+      "Cách ước tính nhanh là lấy lãi suất danh nghĩa trừ tỷ lệ lạm phát. Ví dụ, lãi suất 6% và lạm phát 4% cho lãi suất thực xấp xỉ 2%. Đây là phép tính gần đúng, phù hợp để hình dung chứ không thay thế tính toán chi tiết.",
+      "Công thức chính xác hơn là lấy một cộng lãi suất danh nghĩa, chia cho một cộng tỷ lệ lạm phát, rồi trừ một. Khi các tỷ lệ không quá lớn, kết quả thường gần với phép trừ đơn giản.",
+      "Lãi suất thực dương nghĩa là sức mua có khả năng tăng; lãi suất thực âm nghĩa là tiền vẫn tăng về số lượng nhưng có thể mua được ít hơn. Tuy vậy, lạm phát cá nhân của bạn có thể khác chỉ số chung vì mỗi gia đình có cơ cấu chi tiêu khác nhau.",
+      "Khi so sánh các kỳ hạn tiết kiệm, đừng chỉ nhìn lãi suất. Hãy xem thuế nếu có, khả năng rút trước hạn, nhu cầu dùng tiền và mức lạm phát kỳ vọng. Một mức lãi cao hơn nhưng khóa tiền quá lâu có thể không phù hợp với mục tiêu.",
+      "Lãi suất thực cũng không tự động cho biết nên mua cổ phiếu hay gửi tiết kiệm. Hai lựa chọn có mức biến động, thời gian và mục đích khác nhau. Hãy dùng nó như một dữ kiện trong kế hoạch, không phải tín hiệu mua bán.",
+    ],
+  },
   {
     title: "Lãi suất ngân hàng tháng 6/2026: đừng chỉ nhìn con số cao nhất",
     slug: "lai-suat-ngan-hang-thang-6-2026-dung-chi-nhin-con-so-cao-nhat",
@@ -527,6 +646,31 @@ export const sampleMissions: Mission[] = [
       "Xác định được mã có tỷ trọng lớn nhất.",
       "Có phần tự xem lại nếu tỷ trọng vượt 30%.",
     ],
+    isActive: true,
+  },
+  {
+    title: "Bình thường hóa lợi nhuận trước khi dùng P/E",
+    slug: "binh-thuong-hoa-loi-nhuan-truoc-khi-dung-pe",
+    description:
+      "Viết ba kịch bản EPS để kiểm tra một cổ phiếu P/E thấp có thực sự rẻ hay chỉ đang ở đỉnh lợi nhuận.",
+    difficulty: "advanced",
+    category: "Định giá và chu kỳ",
+    estimatedMinutes: 25,
+    objective:
+      "Không dùng P/E trailing máy móc khi lợi nhuận doanh nghiệp biến động theo chu kỳ.",
+    instructions: [
+      "Chọn một doanh nghiệp có lợi nhuận hoặc biên lợi nhuận biến động mạnh qua các năm.",
+      "Viết ba kịch bản EPS: xấu, cơ sở và tốt; ghi rõ giả định chính của từng kịch bản.",
+      "Tính lại P/E hiện tại trên từng mức EPS thay vì chỉ dùng lợi nhuận 12 tháng gần nhất.",
+      "Viết mức giá hoặc dữ kiện mới khiến bạn sẵn sàng xem xét lại quyết định.",
+    ],
+    successCriteria: [
+      "Có đủ ba kịch bản EPS và giả định đi kèm.",
+      "Có P/E tính lại cho ít nhất kịch bản cơ sở và xấu.",
+      "Kết luận có nhắc tới chu kỳ, biên an toàn và điều kiện kiểm chứng.",
+    ],
+    relatedArticleSlug: "pe-la-gi",
+    relatedCaseSlug: "pe-thap-o-dinh-chu-ky",
     isActive: true,
   },
 ];

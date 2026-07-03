@@ -1,4 +1,8 @@
-import type { MarketDirection } from "./summary";
+import type {
+  MarketDataStatus,
+  MarketDirection,
+  MarketSummary,
+} from "./summary";
 
 export function formatMarketNumber(value: number, maximumFractionDigits = 0) {
   return new Intl.NumberFormat("vi-VN", {
@@ -30,11 +34,41 @@ export function marketArrow(direction: MarketDirection) {
 }
 
 export function formatMarketUpdatedAt(value: string) {
-  return new Intl.DateTimeFormat("vi-VN", {
+  const parts = new Intl.DateTimeFormat("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    hourCycle: "h23",
     timeZone: "Asia/Ho_Chi_Minh",
-  }).format(new Date(value));
+  })
+    .formatToParts(new Date(value))
+    .reduce<Record<string, string>>((result, part) => {
+      if (part.type !== "literal") {
+        result[part.type] = part.value;
+      }
+      return result;
+    }, {});
+
+  return `${parts.day}/${parts.month}/${parts.year} ${parts.hour}:${parts.minute}`;
+}
+
+export function marketStatusLabel(status: MarketDataStatus) {
+  if (status === "delayed") {
+    return "Dữ liệu có thể trễ";
+  }
+
+  if (status === "failed") {
+    return "Nguồn lỗi · dữ liệu minh họa";
+  }
+
+  return "Dữ liệu minh họa";
+}
+
+export function marketTimestampLabel(summary: MarketSummary) {
+  const prefix = summary.status === "delayed" ? "Tải lúc" : "Mốc dữ liệu";
+  return `${prefix} ${formatMarketUpdatedAt(summary.updatedAt)}`;
 }
 
 export function formatTodayLabel() {

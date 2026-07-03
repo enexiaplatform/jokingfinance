@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, ClipboardList, NotebookPen } from "lucide-react";
+import { BookOpen, CalendarClock, ClipboardList, NotebookPen } from "lucide-react";
 import { sampleArticles } from "@/data/sample-content";
 import { DISCIPLINE_REMINDERS } from "@/lib/constants";
 import { formatPercent, formatPoints, formatTradeSide } from "@/lib/format";
+import { getTradeReviewSchedule } from "@/lib/simulator/calculations";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { MetricCard } from "@/components/ui/metric-card";
 import { KnowledgeDashboardCard } from "@/components/app/knowledge-dashboard-card";
+import { PracticeCaseDashboardCard } from "@/components/app/practice-case-dashboard-card";
 import { useVirtualPortfolio } from "./use-virtual-portfolio";
 
 export function DashboardPanel() {
@@ -20,6 +22,9 @@ export function DashboardPanel() {
     state.missions.find((mission) => mission.slug === activeProgress?.missionSlug) ??
     state.missions[0];
   const reminder = DISCIPLINE_REMINDERS[new Date().getDay() % DISCIPLINE_REMINDERS.length];
+  const reviewSchedule = getTradeReviewSchedule(state);
+  const dueReviews = reviewSchedule.filter((item) => item.status === "due");
+  const nextReview = reviewSchedule.find((item) => item.status === "upcoming");
 
   if (loading) {
     return <div className="rounded-md border border-[#d9ddd3] bg-white p-6">Đang tải tổng quan...</div>;
@@ -63,7 +68,31 @@ export function DashboardPanel() {
         <MetricCard label="Mã đang giữ" value={summary.holdingsCount} helper="Số mã đang nắm giữ" />
       </div>
 
-      <KnowledgeDashboardCard />
+      <div className="grid gap-5 xl:grid-cols-2">
+        <KnowledgeDashboardCard />
+        <PracticeCaseDashboardCard />
+      </div>
+
+      <section className="rounded-md border border-[#b8d8d1] bg-[#f1faf7] p-5 shadow-sm">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <div className="flex items-center gap-2">
+              <CalendarClock className="h-5 w-5 text-[#0f766e]" aria-hidden="true" />
+              <h2 className="text-xl font-bold text-[#17201b]">Xem lại quyết định</h2>
+            </div>
+            <p className="mt-2 text-sm leading-6 text-[#4c5d54]">
+              {dueReviews.length > 0
+                ? `${dueReviews.length} quyết định đã đến hạn. Hãy kiểm tra lại luận điểm trước khi nhìn vào lãi/lỗ.`
+                : nextReview
+                  ? `Chưa có việc quá hạn. Lần xem lại tiếp theo còn ${nextReview.daysUntil} ngày.`
+                  : "Giao dịch mô phỏng đầu tiên sẽ tạo lịch xem lại sau 7, 14 hoặc 30 ngày."}
+            </p>
+          </div>
+          <ButtonLink href="/app/journal" variant={dueReviews.length > 0 ? "primary" : "secondary"}>
+            {dueReviews.length > 0 ? "Xem việc đến hạn" : "Mở nhật ký"}
+          </ButtonLink>
+        </div>
+      </section>
 
       <div className="grid gap-5 xl:grid-cols-[1fr_1fr]">
         <section className="rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">

@@ -1,11 +1,17 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import type { MistakeType } from "@/lib/simulator/types";
+import { getTradeReviewSchedule } from "@/lib/simulator/calculations";
+import type {
+  MistakeType,
+  ThesisStatus,
+  WouldRepeat,
+} from "@/lib/simulator/types";
 import { formatDate, formatEmotion, formatMistakeType, formatTradeSide } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { useVirtualPortfolio } from "./use-virtual-portfolio";
+import { BehavioralDiagnostics } from "./behavioral-diagnostics";
 
 const mistakeTypes: MistakeType[] = [
   "FOMO",
@@ -20,11 +26,18 @@ const mistakeTypes: MistakeType[] = [
 
 export function JournalPanel() {
   const { state, loading, message, updateJournal } = useVirtualPortfolio();
+  const [activeTab, setActiveTab] = useState<"journal" | "diagnostics">("journal");
   const [selectedTradeId, setSelectedTradeId] = useState("");
   const [tickerFilter, setTickerFilter] = useState("");
   const [emotionFilter, setEmotionFilter] = useState("");
   const [mistakeFilter, setMistakeFilter] = useState("");
-  const selectedTrade = state.trades.find((trade) => trade.id === selectedTradeId) ?? state.trades[0];
+  const [reviewFilter, setReviewFilter] = useState("due");
+  const reviewSchedule = useMemo(() => getTradeReviewSchedule(state), [state]);
+  const reviewByTradeId = useMemo(
+    () => new Map(reviewSchedule.map((item) => [item.trade.id, item])),
+    [reviewSchedule],
+  );
+  const selectedTrade = state.trades.find((trade) => trade.id === selectedTradeId);
   const existingEntry = selectedTrade
     ? state.journal.find((entry) => entry.tradeId === selectedTrade.id)
     : undefined;
@@ -32,6 +45,8 @@ export function JournalPanel() {
   const [lessonLearned, setLessonLearned] = useState("");
   const [mistakeType, setMistakeType] = useState<MistakeType>("Other");
   const [confidenceScore, setConfidenceScore] = useState(3);
+  const [thesisStatus, setThesisStatus] = useState<ThesisStatus>("unsure");
+  const [wouldRepeat, setWouldRepeat] = useState<WouldRepeat>("unsure");
 
   const filteredTrades = useMemo(() => {
     return state.trades.filter((trade) => {
@@ -39,9 +54,20 @@ export function JournalPanel() {
       const matchesTicker = tickerFilter ? trade.ticker === tickerFilter : true;
       const matchesEmotion = emotionFilter ? trade.emotion === emotionFilter : true;
       const matchesMistake = mistakeFilter ? entry?.mistakeType === mistakeFilter : true;
-      return matchesTicker && matchesEmotion && matchesMistake;
+      const reviewItem = reviewByTradeId.get(trade.id);
+      const matchesReview =
+        reviewFilter === "all" ? true : reviewItem?.status === reviewFilter;
+      return matchesTicker && matchesEmotion && matchesMistake && matchesReview;
     });
-  }, [emotionFilter, mistakeFilter, state.journal, state.trades, tickerFilter]);
+  }, [
+    emotionFilter,
+    mistakeFilter,
+    reviewFilter,
+    reviewByTradeId,
+    state.journal,
+    state.trades,
+    tickerFilter,
+  ]);
 
   function loadEntry(tradeId: string) {
     const trade = state.trades.find((item) => item.id === tradeId);
@@ -54,6 +80,8 @@ export function JournalPanel() {
     setLessonLearned(entry?.lessonLearned ?? "");
     setMistakeType(entry?.mistakeType ?? "Other");
     setConfidenceScore(entry?.confidenceScore ?? 3);
+    setThesisStatus(entry?.thesisStatus ?? "unsure");
+    setWouldRepeat(entry?.wouldRepeat ?? "unsure");
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -66,6 +94,9 @@ export function JournalPanel() {
       lessonLearned,
       mistakeType,
       confidenceScore,
+      thesisStatus,
+      wouldRepeat,
+      reviewedAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
   }
@@ -81,158 +112,240 @@ export function JournalPanel() {
         <p className="mt-2 text-[#5b6861]">Ghi phần tự xem lại sau giao dịch để biến quyết định thành kinh nghiệm.</p>
       </div>
 
+      {/* Tab Navigation */}
+      <div className="flex border-b border-[#e0e5dc] gap-2">
+        <button
+          type="button"
+          onClick={() => setActiveTab("journal")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all ${
+            activeTab === "journal"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          📝 Ghi nhật ký & Tự xem lại
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("diagnostics")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all ${
+            activeTab === "diagnostics"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          📊 Chẩn đoán hành vi & Khuyến nghị
+        </button>
+      </div>
+
       {message ? (
         <p className="rounded-md border border-[#d9ddd3] bg-white p-3 text-sm text-[#4c5d54]">
           {message}
         </p>
       ) : null}
 
-      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">
-          <h2 className="text-xl font-bold text-[#17201b]">Bộ lọc</h2>
-          <div className="mt-4 grid gap-3 md:grid-cols-3 xl:grid-cols-1">
-            <select
-              value={tickerFilter}
-              onChange={(event) => setTickerFilter(event.target.value)}
-              className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
-            >
-              <option value="">Tất cả mã</option>
-              {[...new Set(state.trades.map((trade) => trade.ticker))].map((ticker) => (
-                <option key={ticker} value={ticker}>
-                  {ticker}
-                </option>
-              ))}
-            </select>
-            <select
-              value={emotionFilter}
-              onChange={(event) => setEmotionFilter(event.target.value)}
-              className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
-            >
-              <option value="">Tất cả cảm xúc</option>
-              {[...new Set(state.trades.map((trade) => trade.emotion))].map((emotion) => (
-                <option key={emotion} value={emotion}>
-                  {formatEmotion(emotion)}
-                </option>
-              ))}
-            </select>
-            <select
-              value={mistakeFilter}
-              onChange={(event) => setMistakeFilter(event.target.value)}
-              className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
-            >
-              <option value="">Tất cả loại lỗi</option>
-              {mistakeTypes.map((type) => (
-                <option key={type} value={type}>
-                  {formatMistakeType(type)}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mt-5 grid gap-3">
-            {filteredTrades.map((trade) => (
-              <button
-                key={trade.id}
-                type="button"
-                onClick={() => loadEntry(trade.id)}
-                className="rounded-md border border-[#e0e5dc] p-3 text-left hover:border-[#0f766e]"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="font-bold text-[#17201b]">
-                    {formatTradeSide(trade.side)} {trade.ticker}
-                  </span>
-                  <Badge tone={trade.emotion === "FOMO" ? "coral" : "neutral"}>
-                    {formatEmotion(trade.emotion)}
-                  </Badge>
-                </div>
-                <p className="mt-2 line-clamp-2 text-sm text-[#5b6861]">
-                  {trade.thesis || "Chưa có luận điểm"}
-                </p>
-              </button>
-            ))}
-            {filteredTrades.length === 0 ? (
-              <p className="text-sm text-[#5b6861]">Chưa có giao dịch phù hợp.</p>
-            ) : null}
-          </div>
-        </section>
-
-        <form onSubmit={handleSubmit} className="grid gap-4 rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">
-          <h2 className="text-xl font-bold text-[#17201b]">Tự xem lại</h2>
-          {selectedTrade ? (
-            <div className="rounded-md border border-[#d9ddd3] bg-[#f8fbf7] p-4 text-sm">
-              <p className="font-bold text-[#17201b]">
-                {formatTradeSide(selectedTrade.side)} {selectedTrade.quantity} {selectedTrade.ticker}
-              </p>
-              <p className="mt-1 text-[#66736c]">{formatDate(selectedTrade.createdAt)}</p>
-              <p className="mt-3 leading-6 text-[#4c5d54]">
-                Luận điểm: {selectedTrade.thesis || "Chưa có luận điểm."}
-              </p>
-              {existingEntry ? (
-                <p className="mt-2 text-xs font-semibold text-[#0f766e]">
-                  Đã có phần tự xem lại, bạn có thể chỉnh sửa.
-                </p>
-              ) : null}
-            </div>
-          ) : (
-            <p className="text-sm text-[#5b6861]">Chưa có giao dịch để ghi nhật ký.</p>
-          )}
-
-          <label className="grid gap-2 text-sm font-semibold text-[#314039]">
-            Điều gì đã xảy ra?
-            <textarea
-              value={reflection}
-              onChange={(event) => setReflection(event.target.value)}
-              rows={4}
-              className="rounded-md border border-[#d9ddd3] px-3 py-2"
-            />
-          </label>
-
-          <label className="grid gap-2 text-sm font-semibold text-[#314039]">
-            Tôi học được gì?
-            <textarea
-              value={lessonLearned}
-              onChange={(event) => setLessonLearned(event.target.value)}
-              rows={3}
-              className="rounded-md border border-[#d9ddd3] px-3 py-2"
-            />
-          </label>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <label className="grid gap-2 text-sm font-semibold text-[#314039]">
-              Loại lỗi hoặc điểm mạnh
+      {activeTab === "journal" ? (
+        <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+          <section className="rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-bold text-[#17201b]">Bộ lọc</h2>
+            <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-1">
               <select
-                value={mistakeType}
-                onChange={(event) => setMistakeType(event.target.value as MistakeType)}
-                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3"
+                value={reviewFilter}
+                onChange={(event) => setReviewFilter(event.target.value)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
               >
+                <option value="due">Đến hạn xem lại</option>
+                <option value="upcoming">Sắp đến hạn</option>
+                <option value="completed">Đã xem lại</option>
+                <option value="all">Tất cả quyết định</option>
+              </select>
+              <select
+                value={tickerFilter}
+                onChange={(event) => setTickerFilter(event.target.value)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
+              >
+                <option value="">Tất cả mã</option>
+                {[...new Set(state.trades.map((trade) => trade.ticker))].map((ticker) => (
+                  <option key={ticker} value={ticker}>
+                    {ticker}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={emotionFilter}
+                onChange={(event) => setEmotionFilter(event.target.value)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
+              >
+                <option value="">Tất cả cảm xúc</option>
+                {[...new Set(state.trades.map((trade) => trade.emotion))].map((emotion) => (
+                  <option key={emotion} value={emotion}>
+                    {formatEmotion(emotion)}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={mistakeFilter}
+                onChange={(event) => setMistakeFilter(event.target.value)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3 text-sm"
+              >
+                <option value="">Tất cả loại lỗi</option>
                 {mistakeTypes.map((type) => (
                   <option key={type} value={type}>
                     {formatMistakeType(type)}
                   </option>
                 ))}
               </select>
-            </label>
+            </div>
+
+            <div className="mt-5 grid gap-3">
+              {filteredTrades.map((trade) => {
+                const reviewItem = reviewByTradeId.get(trade.id);
+
+                return (
+                  <button
+                    key={trade.id}
+                    type="button"
+                    onClick={() => loadEntry(trade.id)}
+                    className="rounded-md border border-[#e0e5dc] p-3 text-left hover:border-[#0f766e]"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-bold text-[#17201b]">
+                        {formatTradeSide(trade.side)} {trade.ticker}
+                      </span>
+                      <Badge tone={trade.emotion === "FOMO" ? "coral" : "neutral"}>
+                        {reviewItem?.status === "completed"
+                          ? "Đã xem lại"
+                          : reviewItem?.status === "due"
+                            ? "Đến hạn"
+                            : `Còn ${reviewItem?.daysUntil ?? 0} ngày`}
+                      </Badge>
+                    </div>
+                    <p className="mt-2 line-clamp-2 text-sm text-[#5b6861]">
+                      {trade.thesis || "Chưa có luận điểm"}
+                    </p>
+                  </button>
+                );
+              })}
+              {filteredTrades.length === 0 ? (
+                <p className="text-sm text-[#5b6861]">Chưa có giao dịch phù hợp.</p>
+              ) : null}
+            </div>
+          </section>
+
+          <form onSubmit={handleSubmit} className="grid gap-4 rounded-md border border-[#e0e5dc] bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-bold text-[#17201b]">Tự xem lại</h2>
+            {selectedTrade ? (
+              <div className="rounded-md border border-[#d9ddd3] bg-[#f8fbf7] p-4 text-sm">
+                <p className="font-bold text-[#17201b]">
+                  {formatTradeSide(selectedTrade.side)} {selectedTrade.quantity} {selectedTrade.ticker}
+                </p>
+                <p className="mt-1 text-[#66736c]">{formatDate(selectedTrade.createdAt)}</p>
+                <p className="mt-1 text-[#66736c]">
+                  Hẹn xem lại: {formatDate(selectedTrade.reviewDueAt)}
+                </p>
+                <p className="mt-3 leading-6 text-[#4c5d54]">
+                  Luận điểm: {selectedTrade.thesis || "Chưa có luận điểm."}
+                </p>
+                {existingEntry ? (
+                  <p className="mt-2 text-xs font-semibold text-[#0f766e]">
+                    Đã có phần tự xem lại, bạn có thể chỉnh sửa.
+                  </p>
+                ) : null}
+              </div>
+            ) : (
+              <p className="text-sm text-[#5b6861]">Chưa có giao dịch để ghi nhật ký.</p>
+            )}
+
             <label className="grid gap-2 text-sm font-semibold text-[#314039]">
-              Mức tự tin: {confidenceScore}
-              <input
-                type="range"
-                min={1}
-                max={5}
-                value={confidenceScore}
-                onChange={(event) => setConfidenceScore(Number(event.target.value))}
+              Luận điểm ban đầu còn đúng không?
+              <select
+                value={thesisStatus}
+                onChange={(event) => setThesisStatus(event.target.value as ThesisStatus)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3"
+              >
+                <option value="valid">Vẫn còn đúng</option>
+                <option value="weakened">Đã yếu đi</option>
+                <option value="invalid">Không còn đúng</option>
+                <option value="unsure">Chưa đủ dữ liệu</option>
+              </select>
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+              Điều gì đã xảy ra và dữ liệu nào bạn chưa biết lúc đó?
+              <textarea
+                value={reflection}
+                onChange={(event) => setReflection(event.target.value)}
+                required
+                minLength={10}
+                rows={4}
+                className="rounded-md border border-[#d9ddd3] px-3 py-2"
               />
             </label>
-          </div>
 
-          <button
-            type="submit"
-            disabled={!selectedTrade}
-            className="min-h-11 rounded-md bg-[#0f766e] px-4 text-sm font-semibold text-white hover:bg-[#115e59] disabled:opacity-60"
-          >
-            Lưu phần tự xem lại
-          </button>
-        </form>
-      </div>
+            <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+              Tôi học được gì?
+              <textarea
+                value={lessonLearned}
+                onChange={(event) => setLessonLearned(event.target.value)}
+                required
+                minLength={5}
+                rows={3}
+                className="rounded-md border border-[#d9ddd3] px-3 py-2"
+              />
+            </label>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+                Loại lỗi hoặc điểm mạnh
+                <select
+                  value={mistakeType}
+                  onChange={(event) => setMistakeType(event.target.value as MistakeType)}
+                  className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3"
+                >
+                  {mistakeTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {formatMistakeType(type)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+                Mức tự tin: {confidenceScore}
+                <input
+                  type="range"
+                  min={1}
+                  max={5}
+                  value={confidenceScore}
+                  onChange={(event) => setConfidenceScore(Number(event.target.value))}
+                />
+              </label>
+            </div>
+
+            <label className="grid gap-2 text-sm font-semibold text-[#314039]">
+              Nếu làm lại với thông tin hiện có, bạn có đưa ra cùng quyết định?
+              <select
+                value={wouldRepeat}
+                onChange={(event) => setWouldRepeat(event.target.value as WouldRepeat)}
+                className="min-h-11 rounded-md border border-[#d9ddd3] bg-white px-3"
+              >
+                <option value="yes">Có</option>
+                <option value="no">Không</option>
+                <option value="unsure">Chưa chắc</option>
+              </select>
+            </label>
+
+            <button
+              type="submit"
+              disabled={!selectedTrade}
+              className="min-h-11 rounded-md bg-[#0f766e] px-4 text-sm font-semibold text-white hover:bg-[#115e59] disabled:opacity-60"
+            >
+              Lưu phần tự xem lại
+            </button>
+          </form>
+        </div>
+      ) : (
+        <BehavioralDiagnostics trades={state.trades} journal={state.journal} />
+      )}
 
       <Disclaimer />
     </div>

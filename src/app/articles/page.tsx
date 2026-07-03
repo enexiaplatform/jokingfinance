@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2, Search } from "lucide-react";
 import { ArticleCard } from "@/components/marketing/article-card";
 import { PublicFooter } from "@/components/marketing/public-footer";
@@ -16,10 +17,26 @@ type ArticlesPageProps = {
   }>;
 };
 
-export const metadata = {
-  title: "Bài học - JokingFinance",
-  description: "Bài học tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.",
-};
+export async function generateMetadata({
+  searchParams,
+}: ArticlesPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const isFiltered = Boolean(params?.q || params?.category);
+
+  return {
+    title: "Bài học tài chính cho người mới - JokingFinance",
+    description: "Bài học tài chính dễ hiểu, có nhiệm vụ thực hành đi kèm.",
+    alternates: {
+      canonical: "/articles",
+    },
+    robots: isFiltered
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
+  };
+}
 
 export default async function ArticlesPage({ searchParams }: ArticlesPageProps) {
   const params = await searchParams;

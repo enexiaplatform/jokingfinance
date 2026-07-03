@@ -24,6 +24,7 @@ import {
   getKnowledgeModuleUrl,
   knowledgeLevelLabels,
 } from "@/data/knowledge-library";
+import { getSiteUrl } from "@/lib/site-url";
 
 type KnowledgeModulePageProps = {
   params: Promise<{
@@ -45,6 +46,12 @@ export async function generateMetadata({ params }: KnowledgeModulePageProps) {
       ? `${result.knowledgeModule.title} - ${result.pillar.title} - JokingFinance`
       : "Bài học kiến thức - JokingFinance",
     description: result?.knowledgeModule.goal,
+    alternates: {
+      canonical: new URL(
+        `/knowledge/${pillarSlug}/${moduleSlug}`,
+        getSiteUrl(),
+      ).toString(),
+    },
   };
 }
 

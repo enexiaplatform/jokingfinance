@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -36,11 +37,27 @@ const statusLabels = {
   developing: "Đang phát triển",
 };
 
-export const metadata = {
-  title: "Tin tức phân tích - JokingFinance",
-  description:
-    "Bàn phân tích tin tức tài chính: biến tin thị trường thành câu hỏi, tín hiệu cần theo dõi và bài học liên quan.",
-};
+export async function generateMetadata({
+  searchParams,
+}: NewsPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const hasFilters = Boolean(params?.q || params?.theme || params?.impact);
+
+  return {
+    title: "Tin tức phân tích - JokingFinance",
+    description:
+      "Bàn phân tích tin tức tài chính: biến tin thị trường thành câu hỏi, tín hiệu cần theo dõi và bài học liên quan.",
+    alternates: {
+      canonical: "/news",
+    },
+    robots: hasFilters
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
+  };
+}
 
 export default async function NewsPage({ searchParams }: NewsPageProps) {
   const params = await searchParams;

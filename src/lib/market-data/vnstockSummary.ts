@@ -109,15 +109,20 @@ export async function getVnstockMarketSummary(): Promise<MarketSummary> {
   if (tickers.length === 0) {
     return {
       ...fallbackMarketSummary,
-      updatedAt: new Date().toISOString(),
-      notice: "Vnstock chua tra duoc bang gia, dang dung du lieu mo phong.",
+      status: "failed",
+      fetchedAt: new Date().toISOString(),
+      notice: "Vnstock chưa trả được bảng giá, đang dùng dữ liệu minh họa gần nhất.",
     };
   }
 
   return {
     source: "vnstock",
+    status: "delayed",
     updatedAt: new Date().toISOString(),
+    fetchedAt: new Date().toISOString(),
     tickers,
     indices: indices.length > 0 ? indices : fallbackMarketSummary.indices,
+    notice:
+      "Dữ liệu từ Vnstock có thể trễ hoặc khác nguồn giao dịch chính thức. Chỉ dùng cho học tập và mô phỏng.",
   };
 }

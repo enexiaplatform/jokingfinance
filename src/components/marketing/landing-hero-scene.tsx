@@ -17,6 +17,8 @@ import {
   formatMarketChange,
   formatMarketNumber,
   formatMarketPercent,
+  marketStatusLabel,
+  marketTimestampLabel,
 } from "@/lib/market-data/format";
 import type { MarketSummary } from "@/lib/market-data/summary";
 
@@ -53,7 +55,13 @@ export function LandingHeroScene() {
         }
       } catch {
         if (active) {
-          setMarketSummary(fallbackMarketSummary);
+          setMarketSummary({
+            ...fallbackMarketSummary,
+            status: "failed",
+            fetchedAt: new Date().toISOString(),
+            notice:
+              "Không thể tải dữ liệu thị trường. Đang dùng dữ liệu minh họa gần nhất.",
+          });
         }
       }
     }
@@ -86,11 +94,23 @@ export function LandingHeroScene() {
             bỏ một đồng tiền thật.
           </p>
           <div className="hero-cta">
-            <Link className="btn btn-primary" href="/app/dashboard">
+            <Link
+              className="btn btn-primary"
+              href="/start"
+              data-analytics-event="onboarding_start_click"
+              data-analytics-label="Bắt đầu trong 15 phút"
+              data-analytics-location="home_hero"
+            >
               <LineChart className="h-[18px] w-[18px]" aria-hidden="true" />
-              Mở bảng mô phỏng
+              Bắt đầu trong 15 phút
             </Link>
-            <Link className="btn btn-outline" href="/articles">
+            <Link
+              className="btn btn-outline"
+              href="/articles"
+              data-analytics-event="content_hub_click"
+              data-analytics-label="Đọc bài học mới nhất"
+              data-analytics-location="home_hero"
+            >
               <BookOpen className="h-[18px] w-[18px]" aria-hidden="true" />
               Đọc bài học mới nhất
             </Link>
@@ -112,11 +132,9 @@ export function LandingHeroScene() {
         <div className="board">
           <div className="board-head">
             <span className="t">Bảng giá Vnstock · Mã đang theo dõi</span>
-            <div className="board-tabs">
-              <button className="on" type="button">
-                Demo
-              </button>
-              <button type="button">{marketSummary.source === "vnstock" ? "Thật" : "Dự phòng"}</button>
+            <div className="board-tabs" aria-label="Trạng thái nguồn dữ liệu">
+              <span className="on">Điểm ảo</span>
+              <span>{marketStatusLabel(marketSummary.status)}</span>
             </div>
           </div>
           <table className="qt">
@@ -150,7 +168,7 @@ export function LandingHeroScene() {
           </table>
           <div className="board-foot">
             <Info className="h-[14px] w-[14px]" aria-hidden="true" />
-            Giá demo lấy từ Vnstock khi khả dụng. Không phải khuyến nghị.
+            {marketTimestampLabel(marketSummary)} · {marketSummary.notice}
           </div>
         </div>
       </div>

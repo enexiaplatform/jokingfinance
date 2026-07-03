@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type AuthFormProps = {
@@ -14,6 +15,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [acceptedSafety, setAcceptedSafety] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const isSignup = mode === "signup";
@@ -37,10 +39,19 @@ export function AuthForm({ mode }: AuthFormProps) {
     const supabase = createSupabaseBrowserClient();
     const redirectTo = getSafeRedirectTo();
 
+    if (isSignup && !acceptedSafety) {
+      setLoading(false);
+      setMessage("Bạn cần xác nhận điều khoản và cảnh báo rủi ro trước khi tạo tài khoản.");
+      return;
+    }
+
     if (!supabase) {
       if (displayName) {
         localStorage.setItem("jokingfinance-display-name", displayName);
       }
+      trackEvent(isSignup ? "signup_demo_success" : "login_demo_success", {
+        redirect_to: redirectTo,
+      });
       setMessage("Chế độ dùng thử: chưa cấu hình biến môi trường Supabase, đang mở khu vực app.");
       router.push(redirectTo);
       return;
@@ -63,16 +74,27 @@ export function AuthForm({ mode }: AuthFormProps) {
       setLoading(false);
 
       if (error) {
+        trackEvent("signup_error", {
+          error_code: error.code,
+        });
         setMessage(error.message);
         return;
       }
 
       if (data.session) {
+        trackEvent("signup_success", {
+          confirmation_required: false,
+          redirect_to: redirectTo,
+        });
         router.push(redirectTo);
         router.refresh();
         return;
       }
 
+      trackEvent("signup_success", {
+        confirmation_required: true,
+        redirect_to: redirectTo,
+      });
       setMessage("Tài khoản đã được tạo. Kiểm tra email nếu Supabase đang bật xác nhận email.");
       return;
     }
@@ -85,10 +107,16 @@ export function AuthForm({ mode }: AuthFormProps) {
     setLoading(false);
 
     if (error) {
+      trackEvent("login_error", {
+        error_code: error.code,
+      });
       setMessage(error.message);
       return;
     }
 
+    trackEvent("login_success", {
+      redirect_to: redirectTo,
+    });
     router.push(redirectTo);
     router.refresh();
   }
@@ -131,6 +159,42 @@ export function AuthForm({ mode }: AuthFormProps) {
           placeholder="Tối thiểu 6 ký tự"
         />
       </label>
+
+      {isSignup ? (
+        <label className="flex items-start gap-3 rounded-md border border-[#d9ddd3] bg-[#f8fbf7] p-3 text-sm leading-6 text-[#43534a]">
+          <input
+            type="checkbox"
+            checked={acceptedSafety}
+            onChange={(event) => {
+              const checked = event.target.checked;
+              setAcceptedSafety(checked);
+
+              if (checked) {
+                trackEvent("risk_disclaimer_accepted", {
+                  location: "signup",
+                });
+              }
+            }}
+            required
+            className="mt-1 h-4 w-4 shrink-0 accent-[#0f766e]"
+          />
+          <span>
+            Tôi đồng ý với{" "}
+            <a href="/terms" className="font-semibold text-[#0f766e] underline">
+              Điều khoản
+            </a>{" "}
+            và đã đọc{" "}
+            <a
+              href="/risk-disclaimer"
+              className="font-semibold text-[#0f766e] underline"
+            >
+              Cảnh báo rủi ro & nguồn dữ liệu
+            </a>
+            . Tôi hiểu đây là công cụ giáo dục, dữ liệu có thể trễ và điểm ảo không có
+            giá trị tiền thật.
+          </span>
+        </label>
+      ) : null}
 
       <button
         type="submit"
