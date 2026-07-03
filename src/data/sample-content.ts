@@ -485,6 +485,32 @@ export const sampleArticles: Article[] = [
       "Để lãi kép hoạt động hiệu quả, bạn cần duy trì kỷ luật tích lũy định kỳ và kiên quyết bảo vệ nguồn vốn của mình. Sử dụng JokingFinance Simulator giúp bạn làm quen với tư duy dài hạn, thử nghiệm các mô hình phân bổ tài sản khác nhau và quan sát kết quả tích lũy mà không chịu áp lực cảm xúc của tiền thật.",
       "Hãy nhớ rằng: bảo vệ vốn quan trọng hơn kiếm lợi nhuận. Chỉ khi bạn giữ được kỷ luật cắt lỗ sớm và tránh được các cú sập sâu, sức mạnh của lãi kép mới có thể phát huy tối đa tác dụng qua nhiều năm."
     ]
+  },
+  {
+    title: "Tự do tài chính (FIRE) tại Việt Nam: Con số và lộ trình thực tế",
+    slug: "tu-do-tai-chinh-fire-tai-viet-nam-lo-trinh-thuc-te",
+    summary:
+      "Giải thích cách tính con số tự do tài chính (FIRE) phù hợp với bối cảnh lạm phát và lãi suất tại Việt Nam, tránh áp dụng máy móc quy tắc 4% của Mỹ.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["tự do tài chính", "FIRE", "tích lũy", "tài chính cá nhân"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "intermediate",
+    readingTime: 8,
+    relatedStocks: [],
+    relatedMissionSlug: "xac-dinh-con-so-tu-do-tai-chinh",
+    seoTitle: "Tự do tài chính (FIRE) tại Việt Nam - Lộ trình thực tế",
+    seoDescription:
+      "Tìm hiểu cách hoạch định tự do tài chính (FIRE) phù hợp với lạm phát và lãi suất ở Việt Nam. Công thức tính và tỷ lệ rút tiền an toàn.",
+    body: [
+      "Trào lưu Tự do Tài chính và Nghỉ hưu sớm (FIRE - Financial Independence, Retire Early) đang trở nên phổ biến tại Việt Nam. Tuy nhiên, việc áp dụng máy móc quy tắc 4% nổi tiếng của Mỹ (Rule of 25) vào bối cảnh Việt Nam có thể dẫn đến những sai lầm nghiêm trọng do sự khác biệt lớn về lạm phát và lãi suất.",
+      "Quy tắc 4% xuất phát từ Nghiên cứu Trinity ở Mỹ, giả định lạm phát dài hạn chỉ khoảng 2-3% và lợi nhuận đầu tư từ cổ phiếu/trái phiếu Mỹ bù đắp được mức này. Ở Việt Nam, lạm phát bình quân thường dao động quanh 4% và có những chu kỳ biến động cao hơn. Do đó, nếu bạn rút 4% tài sản mỗi năm và tăng dần theo lạm phát Việt Nam, danh mục của bạn có nguy cơ cạn kiệt nhanh hơn nhiều.",
+      "Một cách tiếp cận an toàn hơn cho thị trường Việt Nam là tính toán tỷ lệ rút an toàn (Safe Withdrawal Rate - SWR) dựa trên công thức: SWR = Lợi suất đầu tư thực tế khi nghỉ hưu - Tỷ lệ lạm phát kỳ vọng. Ví dụ, nếu bạn dịch chuyển tài sản sang các kênh an toàn (như gửi tiết kiệm, trái phiếu) với lãi suất bình quân 7%/năm, và lạm phát là 4%/năm, thì tỷ lệ rút an toàn thực tế chỉ nên ở mức 3%/năm.",
+      "Với tỷ lệ rút 3%/năm, con số tự do tài chính của bạn sẽ bằng chi phí sinh hoạt hàng năm chia cho 3% (tương đương nhân với 33.3 lần chi phí năm, thay vị 25 lần như quy tắc 4%). Đây gọi là quy tắc 33.3 - mang lại một tấm lá chắn an toàn và vững chắc hơn rất nhiều trước biến động vĩ mô.",
+      "Điểm quan trọng thứ hai là phải điều chỉnh lạm phát cho mục tiêu tương lai. Nếu bạn 25 tuổi, chi tiêu hiện tại là 15 triệu/tháng và muốn tự do ở tuổi 45 (sau 20 năm), con số FIRE hôm nay là 6 tỷ đồng (theo quy tắc 33.3). Nhưng với lạm phát 4%/năm, con số thực tế bạn cần tích lũy ở tuổi 45 phải là 6 tỷ * (1.04)^20 ≈ 13.1 tỷ đồng.",
+      "Đừng nản lòng trước con số lớn. Sức mạnh của lãi kép trong giai đoạn tích lũy (nhờ đầu tư đều đặn vào cổ phiếu đầu ngành có lợi suất 10-12%/năm) sẽ gánh vác phần lớn mục tiêu của bạn. Hãy sử dụng JokingFinance FIRE Tool để lập bản đồ chi tiết, theo dõi tiến độ tích lũy ảo và rèn luyện tính kỷ luật trước khi giải ngân tiền thật."
+    ]
   }
 ];
 
@@ -722,6 +748,30 @@ export const sampleMissions: Mission[] = [
     ],
     relatedArticleSlug: "pe-la-gi",
     relatedCaseSlug: "pe-thap-o-dinh-chu-ky",
+    isActive: true,
+  },
+  {
+    title: "Xác định con số Tự do Tài chính của bạn",
+    slug: "xac-dinh-con-so-tu-do-tai-chinh",
+    description:
+      "Sử dụng công cụ Hoạch định Tự do Tài chính để tính số tiền và thời gian cần tích lũy dựa trên kịch bản lạm phát tại Việt Nam.",
+    difficulty: "intermediate",
+    category: "Tài chính cá nhân",
+    estimatedMinutes: 15,
+    objective: "Hiểu cách điều chỉnh lạm phát và thiết lập tỷ lệ rút an toàn phù hợp với thực tế Việt Nam.",
+    instructions: [
+      "Mở tab Hoạch định FIRE trong hộp công cụ.",
+      "Nhập tuổi hiện tại, tuổi mục tiêu và chi phí sinh hoạt thiết thực.",
+      "Điều chỉnh tỷ lệ lạm phát kỳ vọng ở mức 4% (mức chuẩn của Việt Nam).",
+      "Ghi nhận con số FIRE tương lai đã điều chỉnh lạm phát và số tiền cần tích lũy hàng tháng.",
+      "Viết nhận xét vào phần tự xem lại về tính khả thi của lộ trình hiện tại của bạn."
+    ],
+    successCriteria: [
+      "Đã chạy công cụ hoạch định FIRE.",
+      "Có ghi nhận con số FIRE tương lai đã điều chỉnh lạm phát.",
+      "Có ghi chép bài học hoặc suy ngẫm về tỷ lệ rút an toàn."
+    ],
+    relatedArticleSlug: "tu-do-tai-chinh-fire-tai-viet-nam-lo-trinh-thuc-te",
     isActive: true,
   },
 ];

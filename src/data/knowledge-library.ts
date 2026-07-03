@@ -139,6 +139,14 @@ export const knowledgePillars: KnowledgePillar[] = [
         topics: ["Nợ tốt và nợ xấu", "Lãi suất vay", "Tỷ lệ trả nợ", "Thẻ tín dụng", "Rủi ro đòn bẩy"],
         practice: "Tính tỷ lệ trả nợ hàng tháng và viết ngưỡng cảnh báo cá nhân.",
       },
+      {
+        title: "Hoạch định tự do tài chính (FIRE)",
+        goal: "Xác định con số độc lập tài chính dài hạn dựa trên thực tế lạm phát và lãi suất Việt Nam.",
+        topics: ["Tự do tài chính", "Quy tắc 33.3", "Tỷ lệ rút an toàn (SWR)", "Điều chỉnh lạm phát", "Kỷ luật tích lũy"],
+        practice: "Sử dụng FIRE Tool để tính toán lộ trình cá nhân hóa và viết bài đánh giá khả thi.",
+        relatedArticleSlugs: ["tu-do-tai-chinh-fire-tai-viet-nam-lo-trinh-thuc-te", "lai-kep-va-chi-phi-co-hoi"],
+        relatedMissionSlugs: ["xac-dinh-con-so-tu-do-tai-chinh"],
+      },
     ],
   },
   {

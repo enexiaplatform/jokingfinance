@@ -22,8 +22,9 @@ import {
 import Link from "next/link";
 import { ValuationTool } from "./valuation-tool";
 import { BiasTool } from "./bias-tool";
+import { FireTool } from "./fire-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire";
 
 type ChecklistQuestion = {
   id: number;
@@ -452,6 +453,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🧠 Trắc Nghiệm Tâm Lý Giao Dịch
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("fire")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "fire"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🔥 Hoạch định FIRE (Tự Do Tài Chính)
         </button>
       </div>
 
@@ -1218,8 +1230,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         </div>
       ) : activeTab === "valuation" ? (
         <ValuationTool stocks={state?.stocks || []} />
-      ) : (
+      ) : activeTab === "bias" ? (
         <BiasTool />
+      ) : (
+        <FireTool />
       )}
 
       <Disclaimer />
