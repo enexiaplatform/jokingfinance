@@ -596,6 +596,29 @@ export const sampleArticles: Article[] = [
       "Ngược lại, nếu bạn tuân thủ nguyên tắc quản trị rủi ro nghiêm ngặt của các quỹ đầu tư chuyên nghiệp: chỉ mạo hiểm tối đa 1% - 2% tài sản cho mỗi giao dịch. Dù gặp phải chuỗi thua lỗ 6 lệnh liên tiếp, tài khoản của bạn cũng chỉ giảm từ 6% đến 11%. Mức sụt giảm này hoàn toàn nằm trong tầm kiểm soát và có thể dễ dàng phục hồi chỉ sau 3-4 lệnh thắng tiếp theo. Xác suất phá sản toán học lúc này bằng 0%.",
       "JokingFinance đã tích hợp công cụ 'Giả lập Monte Carlo' trong hộp công cụ tài chính. Công cụ này cho phép bạn nhập các thông số thực tế của riêng mình và vẽ ra đường đi của 15 tài khoản giả định để trực tiếp nhìn thấy sức mạnh tàn phá của việc đi lệnh quá tay. Hãy nhớ rằng: Thị trường chứng khoán luôn có những biến số không ngờ tới, và kỷ luật giữ quy mô rủi ro nhỏ là chìa khóa duy nhất để bạn có thể tiếp tục cuộc chơi."
     ]
+  },
+  {
+    title: "Công thức Kelly và Quản trị tỷ trọng trong đầu tư",
+    slug: "cong-thuc-kelly-va-quan-tri-ty-trong-danh-muc",
+    summary: "Tìm hiểu cách áp dụng toán học để phân bổ quy mô vị thế tối ưu cho mỗi cổ phiếu nhằm tối đa hóa tài sản tích lũy dài hạn và phòng ngừa rủi ro cháy tài khoản.",
+    category: "Quản trị rủi ro",
+    categorySlug: "quan-tri-rui-ro",
+    tags: ["kelly criterion", "phân bổ vốn", "quản trị rủi ro", "kỷ luật", "vị thế"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-04",
+    difficulty: "advanced",
+    readingTime: 6,
+    relatedStocks: ["HPG", "FPT", "VCB", "VNM"],
+    relatedMissionSlug: "thuc-hanh-cong-thuc-kelly-toi-uu-von",
+    seoTitle: "Công thức Kelly và Quản trị tỷ trọng đi tiền trong đầu tư chứng khoán",
+    seoDescription: "Hiểu sâu sắc về cách tính hệ số Kelly tối ưu hóa quy mô vốn đầu tư. Tìm hiểu lý do tại sao Fractional Kelly là giải pháp an toàn nhất để tránh cháy tài khoản.",
+    body: [
+      "Trong giới đầu tư, câu hỏi 'Nên mua cổ phiếu nào?' thường chiếm 90% sự chú ý của người mới. Tuy nhiên, các nhà giao dịch huyền thoại như Warren Buffett hay Ed Seykota lại cho rằng câu hỏi quyết định sự sinh tồn và giàu có dài hạn lại là: 'Nên mua bao nhiêu?' hay 'Phân bổ tỷ trọng bao nhiêu cho mỗi mã?'. Đây chính là nơi Công thức Kelly (Kelly Criterion) chứng minh sức mạnh toán học vượt trội.",
+      "Công thức Kelly được phát triển bởi nhà vật lý học John Kelly vào năm 1956. Trong đầu tư tài chính, công thức này được áp dụng như sau: K% = (p * b - q) / b. Trong đó: p là xác suất thắng (Win Rate), b là tỷ lệ Lợi nhuận/Thua lỗ (Net Odds hay RRR), và q là xác suất thua (1 - p). Ví dụ, nếu bạn có xác suất thắng là 50% (p = 0.5) và mục tiêu chốt lời gấp đôi cắt lỗ (b = 2.0), thì Kelly gợi ý tỷ lệ đi tiền tối ưu là: (0.5 * 2 - 0.5) / 2 = 25% tổng vốn đầu tư.",
+      "Mục tiêu của công thức Kelly là tìm ra điểm cân bằng hoàn hảo. Nếu bạn đi tiền nhỏ hơn tỷ lệ Kelly (Under-betting), tài sản của bạn sẽ tăng trưởng dưới mức tiềm năng tối ưu. Nhưng nếu bạn đi tiền vượt quá tỷ lệ Kelly (Over-betting), bạn đang đối mặt với nguy cơ sụt giảm tài sản cực kỳ lớn. Toán học chứng minh rằng, việc liên tục đi lệnh vượt quá tỷ lệ Kelly sẽ dẫn đến xác suất cháy tài khoản (Risk of Ruin) tiến về 100% về mặt dài hạn, ngay cả khi các giao dịch của bạn có kỳ vọng lợi nhuận dương.",
+      "Tuy nhiên, trong thị trường chứng khoán thực tế, việc dự đoán chính xác xác suất thắng (Win Rate) là điều cực kỳ khó khăn và thường bị thổi phồng bởi tâm lý lạc quan quá mức. Do đó, các nhà quản lý quỹ chuyên nghiệp thường sử dụng 'Fractional Kelly' (Kelly một phần) - phổ biến nhất là Half Kelly (0.5x) hoặc Quarter Kelly (0.25x). Việc chia nhỏ tỷ lệ Kelly này giúp giảm đáng kể mức sụt giảm tài sản lớn nhất (Max Drawdown) trong chuỗi thua lỗ, nhưng vẫn giữ được 75% đến 90% hiệu suất sinh lời lý thuyết.",
+      "JokingFinance đã tích hợp công cụ tính toán và giả lập Kelly trực quan trong Hộp công cụ tài chính. Người học có thể trực tiếp thử nghiệm các kịch bản Full Kelly, Half Kelly và All-in để nhìn thấy tác động của việc đi tiền quá mức lên sự sinh tồn của tài khoản. Hãy thực hành trên điểm ảo trước khi dùng tiền thật để biến kỷ luật đi vốn thành bản năng đầu tư của bạn."
+    ]
   }
 ];
 
@@ -927,6 +950,29 @@ export const sampleMissions: Mission[] = [
       "Ghi chép suy ngẫm cá nhân về chuỗi thua lỗ tự nhiên và tầm quan trọng của việc duy trì quy mô vốn nhỏ."
     ],
     relatedArticleSlug: "mo-phong-monte-carlo-va-rui-ro-pha-san",
+    isActive: true,
+  },
+  {
+    title: "Thực hành công thức Kelly và tối ưu hóa tỷ trọng đi tiền",
+    slug: "thuc-hanh-cong-thuc-kelly-toi-uu-von",
+    description: "Sử dụng công cụ tính toán Kelly để tìm tỷ lệ đi tiền tối ưu cho cổ phiếu mục tiêu và chạy giả lập so sánh kịch bản.",
+    difficulty: "advanced",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu sâu về khái niệm kỳ vọng toán học và cách tìm điểm cân bằng phân bổ vốn bằng công thức Kelly.",
+    instructions: [
+      "Mở tab Phân bổ tối ưu Kelly trong hộp công cụ tài chính.",
+      "Chọn mã cổ phiếu dự kiến (ví dụ HPG) và thiết lập mức chốt lời 20%, cắt lỗ 8% (Odds = 2.50).",
+      "Điều chỉnh thanh trượt Win Rate từ 30% đến 60% để xem khi nào Kỳ vọng toán học chuyển từ âm sang dương.",
+      "Chọn chế độ Half Kelly (0.5x) và so sánh hiệu suất sinh lời cũng như mức sụt giảm lớn nhất (Max Drawdown) với kịch bản Over-betting/All-in trong biểu đồ giả lập 50 lệnh.",
+      "Ghi lại bài học về lý do tại sao không nên đi tiền quá tay ngay cả khi cơ hội thắng có vẻ cao."
+    ],
+    successCriteria: [
+      "Đã chạy tính toán Kelly với ít nhất 1 cơ hội có kỳ vọng toán học dương.",
+      "So sánh trực quan được sự ổn định của Half Kelly so với All-in lớn trong giả lập.",
+      "Rút ra được bài học về Fractional Kelly và giới hạn 20% vốn tối đa của JokingFinance."
+    ],
+    relatedArticleSlug: "cong-thuc-kelly-va-quan-tri-ty-trong-danh-muc",
     isActive: true,
   },
 ];

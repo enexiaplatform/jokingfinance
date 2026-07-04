@@ -417,6 +417,14 @@ export const knowledgePillars: KnowledgePillar[] = [
         relatedArticleSlugs: ["mo-phong-monte-carlo-va-rui-ro-pha-san", "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu"],
         relatedMissionSlugs: ["thuc-hanh-gia-lap-monte-carlo", "thuc-hanh-quan-tri-rui-ro-va-tinh-toan-vi-the"],
       },
+      {
+        title: "Công thức Kelly và Tối ưu tỷ trọng",
+        goal: "Hiểu cách áp dụng toán học để tìm ra quy mô đi lệnh tối ưu giúp tối đa hóa tài sản dài hạn.",
+        topics: ["Hệ số Kelly", "Kỳ vọng toán học", "Full Kelly vs Fractional Kelly", "Tâm lý sợ sụt giảm tài sản (Drawdown)"],
+        practice: "Sử dụng Kelly Tool để lập kế hoạch phân bổ vốn cho cổ phiếu mục tiêu.",
+        relatedArticleSlugs: ["cong-thuc-kelly-va-quan-tri-ty-trong-danh-muc"],
+        relatedMissionSlugs: ["thuc-hanh-cong-thuc-kelly-toi-uu-von"],
+      },
     ],
   },
   {

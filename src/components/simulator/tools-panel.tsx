@@ -26,8 +26,9 @@ import { FireTool } from "./fire-tool";
 import { DcaTool } from "./dca-tool";
 import { PositionTool } from "./position-tool";
 import { RuinTool } from "./ruin-tool";
+import { KellyTool } from "./kelly-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly";
 
 type ChecklistQuestion = {
   id: number;
@@ -500,6 +501,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🎲 Giả lập Monte Carlo (Phá sản)
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("kelly")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "kelly"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          ⚖️ Phân bổ tối ưu Kelly
         </button>
       </div>
 
@@ -1274,8 +1286,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <DcaTool />
       ) : activeTab === "position" ? (
         <PositionTool stocks={state?.stocks || []} />
-      ) : (
+      ) : activeTab === "ruin" ? (
         <RuinTool />
+      ) : (
+        <KellyTool stocks={state?.stocks || []} />
       )}
 
       <Disclaimer />
