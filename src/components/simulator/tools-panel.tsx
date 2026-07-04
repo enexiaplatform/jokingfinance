@@ -27,8 +27,9 @@ import { DcaTool } from "./dca-tool";
 import { PositionTool } from "./position-tool";
 import { RuinTool } from "./ruin-tool";
 import { KellyTool } from "./kelly-tool";
+import { DividendTool } from "./dividend-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly" | "dividend";
 
 type ChecklistQuestion = {
   id: number;
@@ -512,6 +513,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           ⚖️ Phân bổ tối ưu Kelly
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("dividend")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "dividend"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🪙 Tích lũy cổ tức DGI
         </button>
       </div>
 
@@ -1288,8 +1300,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <PositionTool stocks={state?.stocks || []} />
       ) : activeTab === "ruin" ? (
         <RuinTool />
-      ) : (
+      ) : activeTab === "kelly" ? (
         <KellyTool stocks={state?.stocks || []} />
+      ) : (
+        <DividendTool />
       )}
 
       <Disclaimer />

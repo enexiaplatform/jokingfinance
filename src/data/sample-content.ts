@@ -619,6 +619,29 @@ export const sampleArticles: Article[] = [
       "Tuy nhiên, trong thị trường chứng khoán thực tế, việc dự đoán chính xác xác suất thắng (Win Rate) là điều cực kỳ khó khăn và thường bị thổi phồng bởi tâm lý lạc quan quá mức. Do đó, các nhà quản lý quỹ chuyên nghiệp thường sử dụng 'Fractional Kelly' (Kelly một phần) - phổ biến nhất là Half Kelly (0.5x) hoặc Quarter Kelly (0.25x). Việc chia nhỏ tỷ lệ Kelly này giúp giảm đáng kể mức sụt giảm tài sản lớn nhất (Max Drawdown) trong chuỗi thua lỗ, nhưng vẫn giữ được 75% đến 90% hiệu suất sinh lời lý thuyết.",
       "JokingFinance đã tích hợp công cụ tính toán và giả lập Kelly trực quan trong Hộp công cụ tài chính. Người học có thể trực tiếp thử nghiệm các kịch bản Full Kelly, Half Kelly và All-in để nhìn thấy tác động của việc đi tiền quá mức lên sự sinh tồn của tài khoản. Hãy thực hành trên điểm ảo trước khi dùng tiền thật để biến kỷ luật đi vốn thành bản năng đầu tư của bạn."
     ]
+  },
+  {
+    title: "Tích lũy cổ tức tăng trưởng và sức bật lãi kép",
+    slug: "tich-luy-co-tuc-va-suc-bat-compound-dividend",
+    summary: "Tìm hiểu chiến lược đầu tư cổ tức tăng trưởng (DGI), khái niệm Yield-on-Cost và tại sao tái đầu tư cổ tức (DRIP) là chìa khóa tạo ra dòng tiền thụ động khổng lồ dài hạn.",
+    category: "Tài chính cá nhân",
+    categorySlug: "tai-chinh-ca-nhan",
+    tags: ["cổ tức", "lãi kép", "DGI", "tích sản", "thụ động"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-04",
+    difficulty: "intermediate",
+    readingTime: 6,
+    relatedStocks: ["VNM", "FPT", "ACB", "REE"],
+    relatedMissionSlug: "thuc-hanh-tich-luy-co-tuc-dgi-drip",
+    seoTitle: "Đầu tư cổ tức tăng trưởng và Lãi kép tái đầu tư (DRIP) tại Việt Nam",
+    seoDescription: "Chi tiết chiến lược Dividend Growth Investing (DGI), cách tính Yield on Cost và sức tàn phá của việc tiêu xài cổ tức so với tái đầu tư dài hạn.",
+    body: [
+      "Trong thế giới đầu tư tài chính, có một câu nói nổi tiếng của John D. Rockefeller: 'Điều duy nhất làm tôi phấn khích là nhìn thấy tiền cổ tức đổ vào tài khoản'. Nhiều người coi đầu tư chứng khoán là việc mua đi bán lại ngắn hạn để ăn chênh lệch giá. Tuy nhiên, một bộ phận các nhà đầu tư lý trí lại lựa chọn chiến lược thầm lặng nhưng cực kỳ mạnh mẽ: Đầu tư tăng trưởng cổ tức (Dividend Growth Investing - DGI).",
+      "Chiến lược DGI tập trung vào việc tìm kiếm các doanh nghiệp có lợi thế cạnh tranh bền vững, dòng tiền kinh doanh cực kỳ khỏe mạnh và có lịch sử tăng trưởng mức chi trả cổ tức đều đặn qua các năm. Điểm khác biệt mấu chốt của DGI so với việc săn tìm cổ phiếu có tỷ suất cổ tức (Dividend Yield) cao hiện tại là tốc độ tăng trưởng cổ tức. Một doanh nghiệp đang trả tỷ suất 2% nhưng tăng trưởng cổ tức 15%/năm sẽ đem lại dòng tiền vượt trội so với doanh nghiệp trả 6% nhưng không tăng trưởng trong dài hạn.",
+      "Khi theo đuổi chiến lược DGI, khái niệm Yield-on-Cost (YoC) là thước đo thành công tối thượng. YoC là tỷ suất cổ tức tính trên giá vốn ban đầu bạn mua. Ví dụ, nếu bạn mua cổ phiếu FPT với giá 112.000đ khi công ty chia cổ tức 2.500đ (YoC = 2.2%). Nhờ FPT liên tục mở rộng kinh doanh, sau 10 năm, lượng cổ tức trả cho một cổ phiếu tăng lên 8.000đ. Lúc này, YoC trên giá vốn ban đầu của bạn đã tăng lên tới 7.14%. Đây chính là chiếc phao cứu sinh bảo vệ bạn khỏi sự bào mòn của lạm phát.",
+      "Nhân tố thúc đẩy tài sản tăng trưởng theo đồ thị hàm số mũ chính là Kế hoạch Tái đầu tư Cổ tức (Dividend Reinvestment Plan - DRIP). Thay vì rút tiền cổ tức ra tiêu dùng cá nhân (như mua ly trà sữa, nâng cấp điện thoại), bạn dùng toàn bộ số tiền đó để mua thêm cổ phần của chính doanh nghiệp. Quá trình này tạo nên một vòng xoáy lãi kép: Nhiều cổ phần hơn -> Nhận nhiều cổ tức hơn -> Mua được nhiều cổ phần hơn nữa. Qua thời gian, số lượng cổ phiếu tích lũy của bạn sẽ tự động phình to mà không cần bạn phải nạp thêm vốn tự có.",
+      "JokingFinance đã ra mắt công cụ 'Giả lập Tích lũy Cổ tức Tăng trưởng' để bạn trực tiếp so sánh hai kịch bản: Có tái đầu tư (DRIP) và Không tái đầu tư (Lấy tiền mặt chi tiêu). Bạn sẽ thấy rõ tác động của 5% thuế cổ tức tại nguồn của Việt Nam và sự phân hóa tài sản khổng lồ sau 10-20 năm. Hãy bắt đầu rèn luyện tư duy đồng chủ sở hữu doanh nghiệp và tích lũy cổ phần ảo ngay hôm nay."
+    ]
   }
 ];
 
@@ -973,6 +996,29 @@ export const sampleMissions: Mission[] = [
       "Rút ra được bài học về Fractional Kelly và giới hạn 20% vốn tối đa của JokingFinance."
     ],
     relatedArticleSlug: "cong-thuc-kelly-va-quan-tri-ty-trong-danh-muc",
+    isActive: true,
+  },
+  {
+    title: "Thực hành giả lập cổ tức tăng trưởng và cơ chế DRIP",
+    slug: "thuc-hanh-tich-luy-co-tuc-dgi-drip",
+    description: "Sử dụng công cụ giả lập cổ tức tăng trưởng để so sánh hiệu quả của việc tái đầu tư cổ tức (DRIP) so với nhận tiền mặt đối với các mã cổ phiếu đầu ngành.",
+    difficulty: "intermediate",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu sâu về khái niệm Yield-on-Cost và sức bật lãi kép từ việc sở hữu thêm cổ phần qua tái đầu tư cổ tức.",
+    instructions: [
+      "Mở tab Tích lũy cổ tức DGI trong hộp công cụ tài chính JokingFinance.",
+      "Chọn mã cổ phiếu Vinamilk (VNM) với thiết lập vốn ban đầu 50 triệu và tích lũy 3 triệu/tháng trong thời gian 15 năm.",
+      "Chạy giả lập lần 1 với tính năng Tái đầu tư cổ tức (DRIP) đang Bật. Ghi chép lại Giá trị tài sản cuối kỳ, Yield on Cost (YoC) cuối kỳ và lượng Thu nhập thụ động hàng năm.",
+      "Chạy giả lập lần 2 với tính năng Tái đầu tư cổ tức (DRIP) đang Tắt (nhận tiền mặt tiêu dùng). So sánh sự sụt giảm về tài sản và dòng tiền thụ động năm cuối.",
+      "Chuyển sang mã FPT và quan sát sự khác biệt khi một cổ phiếu có mức tăng trưởng cổ tức cao (12%/năm) tạo ra Yield on Cost vượt trội sau 20 năm tích lũy."
+    ],
+    successCriteria: [
+      "Đã thực hiện so sánh trực quan giữa hai chế độ Có DRIP và Không DRIP trên cùng một mã cổ phiếu.",
+      "Xác định được sự ảnh hưởng của tốc độ tăng trưởng cổ tức (Dividend Growth) đối với chỉ số Yield on Cost cuối kỳ.",
+      "Ghi chép lại suy ngẫm cá nhân về tầm quan trọng của việc coi cổ tức là công cụ tích lũy cổ phần thay vì tiền tiêu xài ngắn hạn."
+    ],
+    relatedArticleSlug: "tich-luy-co-tuc-va-suc-bat-compound-dividend",
     isActive: true,
   },
 ];

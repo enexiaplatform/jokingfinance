@@ -10,6 +10,12 @@ const localPriorityArticleSlugs = new Set([
   "lai-suat-tien-gui-va-co-phieu-ngan-hang-lien-quan-voi-nhau-ra-sao",
   "khi-niem-dinh-gia-pe-va-bien-an-toan",
   "lai-kep-va-chi-phi-co-hoi",
+  "hoach-dinh-fire-va-tu-do-tai-chinh",
+  "suc-manh-cua-tich-luy-dinh-ky-dca",
+  "quy-mo-vi-the-va-ty-le-rrr",
+  "mo-phong-monte-carlo-va-rui-ro-pha-san",
+  "cong-thuc-kelly-va-quan-tri-ty-trong-danh-muc",
+  "tich-luy-co-tuc-va-suc-bat-compound-dividend",
 ]);
 
 const localPriorityArticles = sampleArticles.filter((article) =>
