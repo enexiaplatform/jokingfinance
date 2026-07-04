@@ -414,6 +414,8 @@ export const knowledgePillars: KnowledgePillar[] = [
         goal: "Tạo quy tắc trước khi cảm xúc lên tiếng.",
         topics: ["Ngưỡng cắt lỗ", "Ngưỡng giảm tỷ trọng", "Điều kiện mua thêm", "Điều kiện bán", "Quy tắc nghỉ giao dịch"],
         practice: "Viết 5 quy tắc cá nhân cho danh mục ảo.",
+        relatedArticleSlugs: ["mo-phong-monte-carlo-va-rui-ro-pha-san", "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu"],
+        relatedMissionSlugs: ["thuc-hanh-gia-lap-monte-carlo", "thuc-hanh-quan-tri-rui-ro-va-tinh-toan-vi-the"],
       },
     ],
   },

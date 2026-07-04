@@ -25,8 +25,9 @@ import { BiasTool } from "./bias-tool";
 import { FireTool } from "./fire-tool";
 import { DcaTool } from "./dca-tool";
 import { PositionTool } from "./position-tool";
+import { RuinTool } from "./ruin-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin";
 
 type ChecklistQuestion = {
   id: number;
@@ -488,6 +489,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🎯 Tính vị thế & Rủi ro RRR
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("ruin")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "ruin"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🎲 Giả lập Monte Carlo (Phá sản)
         </button>
       </div>
 
@@ -1260,8 +1272,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <FireTool />
       ) : activeTab === "dca" ? (
         <DcaTool />
-      ) : (
+      ) : activeTab === "position" ? (
         <PositionTool stocks={state?.stocks || []} />
+      ) : (
+        <RuinTool />
       )}
 
       <Disclaimer />

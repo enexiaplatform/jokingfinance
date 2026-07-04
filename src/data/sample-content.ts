@@ -134,6 +134,17 @@ export const learningTracks: LearningTrack[] = [
     articleSlugs: ["vi-sao-nguoi-moi-de-fomo", "danh-muc-dau-tu-la-gi"],
     missionSlugs: ["nhan-dien-giao-dich-fomo", "khong-phan-bo-qua-20-phan-tram-vao-mot-ma"],
   },
+  {
+    title: "Sống sót và Quản trị xác suất phá sản",
+    slug: "song-sot-va-quan-tri-xac-suat-pha-san",
+    description:
+      "Tìm hiểu lý do toán học vì sao đi lệnh quá lớn sẽ làm tài khoản về không và cách thiết lập quy mô vị thế an toàn.",
+    level: "advanced",
+    estimatedMinutes: 30,
+    outcome: "Hiểu được rủi ro sụt giảm tài sản (Drawdown) và biết áp dụng Monte Carlo để chọn tham số giao dịch bền vững.",
+    articleSlugs: ["mo-phong-monte-carlo-va-rui-ro-pha-san", "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu"],
+    missionSlugs: ["thuc-hanh-gia-lap-monte-carlo", "thuc-hanh-quan-tri-rui-ro-va-tinh-toan-vi-the"],
+  },
 ];
 
 export const sampleArticles: Article[] = [
@@ -561,6 +572,30 @@ export const sampleArticles: Article[] = [
       "Công thức tính số lượng cổ phiếu khuyên mua là: Số lượng = (Tổng vốn * Tỷ lệ rủi ro %) / (Giá mua - Giá cắt lỗ). Giả sử bạn có tổng vốn ảo 100.000.000đ, bạn chỉ chấp nhận rủi ro 1% (tương đương 1.000.000đ) cho giao dịch này. Nếu chênh lệch giữa giá mua và cắt lỗ của FPT là 10.000đ/cổ phiếu, số lượng cổ phiếu bạn nên mua là: 1.000.000 / 10.000 = 100 cổ phiếu. Tổng giá trị lệnh mua này là 13.000.000đ (chiếm 13% tài sản của bạn).",
       "Bằng cách áp dụng nghiêm ngặt công thức này, dù thị trường xảy ra biến cố bất ngờ (thiên nga đen) khiến cổ phiếu lao dốc chạm ngay Stop Loss, tài khoản của bạn cũng chỉ suy giảm đúng 1% - một mức tổn thất cực kỳ nhẹ nhàng và dễ dàng sửa sai. Hãy luyện tập việc tính toán RRR và đi lệnh theo đúng quy mô đề xuất trên JokingFinance để biến quản trị rủi ro thành bản năng trước khi giao dịch tiền thật."
     ]
+  },
+  {
+    title: "Mô phỏng Monte Carlo và Rủi ro phá sản (Risk of Ruin) trong đầu tư",
+    slug: "mo-phong-monte-carlo-va-rui-ro-pha-san",
+    summary: "Tại sao ngay cả với phương pháp giao dịch có tỷ lệ thắng tốt, việc đi lệnh quá lớn vẫn khiến tài khoản của bạn chắc chắn về số không sau chuỗi thua lỗ tự nhiên.",
+    category: "Sai lầm tài chính",
+    categorySlug: "sai-lam-tai-chinh",
+    tags: ["monte carlo", "risk of ruin", "phá sản", "quản trị vốn", "kỷ luật"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-04",
+    difficulty: "advanced",
+    readingTime: 8,
+    relatedStocks: ["HPG", "FPT", "MWG"],
+    relatedMissionSlug: "thuc-hanh-gia-lap-monte-carlo",
+    seoTitle: "Giả lập Monte Carlo và Xác suất cháy tài khoản Risk of Ruin",
+    seoDescription: "Hiểu sâu sắc về xác suất phá sản (Risk of Ruin) bằng phương pháp mô phỏng Monte Carlo. Giải thích tại sao quản trị quy mô vị thế dưới 2% là cách duy nhất để sống sót.",
+    body: [
+      "Trong giới giao dịch chuyên nghiệp, có một định luật bất biến: Bạn không thể thắng nếu không thể sống sót qua chuỗi thua lỗ. Rất nhiều nhà đầu tư cá nhân bước vào thị trường với một phương pháp phân tích kỹ thuật hoặc cơ bản có tỷ lệ thắng lên tới 55% - 60% nhưng vẫn chịu kết cục cháy sạch tài sản. Công cụ giả lập Monte Carlo và khái niệm 'Xác suất phá sản' (Risk of Ruin) sẽ bóc trần sự thật toán học đằng sau sai lầm chí mạng này.",
+      "Xác suất phá sản (Risk of Ruin) là xác suất một tài khoản giao dịch bị sụt giảm đến mức không thể phục hồi (thường được định nghĩa là giảm 30%, 50% hoặc mất trắng 100% vốn) sau một chuỗi lệnh liên tục. Phương pháp mô phỏng Monte Carlo giúp chúng ta chạy hàng trăm, hàng ngàn kịch bản ngẫu nhiên dựa trên các tham số cố định: Tỷ lệ thắng (Win Rate), Tỷ lệ Lợi nhuận/Rủi ro (RRR), và phần trăm vốn chấp nhận rủi ro mỗi lệnh (Risk Per Trade).",
+      "Hãy tưởng tượng bạn có tỷ lệ thắng 50% và RRR = 2.0 (tức là mỗi lần thắng ăn gấp 2 lần thua). Về mặt lý thuyết dài hạn, hệ thống này có lợi nhuận kỳ vọng dương (kỳ vọng toán học dương). Tuy nhiên, nếu bạn mạo hiểm 10% tài khoản cho mỗi lệnh (Risk Per Trade = 10%), giả lập Monte Carlo chỉ ra rằng bạn có hơn 95% cơ hội chạm mức sụt giảm 50% tài sản chỉ sau 50 lệnh. Tại sao lại như vậy?",
+      "Câu trả lời nằm ở 'chuỗi thua liên tục tự nhiên'. Theo lý thuyết xác suất, với tỷ lệ thắng 50%, khả năng bạn gặp một chuỗi thua 6 lệnh liên tiếp trong vòng 50 giao dịch lên tới hơn 80%. Nếu mỗi lệnh bạn rủi ro 10% vốn, chuỗi 6 lệnh thua này sẽ thổi bay hơn 48% tài khoản của bạn (tính theo phương thức lãi kép sụt giảm). Khi đã mất 50% vốn, bạn cần phải nhân đôi tài khoản (+100%) chỉ để hòa vốn ban đầu - một nhiệm vụ cực kỳ gian nan.",
+      "Ngược lại, nếu bạn tuân thủ nguyên tắc quản trị rủi ro nghiêm ngặt của các quỹ đầu tư chuyên nghiệp: chỉ mạo hiểm tối đa 1% - 2% tài sản cho mỗi giao dịch. Dù gặp phải chuỗi thua lỗ 6 lệnh liên tiếp, tài khoản của bạn cũng chỉ giảm từ 6% đến 11%. Mức sụt giảm này hoàn toàn nằm trong tầm kiểm soát và có thể dễ dàng phục hồi chỉ sau 3-4 lệnh thắng tiếp theo. Xác suất phá sản toán học lúc này bằng 0%.",
+      "JokingFinance đã tích hợp công cụ 'Giả lập Monte Carlo' trong hộp công cụ tài chính. Công cụ này cho phép bạn nhập các thông số thực tế của riêng mình và vẽ ra đường đi của 15 tài khoản giả định để trực tiếp nhìn thấy sức mạnh tàn phá của việc đi lệnh quá tay. Hãy nhớ rằng: Thị trường chứng khoán luôn có những biến số không ngờ tới, và kỷ luật giữ quy mô rủi ro nhỏ là chìa khóa duy nhất để bạn có thể tiếp tục cuộc chơi."
+    ]
   }
 ];
 
@@ -869,6 +904,29 @@ export const sampleMissions: Mission[] = [
       "Thực hiện thành công 1 lệnh mua ảo được pre-fill thông số từ công cụ quản trị rủi ro vào simulator."
     ],
     relatedArticleSlug: "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu",
+    isActive: true,
+  },
+  {
+    title: "Thực hành giả lập Monte Carlo và phân tích xác suất phá sản",
+    slug: "thuc-hanh-gia-lap-monte-carlo",
+    description: "Sử dụng công cụ giả lập Monte Carlo để chạy thử nghiệm các kịch bản quản trị vốn và rút ra bài học về quy mô rủi ro an toàn.",
+    difficulty: "advanced",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu được cách chuỗi thua lỗ ngẫu nhiên tàn phá tài khoản và tìm ra ngưỡng phần trăm rủi ro mỗi lệnh tối ưu.",
+    instructions: [
+      "Mở tab Giả lập Monte Carlo (Phá sản) trong hộp công cụ tài chính.",
+      "Nhập mức vốn giả định của bạn và chọn kịch bản 'Con bạc khát nước (Risk 15%)'. Quan sát Xác suất phá sản và các đường đi màu đỏ.",
+      "Tái mô phỏng 3 lần để thấy tính ngẫu nhiên của các đường tài sản mặc dù giữ nguyên thông số.",
+      "Chuyển sang kịch bản 'Quản trị chuẩn (Kỷ luật 1%)' và so sánh sự khác biệt về Xác suất phá sản và mức sụt giảm lớn nhất.",
+      "Ghi nhận mối tương quan giữa tỷ lệ rủi ro mỗi lệnh (%) với xác suất cháy tài khoản."
+    ],
+    successCriteria: [
+      "Đã chạy giả lập Monte Carlo với ít nhất 2 kịch bản rủi ro khác nhau.",
+      "Nhận diện được sự khác biệt trực quan giữa quy mô rủi ro 1% và 15% đối với sự sống sót của tài khoản.",
+      "Ghi chép suy ngẫm cá nhân về chuỗi thua lỗ tự nhiên và tầm quan trọng của việc duy trì quy mô vốn nhỏ."
+    ],
+    relatedArticleSlug: "mo-phong-monte-carlo-va-rui-ro-pha-san",
     isActive: true,
   },
 ];
