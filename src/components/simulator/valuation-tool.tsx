@@ -1,19 +1,13 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { formatCurrency, formatNumber, formatPercent } from "@/lib/format";
 import {
   Calculator,
-  Info,
   ShieldCheck,
   Sparkles,
-  TrendingUp,
-  AlertTriangle,
   ArrowRight,
-  BookOpen,
-  ChevronRight,
-  HelpCircle,
-  TrendingDown
+  BookOpen
 } from "lucide-react";
 import Link from "next/link";
 import type { Stock } from "@/lib/market-data/types";
@@ -34,8 +28,12 @@ export function ValuationTool({ stocks }: ValuationToolProps) {
     return stocks.find((s) => s.ticker === selectedTicker) || stocks[0];
   }, [stocks, selectedTicker]);
 
-  // Set default parameters when stock changes
-  useEffect(() => {
+  const [prevSelectedTicker, setPrevSelectedTicker] = useState(selectedTicker);
+  const [prevStocksLength, setPrevStocksLength] = useState(stocks.length);
+
+  if (selectedTicker !== prevSelectedTicker || stocks.length !== prevStocksLength) {
+    setPrevSelectedTicker(selectedTicker);
+    setPrevStocksLength(stocks.length);
     if (selectedStock) {
       const pe = selectedStock.peRatio || 15;
       const currentPrice = selectedStock.currentPrice || 10000;
@@ -54,7 +52,7 @@ export function ValuationTool({ stocks }: ValuationToolProps) {
         setGrowthRate(10);
       }
     }
-  }, [selectedStock]);
+  }
 
   const eps = typeof customEps === "number" ? customEps : 0;
   const currentPrice = selectedStock ? selectedStock.currentPrice : 0;

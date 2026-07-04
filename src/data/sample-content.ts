@@ -536,6 +536,31 @@ export const sampleArticles: Article[] = [
       "Ngoài lợi ích tài chính, DCA là một 'liều thuốc an thần' cho tâm lý đầu tư. Bạn không còn phải dằn vặt mỗi khi thị trường giảm, vì biết rằng đó là cơ hội gom thêm nhiều cổ phiếu giá rẻ. Bạn cũng không bị FOMO khi thị trường tăng nóng, vì đã có một kế hoạch giải ngân kỷ luật được thiết lập sẵn từ trước. Đầu tư trở thành một thói quen tích lũy nhẹ nhàng như gửi tiết kiệm ngân hàng.",
       "Để áp dụng DCA thành công, có ba nguyên tắc bạn cần tuyệt đối tuân thủ: Thứ nhất, chỉ chọn những cổ phiếu của các doanh nghiệp đầu ngành, có sức mạnh tài chính vững vàng và triển vọng tăng trưởng dài hạn vững chắc (như FPT, HPG, VCB). Thứ hai, kiên định duy trì kỷ luật đóng tiền đều đặn, không tự ý dừng lại hoặc thay đổi chiến lược khi thị trường rung lắc ngắn hạn. Thứ ba, chỉ đầu tư bằng nguồn tiền nhàn rỗi thực sự để đảm bảo bạn không bị buộc phải bán tháo danh mục trước thời hạn."
     ]
+  },
+  {
+    title: "Quy tắc quy mô vị thế và Tỷ lệ RRR (Risk-Reward Ratio) trong đầu tư",
+    slug: "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu",
+    summary: "Vì sao việc quản trị rủi ro quan trọng hơn dự đoán hướng đi của giá cổ phiếu và cách thiết lập quy mô đi lệnh khoa học bằng tỷ lệ RRR.",
+    category: "Chứng khoán nhập môn",
+    categorySlug: "chung-khoan-nhap-mon",
+    tags: ["quản trị rủi ro", "tỷ lệ RRR", "quy mô đi lệnh", "kỷ luật"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-03",
+    difficulty: "intermediate",
+    readingTime: 7,
+    relatedStocks: ["FPT", "HPG", "VCB"],
+    relatedMissionSlug: "thuc-hanh-quan-tri-rui-ro-va-tinh-toan-vi-the",
+    seoTitle: "Quy tắc quy mô vị thế và Tỷ lệ RRR trong đầu tư chứng khoán",
+    seoDescription: "Hướng dẫn chi tiết cách quản trị rủi ro, xác định giá cắt lỗ chốt lời, tính toán tỷ lệ RRR và quy mô đi lệnh tối ưu để bảo vệ tài khoản.",
+    body: [
+      "Hầu hết nhà đầu tư cá nhân mới bước vào thị trường thường dành 95% thời gian để tìm kiếm cổ phiếu siêu hạng hoặc dự đoán xem ngày mai thị trường tăng hay giảm. Tuy nhiên, các nhà giao dịch chuyên nghiệp lâu năm đều biết rằng việc dự đoán chỉ là thứ yếu. Chiếc khiên thực sự bảo vệ bạn và giúp bạn chiến thắng dài hạn chính là: Quản trị rủi ro và xác định quy mô vị thế (Position Sizing).",
+      "Nếu không quản trị vốn, ngay cả khi bạn có tỷ lệ đoán đúng giá cổ phiếu lên đến 60%, bạn vẫn có thể cháy tài khoản. Lý do rất đơn giản: khi đoán đúng, bạn chỉ mua một ít hoặc chốt lời quá non; nhưng khi đoán sai, bạn lại gồng lỗ vô hạn hoặc tiếp tục trung bình giá xuống với tỷ trọng lớn. Một lệnh thua đậm có thể xóa sạch thành quả của 10 lệnh thắng trước đó.",
+      "Để giải quyết triệt để vấn đề này, các nhà quản lý quỹ sử dụng Tỷ lệ Lợi nhuận/Rủi ro (Risk-Reward Ratio - RRR). RRR được định nghĩa bằng khoảng lợi nhuận tiềm năng (từ điểm mua đến giá chốt lời kỳ vọng) chia cho khoảng rủi ro chấp nhận đánh đổi (từ điểm mua đến giá cắt lỗ). Ví dụ, nếu bạn mua cổ phiếu FPT ở giá 130.000đ, đặt cắt lỗ tại 120.000đ (chấp nhận mất 10.000đ) và mục tiêu chốt lời tại 150.000đ (kỳ vọng lời 20.000đ), tỷ lệ RRR của lệnh này sẽ là 20.000 / 10.000 = 2.0.",
+      "Tỷ lệ RRR >= 2.0 mang lại một lợi thế toán học khổng lồ. Với RRR = 2.0, chỉ cần bạn đoán đúng 4 trên 10 lệnh (tỷ lệ thắng 40%), bạn vẫn kiếm được tiền. Cụ thể: 4 lệnh thắng giúp bạn kiếm được 4 x 2.0 = 8.0 đồng lãi, trong khi 6 lệnh thua chỉ làm bạn mất 6 x 1.0 = 6.0 đồng lỗ. Bạn vẫn lãi ròng 2.0 đồng. Nhờ RRR tốt, bạn không còn phải chịu áp lực phải luôn luôn đúng trước mọi biến động của thị trường.",
+      "Sau khi xác định được điểm mua, điểm cắt lỗ và chốt lời đạt chuẩn RRR, câu hỏi tiếp theo là: Tôi nên mua bao nhiêu cổ phiếu? Đây là lúc công thức Quy mô vị thế (Position Sizing) phát huy tác dụng. Bạn cần quyết định trước số tiền tối đa chấp nhận mất nếu chạm cắt lỗ (ví dụ: 1% hoặc 2% tổng tài sản của bạn).",
+      "Công thức tính số lượng cổ phiếu khuyên mua là: Số lượng = (Tổng vốn * Tỷ lệ rủi ro %) / (Giá mua - Giá cắt lỗ). Giả sử bạn có tổng vốn ảo 100.000.000đ, bạn chỉ chấp nhận rủi ro 1% (tương đương 1.000.000đ) cho giao dịch này. Nếu chênh lệch giữa giá mua và cắt lỗ của FPT là 10.000đ/cổ phiếu, số lượng cổ phiếu bạn nên mua là: 1.000.000 / 10.000 = 100 cổ phiếu. Tổng giá trị lệnh mua này là 13.000.000đ (chiếm 13% tài sản của bạn).",
+      "Bằng cách áp dụng nghiêm ngặt công thức này, dù thị trường xảy ra biến cố bất ngờ (thiên nga đen) khiến cổ phiếu lao dốc chạm ngay Stop Loss, tài khoản của bạn cũng chỉ suy giảm đúng 1% - một mức tổn thất cực kỳ nhẹ nhàng và dễ dàng sửa sai. Hãy luyện tập việc tính toán RRR và đi lệnh theo đúng quy mô đề xuất trên JokingFinance để biến quản trị rủi ro thành bản năng trước khi giao dịch tiền thật."
+    ]
   }
 ];
 
@@ -820,6 +845,30 @@ export const sampleMissions: Mission[] = [
       "Có ghi chép bài học suy ngẫm về sức mạnh gom hàng giá rẻ của DCA khi thị trường đi xuống."
     ],
     relatedArticleSlug: "suc-manh-cua-tich-luy-dinh-ky-dca",
+    isActive: true,
+  },
+  {
+    title: "Thực hành quản trị rủi ro và tính toán vị thế",
+    slug: "thuc-hanh-quan-tri-rui-ro-va-tinh-toan-vi-the",
+    description: "Sử dụng công cụ Tính vị thế & Rủi ro RRR để lập kế hoạch cắt lỗ, chốt lời và tính khối lượng mua tối ưu cho một mã cổ phiếu.",
+    difficulty: "intermediate",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu sâu sắc cách kiểm soát rủi ro của từng lệnh ở mức 1% - 2% tài sản và chọn giao dịch có RRR tối ưu.",
+    instructions: [
+      "Mở tab Tính vị thế & Rủi ro RRR trong hộp công cụ.",
+      "Chọn một mã cổ phiếu bạn muốn phân tích (ví dụ: HPG hoặc FPT).",
+      "Thiết lập mức rủi ro tối đa là 1.5% tổng tài sản của bạn.",
+      "Nhập giá mua hiện tại, đặt giá cắt lỗ ở mức -7% và giá chốt lời ở mức +15%. Quan sát tỷ lệ RRR và Khối lượng cổ phiếu khuyên mua.",
+      "Điều chỉnh giá cắt lỗ rộng hơn hoặc chốt lời ngắn hơn để xem tỷ lệ RRR thay đổi như thế nào, và đọc cảnh báo rủi ro tự động.",
+      "Nhấn nút 'Đi lệnh mô phỏng với thông số này' để thực hiện đặt lệnh ảo với khối lượng đã tính toán."
+    ],
+    successCriteria: [
+      "Đã chạy thử nghiệm tính toán vị thế với ít nhất 1 cổ phiếu.",
+      "Tìm được điểm chốt lời/cắt lỗ để đạt tỷ lệ RRR >= 2.0.",
+      "Thực hiện thành công 1 lệnh mua ảo được pre-fill thông số từ công cụ quản trị rủi ro vào simulator."
+    ],
+    relatedArticleSlug: "quan-tri-rui-ro-va-ty-le-rrr-trong-dau-tu",
     isActive: true,
   },
 ];
