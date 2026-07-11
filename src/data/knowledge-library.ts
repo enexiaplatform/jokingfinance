@@ -442,8 +442,8 @@ export const knowledgePillars: KnowledgePillar[] = [
         goal: "Không biến cảm giác sợ bỏ lỡ thành lý do mua.",
         topics: ["FOMO", "Tin nóng", "Đám đông", "Giá tăng nhanh", "Mua không luận điểm"],
         practice: "Đánh dấu một giao dịch mô phỏng là FOMO nếu có.",
-        relatedArticleSlugs: ["vi-sao-nguoi-moi-de-fomo"],
-        relatedMissionSlugs: ["nhan-dien-giao-dich-fomo"],
+        relatedArticleSlugs: ["vi-sao-nguoi-moi-de-fomo", "bay-canh-thoi-diem-va-chu-ky-tam-ly-dam-dong"],
+        relatedMissionSlugs: ["nhan-dien-giao-dich-fomo", "do-luong-fomo-va-panic-khi-timing"],
       },
       {
         title: "Neo giá và sợ lỗ",

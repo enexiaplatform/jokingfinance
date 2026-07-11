@@ -665,6 +665,28 @@ export const sampleArticles: Article[] = [
       "Mối nguy hại lớn nhất của Overtrading là nó cắt đứt dòng chảy lãi kép. Lãi kép chỉ hoạt động mạnh nhất khi tài sản được giữ yên lặng để tự nhân bản. Việc bán đi mua lại liên tục làm gián đoạn quá trình tích lũy, đồng thời liên tục rút tiền mặt ra khỏi tài khoản để nộp thuế phí. Do đó, các nhà đầu tư huyền thoại như Charlie Munger luôn nhấn mạnh: 'Lời khuyên đầu tiên về lãi kép là đừng bao giờ ngắt quãng nó một cách không cần thiết'.",
       "JokingFinance đã phát triển công cụ 'Giả lập Bào mòn Lợi nhuận do Giao dịch ngắn hạn (Overtrading)' để giúp bạn trực quan hóa mối tương quan này. Bạn có thể tự điều chỉnh tần suất giao dịch từ dài hạn đến T+3 hàng ngày, nhập mức 'Alpha' (mức vượt trội mà bạn tin mình có thể thắng thị trường) để xem liệu tài năng trading của bạn có bù đắp nổi lực kéo của chi phí ẩn hay không. Hãy thực hành giả lập trên điểm ảo trước để bảo vệ ví tiền thật của bạn khỏi bẫy bào mòn này."
     ]
+  },
+  {
+    title: "Cạm bẫy Canh thời điểm Thị trường & Chu kỳ Tâm lý Đám đông",
+    slug: "bay-canh-thoi-diem-va-chu-ky-tam-ly-dam-dong",
+    summary: "Tại sao nỗ lực đoán đỉnh bắt đáy của nhà đầu tư cá nhân thường kết thúc bằng việc đu đỉnh bán đáy, và cách rèn luyện kỷ luật vượt qua FOMO.",
+    category: "Sai lầm tài chính",
+    categorySlug: "sai-lam-tai-chinh",
+    tags: ["canh thời điểm", "timing thị trường", "tâm lý học hành vi", "FOMO", "hoảng loạn"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-11",
+    difficulty: "beginner",
+    readingTime: 7,
+    relatedStocks: ["FPT", "SSI", "HPG", "VND"],
+    relatedMissionSlug: "do-luong-fomo-va-panic-khi-timing",
+    seoTitle: "Cạm bẫy Canh thời điểm Thị trường & Bẫy Tâm lý FOMO",
+    seoDescription: "Phân tích tâm lý học hành vi đằng sau xu hướng canh thời điểm thị trường của nhà đầu tư nhỏ lẻ và cách khắc phục bằng chiến lược tích lũy kỷ luật.",
+    body: [
+      "Hầu hết nhà đầu tư cá nhân bước chân vào thị trường chứng khoán với niềm tin mãnh liệt rằng họ có thể mua cổ phiếu lúc giá rẻ nhất ở đáy và bán ra lúc giá cao nhất ở đỉnh. Nỗ lực này được gọi là Canh thời điểm thị trường (Market Timing). Trên lý thuyết, đây là chiến lược hoàn hảo giúp nhân đôi tài sản nhanh chóng. Nhưng trên thực tế, Market Timing là một trong những cái bẫy tàn khốc nhất thiêu rụi tài khoản của người mới.",
+      "Tâm lý học hành vi chỉ ra hai chu kỳ cảm xúc cực đoan chi phối quyết định timing: Hội chứng sợ bỏ lỡ (FOMO - Fear Of Missing Out) và Sự hoảng loạn tột độ (Panic Selling). Khi thị trường tăng liên tục, tin tức tốt dồn dập và mọi người xung quanh khoe lãi, bộ não chúng ta kích hoạt trạng thái tham lam. Người đứng ngoài không chịu nổi áp lực sợ bỏ lỡ cơ hội giàu sang nên đã vội vàng all-in mua đuổi ngay sát đỉnh sóng (FOMO Buy). Ngược lại, khi thị trường sập sâu, tin đồn phá sản lan rộng và tài khoản bốc hơi 30-40%, nỗi sợ mất sạch kích hoạt bản năng tự vệ sinh tồn, buộc họ cắt lỗ dứt khoát ngay tại vùng đáy trước khi giá phục hồi (Panic Sell).",
+      "Sự kết hợp giữa FOMO Buy và Panic Sell tạo ra một vòng lặp hủy hoại tài sản kinh điển: Mua đỉnh - Bán đáy. Điều đáng nói là các nhịp sập flash crash hay các nhịp tăng nóng thường diễn ra rất nhanh và bất ngờ. Một nghiên cứu của JP Morgan Asset Management chỉ ra rằng nếu bạn bỏ lỡ chỉ 10 ngày tăng trưởng mạnh nhất của chỉ số S&P 500 trong vòng 20 năm, lợi suất đầu tư của bạn sẽ bị giảm đi một nửa so với việc nắm giữ kiên nhẫn xuyên suốt thời gian đó.",
+      "Để giúp người học trực tiếp trải nghiệm cảm giác ngột ngạt của bảng điện tử và đo lường khả năng timing của bản thân, JokingFinance đã tích hợp công cụ trò chơi 'Thử thách Canh thời điểm (Market Timer)'. Qua 3 kịch bản bong bóng nóng, thập kỷ đi ngang và cú sập bất ngờ, bạn sẽ được tự tay đặt lệnh mua bán ảo dưới áp lực tin tức nhiễu để xem kết quả tài sản ròng của mình có chiến thắng nổi chiến lược Mua & Nắm giữ (Buy & Hold) thụ động hay không. Việc nhận diện các lỗi hành vi (như FOMO Buyer hay Panic Seller) trên điểm ảo sẽ giúp bạn xây dựng bộ lọc tâm lý vững chắc trước khi dùng tiền thật ngoài đời."
+    ]
   }
 ];
 
@@ -1066,6 +1088,29 @@ export const sampleMissions: Mission[] = [
       "Có ghi chép bài học về tác hại của việc giao dịch quá mức lên hiệu quả đầu tư thực tế."
     ],
     relatedArticleSlug: "overtrading-va-drag-thue-phi",
+    isActive: true,
+  },
+  {
+    title: "Vượt qua Thử thách Canh thời điểm (Market Timer)",
+    slug: "do-luong-fomo-va-panic-khi-timing",
+    description: "Trực tiếp thử sức timing thị trường với trò chơi mô phỏng cảm xúc JokingFinance để nhận diện hành vi FOMO Buy / Panic Sell của bản thân.",
+    difficulty: "beginner",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 10,
+    objective: "Nhận diện phản ứng cảm xúc trước tin tức thị trường biến động mạnh và hiểu tính ưu việt của Buy & Hold.",
+    instructions: [
+      "Mở tab Game Canh thời điểm (Market Timer) trong hộp công cụ tài chính.",
+      "Chọn kịch bản 'Bong bóng & Sụp đổ (Tech Hype)'.",
+      "Tiến hành chơi hết 30 bước, tự tay đặt lệnh mua bán dựa trên giá và tin tức hiển thị ở mỗi bước.",
+      "Hoàn thành trò chơi và đọc phần Chẩn đoán tâm lý ở trang kết quả.",
+      "Chụp ảnh màn hình kết quả hoặc ghi chú lại tên loại nhà đầu tư của bạn (ví dụ: FOMO Buyer, Panic Seller hay Market Follower) cùng bài học tự rút ra."
+    ],
+    successCriteria: [
+      "Hoàn thành trọn vẹn 30 bước của một kịch bản timing bất kỳ.",
+      "Đạt trang kết quả chẩn đoán và so sánh được tài sản của mình với điểm chuẩn Buy & Hold.",
+      "Rút ra được bài học tâm lý cốt lõi về việc kiềm chế cảm xúc trước biến động ngắn hạn."
+    ],
+    relatedArticleSlug: "bay-canh-thoi-diem-va-chu-ky-tam-ly-dam-dong",
     isActive: true,
   },
 ];

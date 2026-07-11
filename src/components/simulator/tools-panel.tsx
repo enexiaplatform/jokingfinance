@@ -29,8 +29,9 @@ import { RuinTool } from "./ruin-tool";
 import { KellyTool } from "./kelly-tool";
 import { DividendTool } from "./dividend-tool";
 import { OvertradingTool } from "./overtrading-tool";
+import { MarketTimerGame } from "./market-timer-game";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly" | "dividend" | "overtrading";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly" | "dividend" | "overtrading" | "markettimer";
 
 type ChecklistQuestion = {
   id: number;
@@ -536,6 +537,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           💸 Hao hụt do Giao dịch ngắn hạn (Overtrading)
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("markettimer")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "markettimer"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          🎮 Game Canh thời điểm (Market Timer)
         </button>
       </div>
 
@@ -1316,8 +1328,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <KellyTool stocks={state?.stocks || []} />
       ) : activeTab === "dividend" ? (
         <DividendTool />
-      ) : (
+      ) : activeTab === "overtrading" ? (
         <OvertradingTool />
+      ) : (
+        <MarketTimerGame />
       )}
 
       <Disclaimer />
