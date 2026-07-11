@@ -312,7 +312,7 @@ export function KellyTool({ stocks }: KellyToolProps) {
             <div>
               <h2 className="text-xl font-bold text-[#17201b]">Công thức Kelly & Phân bổ tỷ trọng</h2>
               <p className="mt-1 text-sm text-[#5b6861] leading-relaxed">
-                Được phát triển bởi nhà vật lý học John Larry Kelly Jr. vào năm 1956, công thức này tính toán tỷ lệ đi tiền tối ưu để tối đa hóa sự tăng trưởng vốn tích lũy dài hạn. Nó trả lời câu hỏi: <b>"Tôi nên phân bổ bao nhiêu phần trăm danh mục vào mã này để tối ưu hóa tài sản?"</b>
+                Được phát triển bởi nhà vật lý học John Larry Kelly Jr. vào năm 1956, công thức này tính toán tỷ lệ đi tiền tối ưu để tối đa hóa sự tăng trưởng vốn tích lũy dài hạn. Nó trả lời câu hỏi: <b>&ldquo;Tôi nên phân bổ bao nhiêu phần trăm danh mục vào mã này để tối ưu hóa tài sản?&rdquo;</b>
               </p>
             </div>
           </div>
@@ -427,7 +427,7 @@ export function KellyTool({ stocks }: KellyToolProps) {
               Bước 2: Chọn phân số Kelly (Kelly Fraction)
             </h3>
             <p className="text-xs text-[#66736c] mb-4">
-              Trong thực tế, do khó đánh giá chính xác Win Rate, các nhà đầu tư thường sử dụng <b>"Fractional Kelly"</b> (Kelly một phần) để hạn chế rủi ro sụt giảm tài sản cực đoan mà vẫn bảo vệ phần lớn tăng trưởng.
+              Trong thực tế, do khó đánh giá chính xác Win Rate, các nhà đầu tư thường sử dụng <b>&ldquo;Fractional Kelly&rdquo;</b> (Kelly một phần) để hạn chế rủi ro sụt giảm tài sản cực đoan mà vẫn bảo vệ phần lớn tăng trưởng.
             </p>
 
             <div className="grid gap-2.5 sm:grid-cols-3">
@@ -783,7 +783,7 @@ export function KellyTool({ stocks }: KellyToolProps) {
 
               {/* Summary Conclusion */}
               <p className="text-[11px] text-[#66736c] leading-relaxed italic mt-4 border-t border-[#edf0eb] pt-2.5">
-                *Đường đi màu xanh lá (Half Kelly) thường mang lại trạng thái cân bằng tốt nhất trong thực tế: nó tăng trưởng ổn định trong chuỗi thắng và giảm thiểu nguy cơ "cháy" hoặc sụt giảm nặng nề khi gặp chuỗi thua lỗ tự nhiên ngẫu nhiên.
+                *Đường đi màu xanh lá (Half Kelly) thường mang lại trạng thái cân bằng tốt nhất trong thực tế: nó tăng trưởng ổn định trong chuỗi thắng và giảm thiểu nguy cơ &ldquo;cháy&rdquo; hoặc sụt giảm nặng nề khi gặp chuỗi thua lỗ tự nhiên ngẫu nhiên.
               </p>
             </div>
           </div>

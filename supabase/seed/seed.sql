@@ -132,3 +132,55 @@ on conflict (slug) do update set
   related_case_slug = excluded.related_case_slug,
   is_active = excluded.is_active,
   updated_at = now();
+
+insert into public.missions (
+  title, slug, description, difficulty, category, estimated_minutes,
+  objective, instructions, success_criteria, related_article_slug, is_active
+) values
+  ('Thực hành giả lập cổ tức tăng trưởng và cơ chế DRIP',
+   'thuc-hanh-tich-luy-co-tuc-dgi-drip',
+   'Sử dụng công cụ giả lập cổ tức tăng trưởng để so sánh hiệu quả của việc tái đầu tư cổ tức (DRIP) so với nhận tiền mặt đối với các mã cổ phiếu đầu ngành.',
+   'intermediate',
+   'Phòng luyện tập',
+   15,
+   'Hiểu sâu về khái niệm Yield-on-Cost và sức bật lãi kép từ việc sở hữu thêm cổ phần qua tái đầu tư cổ tức.',
+   'Mở tab Tích lũy cổ tức DGI trong hộp công cụ tài chính JokingFinance.
+Chọn mã cổ phiếu Vinamilk (VNM) với thiết lập vốn ban đầu 50 triệu và tích lũy 3 triệu/tháng trong thời gian 15 năm.
+Chạy giả lập lần 1 với tính năng Tái đầu tư cổ tức (DRIP) đang Bật. Ghi chép lại Giá trị tài sản cuối kỳ, Yield on Cost (YoC) cuối kỳ và lượng Thu nhập thụ động hàng năm.
+Chạy giả lập lần 2 với tính năng Tái đầu tư cổ tức (DRIP) đang Tắt (nhận tiền mặt tiêu dùng). So sánh sự sụt giảm về tài sản và dòng tiền thụ động năm cuối.
+Chuyển sang mã FPT và quan sát sự khác biệt khi một cổ phiếu có mức tăng trưởng cổ tức cao (12%/năm) tạo ra Yield on Cost vượt trội sau 20 năm tích lũy.',
+   'Đã thực hiện so sánh trực quan giữa hai chế độ Có DRIP và Không DRIP trên cùng một mã cổ phiếu.
+Xác định được sự ảnh hưởng của tốc độ tăng trưởng cổ tức (Dividend Growth) đối với chỉ số Yield on Cost cuối kỳ.
+Ghi chép lại suy ngẫm cá nhân về tầm quan trọng của việc coi cổ tức là công cụ tích lũy cổ phần thay vì tiền tiêu xài ngắn hạn.',
+   'tich-luy-co-tuc-va-suc-bat-compound-dividend',
+   true),
+  ('Thực hành đo lường hao hụt do giao dịch ngắn hạn',
+   'thuc-hanh-do-luong-drag-giao-dich-ngan-han',
+   'Sử dụng công cụ giả lập Overtrading để đo lường tác động của thuế và phí lên tài sản ròng khi quay vòng vốn quá nhanh.',
+   'intermediate',
+   'Phòng luyện tập',
+   15,
+   'Hiểu sâu về bẫy phí thuế khứ hồi và cách tần suất giao dịch cao bào mòn lãi kép dài hạn.',
+   'Mở tab Hao hụt do Giao dịch ngắn hạn (Overtrading) trong hộp công cụ tài chính.
+Nhập vốn ban đầu 100 triệu và góp hàng tháng 3 triệu trong vòng 10 năm.
+Thiết lập Tần suất Giao dịch thành ''Đầu cơ T+3 hàng ngày (Cực kỳ nguy hiểm)'' và quan sát số tiền Thuế & Phí Đã Nộp Lũy Kế.
+Chuyển sang tần suất ''Mua & Nắm giữ dài hạn'' và so sánh sự chênh lệch về Tài sản ròng thực nhận và Tỷ lệ bào mòn (Drag Ratio).
+Thử điều chỉnh tỷ lệ hiệu quả trading (Alpha) của bạn lên +3% xem có bù đắp nổi chi phí giao dịch ở tần suất cao hay không.
+Viết nhận xét vào phần tự xem lại của bạn về kết quả so sánh này.',
+   'Đã chạy giả lập Overtrading với tần suất T+3 hàng ngày và Mua & Nắm giữ dài hạn.
+Xác định được số tiền chênh lệch tài sản ròng giữa hai chiến lược.
+Có ghi chép bài học về tác hại của việc giao dịch quá mức lên hiệu quả đầu tư thực tế.',
+   'overtrading-va-drag-thue-phi',
+   true)
+on conflict (slug) do update set
+  title = excluded.title,
+  description = excluded.description,
+  difficulty = excluded.difficulty,
+  category = excluded.category,
+  estimated_minutes = excluded.estimated_minutes,
+  objective = excluded.objective,
+  instructions = excluded.instructions,
+  success_criteria = excluded.success_criteria,
+  related_article_slug = excluded.related_article_slug,
+  is_active = excluded.is_active,
+  updated_at = now();

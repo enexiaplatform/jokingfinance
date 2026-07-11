@@ -28,8 +28,9 @@ import { PositionTool } from "./position-tool";
 import { RuinTool } from "./ruin-tool";
 import { KellyTool } from "./kelly-tool";
 import { DividendTool } from "./dividend-tool";
+import { OvertradingTool } from "./overtrading-tool";
 
-type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly" | "dividend";
+type Tab = "checklist" | "calculator" | "allocation" | "valuation" | "bias" | "fire" | "dca" | "position" | "ruin" | "kelly" | "dividend" | "overtrading";
 
 type ChecklistQuestion = {
   id: number;
@@ -524,6 +525,17 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
           }`}
         >
           🪙 Tích lũy cổ tức DGI
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("overtrading")}
+          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === "overtrading"
+              ? "border-[#0f766e] text-[#0f766e]"
+              : "border-transparent text-[#5b6861] hover:text-[#17201b]"
+          }`}
+        >
+          💸 Hao hụt do Giao dịch ngắn hạn (Overtrading)
         </button>
       </div>
 
@@ -1302,8 +1314,10 @@ ${listWarning ? `Cảnh báo kỷ luật chưa đạt:\n${listWarning}` : "Tất
         <RuinTool />
       ) : activeTab === "kelly" ? (
         <KellyTool stocks={state?.stocks || []} />
-      ) : (
+      ) : activeTab === "dividend" ? (
         <DividendTool />
+      ) : (
+        <OvertradingTool />
       )}
 
       <Disclaimer />

@@ -5,12 +5,8 @@ import { formatPoints, formatPercent, formatNumber } from "@/lib/format";
 import {
   AlertTriangle,
   RefreshCw,
-  TrendingUp,
   ShieldAlert,
-  Sparkles,
   Info,
-  HelpCircle,
-  TrendingDown,
   ArrowRight,
   BookOpen
 } from "lucide-react";
@@ -90,8 +86,13 @@ export function RuinTool() {
     let sumMaxDrawdown = 0;
     const finalBalances: number[] = [];
     
-    // Setup random generator based on seed (or just Math.random but tied to simSeed change)
-    // To ensure React recalculates when seed changes, we don't need a custom PRNG, Math.random is fine.
+    // Pure deterministic hash function for generating random values without mutating state
+    const getRandVal = (path: number, step: number) => {
+      let h = (simSeed + 1) ^ (path * 1000 + step);
+      h = Math.imul(h ^ (h >>> 16), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+    };
     
     for (let pathIdx = 0; pathIdx < runCount; pathIdx++) {
       let balance = startingCapital;
@@ -101,7 +102,8 @@ export function RuinTool() {
       let pathRuined = false;
 
       for (let t = 0; t < tradesCount; t++) {
-        const isWin = Math.random() < winRate / 100;
+        const randVal = getRandVal(pathIdx, t);
+        const isWin = randVal < winRate / 100;
         const riskAmount = balance * (riskPercent / 100);
         
         if (isWin) {
@@ -253,7 +255,7 @@ export function RuinTool() {
     }
 
     // Parse path string
-    const renderedPaths = pathsToRender.map((path, idx) => {
+    const renderedPaths = pathsToRender.map((path) => {
       const pointsStr = path.map((val, stepIdx) => `${getX(stepIdx)},${getY(val)}`).join(" L ");
       const d = `M ${pointsStr}`;
       

@@ -8,12 +8,14 @@ import {
   RefreshCw,
   ArrowRight,
   ShieldAlert,
+  Coins,
 } from "lucide-react";
 import type { Trade, JournalEntry, MistakeType, TradeEmotion } from "@/lib/simulator/types";
-import { formatEmotion, formatMistakeType } from "@/lib/format";
+import { formatEmotion, formatMistakeType, formatPercent, formatPoints } from "@/lib/format";
 import { MetricCard } from "@/components/ui/metric-card";
 import { Badge } from "@/components/ui/badge";
 import { knowledgePillars, createKnowledgeSlug } from "@/data/knowledge-library";
+import { INITIAL_VIRTUAL_POINTS } from "@/lib/constants";
 
 type BehavioralDiagnosticsProps = {
   trades: Trade[];
@@ -364,6 +366,9 @@ export function BehavioralDiagnostics({ trades, journal }: BehavioralDiagnostics
       .filter((item) => item.total > 0)
       .sort((a, b) => b.rate - a.rate);
 
+    const totalFees = trades.reduce((sum, t) => sum + (t.fee || 0), 0);
+    const dragPercentage = (totalFees / INITIAL_VIRTUAL_POINTS) * 100;
+
     return {
       totalTrades: trades.length,
       journaledCount: journaledTrades.length,
@@ -374,6 +379,8 @@ export function BehavioralDiagnostics({ trades, journal }: BehavioralDiagnostics
       dominantEmotion,
       emotionCounts,
       emotionRegretRates,
+      totalFees,
+      dragPercentage,
     };
   }, [trades, journal]);
 
@@ -837,10 +844,12 @@ export function BehavioralDiagnostics({ trades, journal }: BehavioralDiagnostics
 
   const coverageTone = stats!.coveragePercent >= 75 ? "positive" : stats!.coveragePercent >= 40 ? "neutral" : "warning";
 
+  const dragTone = stats!.dragPercentage >= 2.0 ? "danger" : stats!.dragPercentage >= 0.5 ? "warning" : "positive";
+
   return (
     <div className="grid gap-6">
       {/* 1. Overview Metric Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           label="Độ phủ nhật ký"
           value={`${stats!.coveragePercent}%`}
@@ -858,6 +867,16 @@ export function BehavioralDiagnostics({ trades, journal }: BehavioralDiagnostics
           }
         />
         <MetricCard
+          label="Phí & Thuế bào mòn"
+          value={formatPercent(stats!.dragPercentage)}
+          tone={dragTone}
+          helper={
+            stats!.totalFees > 0
+              ? `Đã mất ${formatPoints(stats!.totalFees)} cho thuế & phí. Tần suất trading cao sẽ bào mòn lãi kép dài hạn.`
+              : "Chưa mất điểm ảo phí giao dịch nào."
+          }
+        />
+        <MetricCard
           label="Số lỗi hành vi"
           value={`${stats!.totalMistakes} lỗi`}
           tone={stats!.totalMistakes > 0 ? "danger" : "positive"}
@@ -868,6 +887,20 @@ export function BehavioralDiagnostics({ trades, journal }: BehavioralDiagnostics
           }
         />
       </div>
+
+      {stats!.dragPercentage >= 0.5 && (
+        <div className="rounded-md border border-[#ead99e] bg-[#fff9e6] p-4 text-sm text-[#7a4d00] flex items-start gap-3">
+          <Coins className="h-5 w-5 text-[#ea580c] shrink-0 mt-0.5" />
+          <div>
+            <strong>Cảnh báo Hao hụt (Drag Alert):</strong> Tỷ lệ phí & thuế đã bào mòn của bạn đạt mức{" "}
+            <strong>{formatPercent(stats!.dragPercentage)}</strong>. Hãy chạy thử công cụ{" "}
+            <Link href="/app/tools" className="font-bold text-[#0f766e] underline">
+              Hao hụt do Giao dịch ngắn hạn (Overtrading)
+            </Link>{" "}
+            để mô phỏng trực quan lượng tiền khổng lồ bạn sẽ cống hiến cho các bên trung gian nếu tiếp tục quay vòng vốn ở tần suất này!
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* 2. Top Cognitive Biases / Mistakes */}

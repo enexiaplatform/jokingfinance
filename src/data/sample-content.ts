@@ -642,6 +642,29 @@ export const sampleArticles: Article[] = [
       "Nhân tố thúc đẩy tài sản tăng trưởng theo đồ thị hàm số mũ chính là Kế hoạch Tái đầu tư Cổ tức (Dividend Reinvestment Plan - DRIP). Thay vì rút tiền cổ tức ra tiêu dùng cá nhân (như mua ly trà sữa, nâng cấp điện thoại), bạn dùng toàn bộ số tiền đó để mua thêm cổ phần của chính doanh nghiệp. Quá trình này tạo nên một vòng xoáy lãi kép: Nhiều cổ phần hơn -> Nhận nhiều cổ tức hơn -> Mua được nhiều cổ phần hơn nữa. Qua thời gian, số lượng cổ phiếu tích lũy của bạn sẽ tự động phình to mà không cần bạn phải nạp thêm vốn tự có.",
       "JokingFinance đã ra mắt công cụ 'Giả lập Tích lũy Cổ tức Tăng trưởng' để bạn trực tiếp so sánh hai kịch bản: Có tái đầu tư (DRIP) và Không tái đầu tư (Lấy tiền mặt chi tiêu). Bạn sẽ thấy rõ tác động của 5% thuế cổ tức tại nguồn của Việt Nam và sự phân hóa tài sản khổng lồ sau 10-20 năm. Hãy bắt đầu rèn luyện tư duy đồng chủ sở hữu doanh nghiệp và tích lũy cổ phần ảo ngay hôm nay."
     ]
+  },
+  {
+    title: "Bẫy giao dịch ngắn hạn và phí thuế hao hụt",
+    slug: "overtrading-va-drag-thue-phi",
+    summary: "Tìm hiểu tác động của tần suất giao dịch (turnover rate) lên tài sản dài hạn. Tại sao thuế 0.1% và phí 0.15% có thể âm thầm nuốt chửng tới 30-50% lợi nhuận của bạn.",
+    category: "Sai lầm tài chính",
+    categorySlug: "sai-lam-tai-chinh",
+    tags: ["giao dịch", "chi phí ẩn", "thuế phí", "tâm lý", "overtrading"],
+    author: "Nhóm JokingFinance",
+    publishedAt: "2026-07-04",
+    difficulty: "intermediate",
+    readingTime: 6,
+    relatedStocks: ["FPT", "VNM", "HPG", "SSI"],
+    relatedMissionSlug: "thuc-hanh-do-luong-drag-giao-dich-ngan-han",
+    seoTitle: "Bẫy giao dịch ngắn hạn và Chi phí ẩn từ thuế phí (Overtrading)",
+    seoDescription: "Chi tiết tác động của phí giao dịch mua bán và thuế bán cổ phiếu lên lợi nhuận kép dài hạn. Công cụ giả lập Overtrading Drag tại JokingFinance.",
+    body: [
+      "Trong giới đầu tư chứng khoán cá nhân tại Việt Nam, lướt sóng ngắn hạn (swing trading) cực kỳ phổ biến. Nhiều người bị cuốn vào bảng điện nhảy múa hàng ngày, thực hiện liên tục các lệnh mua bán T+3 nhằm tối ưu hóa lợi nhuận. Tuy nhiên, đằng sau ảo tưởng về việc mua thấp bán cao liên tiếp là một rào cản toán học cực kỳ đáng sợ: Phí giao dịch và thuế chuyển nhượng cổ phiếu.",
+      "Ở thị trường Việt Nam hiện tại, khi bạn mua một cổ phiếu, bạn trả phí giao dịch cho công ty chứng khoán (thường khoảng 0.15% giá trị lệnh). Khi bán ra, bạn trả thêm 0.15% phí giao dịch bán và 0.10% thuế TNCN chuyển nhượng (tính thẳng trên tổng giá trị bán, không cần biết bạn có lãi hay lỗ). Như vậy, mỗi vòng mua bán hoàn chỉnh (round trip) sẽ tiêu tốn khoảng 0.40% tổng số vốn luân chuyển. Đây có vẻ là một con số rất nhỏ, nhưng sức tàn phá của nó khi nhân với tần suất giao dịch là khổng lồ.",
+      "Tần suất quay vòng danh mục (Portfolio Turnover Rate hay Churn Rate) là thước đo độ nóng của hành vi giao dịch. Nếu bạn giữ cổ phiếu trung bình 1 tháng và đảo danh mục liên tục, bạn quay vòng vốn 12 lần một năm (Churn Rate = 1200%). Nghĩa là bạn phải chịu lực cản chi phí (Cost Drag) khoảng 12 x 0.40% = 4.80% giá trị tài sản của mình mỗi năm. Nếu bạn đầu cơ T+3 hàng ngày và quay vòng vốn 150 lần một năm, Cost Drag sẽ đạt tới 150 x 0.40% = 60.00% tài sản một năm! Ngay cả khi bạn là một thiên tài chọn đúng mã tăng trưởng tốt, bạn vẫn hầu như chắc chắn mất tiền vì phần lớn lợi nhuận đã bị cống nạp cho phí và thuế.",
+      "Mối nguy hại lớn nhất của Overtrading là nó cắt đứt dòng chảy lãi kép. Lãi kép chỉ hoạt động mạnh nhất khi tài sản được giữ yên lặng để tự nhân bản. Việc bán đi mua lại liên tục làm gián đoạn quá trình tích lũy, đồng thời liên tục rút tiền mặt ra khỏi tài khoản để nộp thuế phí. Do đó, các nhà đầu tư huyền thoại như Charlie Munger luôn nhấn mạnh: 'Lời khuyên đầu tiên về lãi kép là đừng bao giờ ngắt quãng nó một cách không cần thiết'.",
+      "JokingFinance đã phát triển công cụ 'Giả lập Bào mòn Lợi nhuận do Giao dịch ngắn hạn (Overtrading)' để giúp bạn trực quan hóa mối tương quan này. Bạn có thể tự điều chỉnh tần suất giao dịch từ dài hạn đến T+3 hàng ngày, nhập mức 'Alpha' (mức vượt trội mà bạn tin mình có thể thắng thị trường) để xem liệu tài năng trading của bạn có bù đắp nổi lực kéo của chi phí ẩn hay không. Hãy thực hành giả lập trên điểm ảo trước để bảo vệ ví tiền thật của bạn khỏi bẫy bào mòn này."
+    ]
   }
 ];
 
@@ -1019,6 +1042,30 @@ export const sampleMissions: Mission[] = [
       "Ghi chép lại suy ngẫm cá nhân về tầm quan trọng của việc coi cổ tức là công cụ tích lũy cổ phần thay vì tiền tiêu xài ngắn hạn."
     ],
     relatedArticleSlug: "tich-luy-co-tuc-va-suc-bat-compound-dividend",
+    isActive: true,
+  },
+  {
+    title: "Thực hành đo lường hao hụt do giao dịch ngắn hạn",
+    slug: "thuc-hanh-do-luong-drag-giao-dich-ngan-han",
+    description: "Sử dụng công cụ giả lập Overtrading để đo lường tác động của thuế và phí lên tài sản ròng khi quay vòng vốn quá nhanh.",
+    difficulty: "intermediate",
+    category: "Phòng luyện tập",
+    estimatedMinutes: 15,
+    objective: "Hiểu sâu về bẫy phí thuế khứ hồi và cách tần suất giao dịch cao bào mòn lãi kép dài hạn.",
+    instructions: [
+      "Mở tab Hao hụt do Giao dịch ngắn hạn (Overtrading) trong hộp công cụ tài chính.",
+      "Nhập vốn ban đầu 100 triệu và góp hàng tháng 3 triệu trong vòng 10 năm.",
+      "Thiết lập Tần suất Giao dịch thành 'Đầu cơ T+3 hàng ngày (Cực kỳ nguy hiểm)' và quan sát số tiền Thuế & Phí Đã Nộp Lũy Kế.",
+      "Chuyển sang tần suất 'Mua & Nắm giữ dài hạn' và so sánh sự chênh lệch về Tài sản ròng thực nhận và Tỷ lệ bào mòn (Drag Ratio).",
+      "Thử điều chỉnh tỷ lệ hiệu quả trading (Alpha) của bạn lên +3% xem có bù đắp nổi chi phí giao dịch ở tần suất cao hay không.",
+      "Viết nhận xét vào phần tự xem lại của bạn về kết quả so sánh này."
+    ],
+    successCriteria: [
+      "Đã chạy giả lập Overtrading với tần suất T+3 hàng ngày và Mua & Nắm giữ dài hạn.",
+      "Xác định được số tiền chênh lệch tài sản ròng giữa hai chiến lược.",
+      "Có ghi chép bài học về tác hại của việc giao dịch quá mức lên hiệu quả đầu tư thực tế."
+    ],
+    relatedArticleSlug: "overtrading-va-drag-thue-phi",
     isActive: true,
   },
 ];
